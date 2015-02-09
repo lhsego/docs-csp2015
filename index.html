@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Tessera Demo at the Conference on Statistical Practice 2015</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/custom/custom.css" rel="stylesheet">
+    <!-- font-awesome -->
+    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- prism -->
+    <link href="assets/prism/prism.css" rel="stylesheet">
+    <link href="assets/prism/prism.r.css" rel="stylesheet">
+    <script type='text/javascript' src='assets/prism/prism.js'></script>
+    <script type='text/javascript' src='assets/prism/prism.r.js'></script>
+    
+    
+    
+    <script type="text/javascript" src="assets/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+   MathJax.Hub.Config({    
+     extensions: ["tex2jax.js"],    
+     "HTML-CSS": { scale: 100}    
+   });
+   </script>
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+    
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <!-- <link href='http://fonts.googleapis.com/css?family=Lustria' rel='stylesheet' type='text/css'> -->
+    <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
+    
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+                                   <!-- <link rel="shortcut icon" href="ico/favicon.png"> -->
+  </head>
+
+  <body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+           
+        </ul>
+        
+        <p class="myHeader">Tessera Demo at the Conference on Statistical Practice 2015</p>
+      </div>
+
+      <hr>
+
+<div class="container-fluid">
+   <div class="row-fluid">
+   
+   <div class="col-md-3 well">
+   <ul class = "nav nav-list" id="toc">
+   <li class='nav-header unselectable' data-edit-href='download_instructions.Rmd'>CSP 2015 Demo</li>
+      
+      <li class='active'>
+         <a target='_self' class='nav-not-header' href='#download-demo-materials'>Download Demo Materials</a>
+      </li>
+
+   </ul>
+   </div>
+
+<div class="col-md-9 tab-content" id="main-content">
+
+<div class='tab-pane active' id='download-demo-materials'>
+<h3>Download Demo Materials</h3>
+
+<p>The Tessera team will be presenting an interactive demo at the 
+<a href="http://www.amstat.org/meetings/csp/2015/" target="_blank">
+2015 Conference on Statistical Practice</a> in 
+New Orleans on February 21, 2015.</p>
+
+<p>Participants who would like to download the Tessera tools prior to the demo 
+please follow these instructions. These tools will allow you to use and test 
+Tessera in your local environment without Hadoop or a similar parallel 
+processing backend.</p>
+
+<ol>
+<li><p>If you do not already have R version 3.0.2 or later, please download and
+install it here: <a href="http://cran.r-project.org" target="_blank">
+http://cran.r-project.org</a>. </p></li>
+<li><p>Optional: You may find the RStudio development environment an easier way
+to program in R, but it is not necessary. You may download it here:
+<a href="http://www.rstudio.com/" target="_blank">http://www.rstudio.com/</a>.</p></li>
+<li><p>Open R and execute the following commands to install the Tessera libraries:</p>
+
+<pre><code class="r">install.packages(&quot;devtools&quot;) # if not already installed
+library(devtools)
+install_github(&quot;tesseradata/datadr&quot;)
+install_github(&quot;tesseradata/trelliscope&quot;)
+</code></pre></li>
+<li><p>Download Tessera demo scripts and files and unzip them on your computer:
+<a href="Tessera_demo_CSP2015.zip">demo files</a></p></li>
+</ol>
+
+<h4>We look forward to seeing you at CSP!</h4>
+
+</div>
+
+   
+   <ul class="pager">
+      <li><a href="#" id="previous">&larr; Previous</a></li> 
+      <li><a href="#" id="next">Next &rarr;</a></li> 
+   </ul>
+</div>
+
+
+</div>
+</div>
+
+<hr>
+
+<div class="footer">
+   <p></p>
+</div>
+</div> <!-- /container -->
+
+<script src="assets/jquery/jquery.js"></script>
+<script type='text/javascript' src='assets/custom/custom.js'></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/custom/jquery.ba-hashchange.min.js"></script>
+<script src="assets/custom/nav.js"></script>
+
+</body>
+</html>
