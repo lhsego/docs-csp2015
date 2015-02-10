@@ -96,9 +96,13 @@ http://cran.r-project.org</a>. </p></li>
 <li><p>Optional: You may find the RStudio development environment an easier way
 to program in R, but it is not necessary. You may download it here:
 <a href="http://www.rstudio.com/" target="_blank">http://www.rstudio.com/</a>.</p></li>
+<li><p>Make sure you have Java JDK (1.4 or newer) installed. If not go here to 
+install it: <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">
+http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>.</p></li>
 <li><p>Open R and execute the following commands to install the Tessera libraries:</p>
 
 <pre><code class="r">install.packages(&quot;devtools&quot;) # if not already installed
+install.packages(&quot;rJava&quot;)
 library(devtools)
 install_github(&quot;tesseradata/datadr&quot;)
 install_github(&quot;tesseradata/trelliscope&quot;)

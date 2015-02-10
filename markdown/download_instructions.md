@@ -34,16 +34,21 @@ http://cran.r-project.org</a>.
 to program in R, but it is not necessary. You may download it here:
 <a href="http://www.rstudio.com/" target="_blank">http://www.rstudio.com/</a>.
 
-3. Open R and execute the following commands to install the Tessera libraries:
+3. Make sure you have Java JDK (1.4 or newer) installed. If not go here to 
+install it: <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">
+http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>.
+
+4. Open R and execute the following commands to install the Tessera libraries:
    
    ```r
    install.packages("devtools") # if not already installed
+   install.packages("rJava")
    library(devtools)
    install_github("tesseradata/datadr")
    install_github("tesseradata/trelliscope")
    ```
 
-4. Download Tessera demo scripts and files and unzip them on your computer:
+5. Download Tessera demo scripts and files and unzip them on your computer:
 [demo files](Tessera_demo_CSP2015.zip)
 
 
