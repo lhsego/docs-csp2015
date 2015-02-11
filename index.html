@@ -86,30 +86,35 @@ New Orleans on February 21, 2015.</p>
 
 <p>Participants who would like to download the Tessera tools prior to the demo 
 please follow these instructions. These tools will allow you to use and test 
-Tessera in your local environment without Hadoop or a similar parallel 
+Tessera on your own computer without Hadoop or a similar parallel 
 processing backend.</p>
 
 <ol>
 <li><p>If you do not already have R version 3.0.2 or later, please download and
 install it here: <a href="http://cran.r-project.org" target="_blank">
-http://cran.r-project.org</a>. </p></li>
+<a href="http://cran.r-project.org">http://cran.r-project.org</a></a>. </p></li>
 <li><p>Optional: You may find the RStudio development environment an easier way
 to program in R, but it is not necessary. You may download it here:
-<a href="http://www.rstudio.com/" target="_blank">http://www.rstudio.com/</a>.</p></li>
+<a href="http://www.rstudio.com/" target="_blank"><a href="http://www.rstudio.com/">http://www.rstudio.com/</a></a>.</p></li>
 <li><p>Make sure you have Java JDK (1.4 or newer) installed. If not go here to 
 install it: 
 <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">
-http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>.</p></li>
+<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></a>.</p></li>
+<li><p>You will need a non-Internet Explorer browser installed on your computer.  Firefox, Safari, or Chrome will all work fine.</p></li>
 <li><p>Open R and execute the following commands to install the Tessera libraries:</p>
 
-<pre><code class="r">install.packages(&quot;devtools&quot;) # if not already installed
-install.packages(&quot;rJava&quot;)
-library(devtools)
-install_github(&quot;tesseradata/datadr&quot;)
-install_github(&quot;tesseradata/trelliscope&quot;)
+<pre><code class="r">  install.packages(c(&quot;devtools&quot;, &quot;rJava&quot;, &quot;plyr&quot;))
+  library(devtools)
+  install_github(&quot;tesseradata/datadr&quot;)
+  install_github(&quot;tesseradata/trelliscope&quot;)
 </code></pre></li>
-<li><p>Download Tessera demo scripts and files and unzip them on your computer:
-<a href="Tessera_demo_CSP2015.zip">demo files</a></p></li>
+<li><p>Download the CSP Tessera demo files and unzip them on your computer:
+<a href="Tessera_demo_CSP2015.zip">Tessera_demo_CSP2015.zip</a></p></li>
+<li><p>The zip file contains a folder called <strong>demos</strong>.  Set your working directory in R to this folder,
+using something like <code>setwd(&quot;mypaths/demos&quot;)</code>.  The <strong>demos</strong> folder 
+contains a folder for each of the three demos:  <strong>power_demo</strong>, <strong>netflow_demo</strong>, and <strong>housing_demo</strong>.
+Each demonstration folder has a single <strong>.R</strong> file which contains the code for the demonstration.<br>
+Open that file in R and begin!</p></li>
 </ol>
 
 <h4>We look forward to seeing you at CSP!</h4>
@@ -118,8 +123,8 @@ install_github(&quot;tesseradata/trelliscope&quot;)
 
    
    <ul class="pager">
-      <li><a href="#" id="previous">&larr; Previous</a></li> 
-      <li><a href="#" id="next">Next &rarr;</a></li> 
+<!--      <li><a href="#" id="previous">&larr; Previous</a></li> -->
+<!--      <li><a href="#" id="next">Next &rarr;</a></li> -->
    </ul>
 </div>
 
@@ -130,7 +135,7 @@ install_github(&quot;tesseradata/trelliscope&quot;)
 <hr>
 
 <div class="footer">
-   <p></p>
+<!--   <p>&copy; , 2015</p>-->
 </div>
 </div> <!-- /container -->
 
