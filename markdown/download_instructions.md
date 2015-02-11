@@ -60,10 +60,10 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>.
 6. Download the CSP Tessera demo files and unzip them on your computer:
 [Tessera_demo_CSP2015.zip](Tessera_demo_CSP2015.zip)
 
-7. The zip file contains a folder called __demos__.  Set your working directory in R to this folder,
-using something like `setwd("mypaths/demos")`.  The __demos__ folder 
-contains a folder for each of the three demos:  __power_demo__, __netflow_demo__, and __housing_demo__.
-Each demonstration folder has a single __.R__ file which contains the code for the demonstration. Open that 
+7. The zip file contains a folder called **demos**.  Set your working directory in R to this folder,
+using something like `setwd("mypaths/demos")`.  The **demos** folder 
+contains a folder for each of the three demos:  **power_demo**, **netflow_demo**, and **housing_demo**.
+Each demonstration folder has a single **.R** file which contains the code for the demonstration. Open that 
 file in your editor of choice and begin!
 
 #### We look forward to seeing you at CSP! 

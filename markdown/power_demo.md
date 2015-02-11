@@ -1,0 +1,74 @@
+---
+output: html_document
+---
+## Power utilization in retail buildings ## 
+
+This dataset contains recordings of the energy consumption and outdoor air temperature of four retail buildings at various locations in the U.S. at 15 minute intervals during 2010. The measurements have
+been anonymized by applying a random linear transformation.
+The variables in the data are described below:
+
+Variable | Description
+---------|-----------------
+building | An integer identifying each of the four buildings
+dateTime | The date and time when the power and temperature were recorded
+year | Integer indicating the year of the measurement (all
+date | The date of the measurement
+quarter | The quarter of the year (Q1, Q2, Q3, Q4)
+month | The month, represented as an integer (1, 2, ..., 12)
+monthName | The name of the month ("January", "Februrary", ..., "December")
+week |  Integer indicating the week in 2010 (1, 2, 3, ..., 53)
+weekDay | The day of the week ("Monday", "Tuesday", ..., "Sunday")
+day | Integer indicating the Julian day in 2010 (number of days since Jan 1, 2010)
+OAT.F | Outdoor Air Temperature measured in Farenheit
+Power.KW | Instantaneous power consumption by the building at the date time, measured in Kilowatts
+
+### Preliminaries ###
+
+Let's begin by setting the working directory for this example. You may have to change the path in the command below to correctly point to the `power_demo` directory.
+
+
+```r
+setwd("power_demo")
+```
+
+And let's remove any possible left-over objects in the Global environment:
+
+```r
+rm(list = ls())
+```
+
+And load the requisite packages:
+
+```r
+library(trelliscope)
+library(plyr)
+```
+
+### Pre-made Trelliscope Displays ###
+
+The following will launch two pre-made trelliscope displays:
+- Power vs. Time 
+- Power vs. Outdoor Air Temp 
+where each panel shows data for all four buildings for a single day.  
+
+The purpose of this activity is to launch the Trelliscope display and then explore the data---to look for patterns, bad data, anomalies, etc. The code required to generate these displays is shown next. <!-- Would be nice to have an internal comment here --> 
+
+
+```r
+# Load some preconfigured global plotting limits
+load("plottingLims.Rdata")
+
+# Open the connection to the pre-existing trelliscope visualization.
+# ("vdb_power" is a folder in "power_demo")
+vdbConn("vdb_power")
+
+# use this port when running locally on your own computer
+myport <- 8100 
+
+# use this port on the AWS demo cluster
+# myport <- Sys.getenv("TR_PORT") 
+
+# Launch the trelliscope viewer.  Use Ctrl-C or ESC to stop the reviewer and return
+# the R prompt
+view(port = myport)
+```
