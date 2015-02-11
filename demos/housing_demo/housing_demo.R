@@ -9,15 +9,22 @@ library(datadr)
 library(trelliscope)
 library(housingData)
 
+################################################################################
+#### Let's set the working directory for this example. You may have to change the
+#### path in the command below to correctly point to the 'housing_demo' directory
+setwd("housing_demo")
+
+# Remove any left-over objects in the Global environment
+rm(list = ls())
+
 ###############################################################################
-#### To see the Trelliscope display execute this section, to see how the
+#### To see the Trelliscope display execute this section. To see how the
 #### display was made see the code below.
 
-vdbConn("vdb_housing", autoYes=TRUE)
-myport <- 8100 # use this when running locally
+vdbConn("vdb_housing", autoYes = TRUE)
+myport <- 8100 # use this when running locally on your own computer
 # myport <- Sys.getenv("TR_PORT") # use this on demo cluster
-view(port=myport)
-
+view(port = myport)
 
 ###############################################################################
 #### Analyze housing dataset and create Trelliscope displays
