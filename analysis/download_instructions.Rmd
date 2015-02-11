@@ -62,7 +62,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>.
 7. The zip file contains a folder called __demos__.  Set your working directory in R to this folder,
 using something like `setwd("mypaths/demos")`.  The __demos__ folder 
 contains a folder for each of the three demos:  __power_demo__, __netflow_demo__, and __housing_demo__.
-Each demonstration folder has a single __.R__ file which contains the code for the demonstration.  
-Open that file in R and begin!
+Each demonstration folder has a single __.R__ file which contains the code for the demonstration. Open that 
+file in your editor of choice and begin!
 
 #### We look forward to seeing you at CSP! 
