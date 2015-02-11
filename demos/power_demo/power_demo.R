@@ -1,12 +1,12 @@
 ################################################################################
-# The goal of this exercise is to see if you can use datadr and trelliscope
-# on your own to explore a simple dataset.
+# The goal of this demonstration is to illustrate a fairly simple use of
+# Trelliscope to visualize power usage and outdoor air temperatures measured
+# at retail buildings.
 ################################################################################
 
 # This dataset contains recordings of the energy consumption and outdoor air temperature
 # of four retail buildings at various locations in the U.S. at 15 min. intervals during 2010.
-# The measurements have
-# been anonymized by applying a random linear transformation.
+# The measurements have been anonymized by applying a random linear transformation.
 # The variables in the data are described below:
 #
 # building - An integer identifying each of the four buildings
@@ -103,7 +103,7 @@ with(d, table(month, building))
 # divide the data by date to create a distributed data frame (ddf) object
 # using the divide() function from the datadr package, and then sort each resulting data
 # frame by building and the dateTime using the arrange() function from the plyr package
-library(dplyr)
+library(plyr)
 byDate <- divide(d, by = "date", postTransFn = function(x) arrange(x, building, dateTime))
 
 # Let's look at a single element of the ddf:
