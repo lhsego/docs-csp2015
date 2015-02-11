@@ -7,16 +7,27 @@
 library(datadr)
 library(trelliscope)
 
+################################################################################
+#### Let's set the working directory for this example. You may have to change the
+#### path in the command below to correctly point to the 'netflow_demo' directory
+setwd("netflow_demo")
+
+# Remove any left-over objects in the Global environment
+rm(list = ls())
 
 ###############################################################################
 #### To see the Trelliscope display execute this section. The code that creates
 #### these displays is below, but cannot be run locally.
 
-vdbConn("vdb_netflow", autoYes=TRUE)
-myport <- 8100 # use this when running locally
+vdbConn("vdb_netflow", autoYes = TRUE)
+myport <- 8100 # use this when running locally on your own computer
 # myport <- Sys.getenv("TR_PORT") # use this on demo cluster
-view(port=myport)
+view(port = myport)
 
+
+###############################################################################
+#### From here on, this example can only be run on a cluster with Hadoop
+#### running and installed
 
 ###############################################################################
 #### Analyze the NetFlow dataset using Hadoop and create Trelliscope displays.

@@ -1,16 +1,17 @@
 <!--
 Comments:
 To create index.html, do this in R:
+
    library(buildDocs)
    setwd(".../docs-csp2015")
    buildDocs("analysis", outLoc=".", copyrightText="")
 
-   library(Smisc)
    # Comment out copyright text, and 'Previous' and 'Next' links since they
-   # aren't relevant (and the break)
+   # aren't relevant (and the break).  Ignore the warning.
+   library(Smisc)
    streamEdit(list(c = list(at = "<p>&copy; , ", type = "html", fixed = TRUE), 
                    c = list(at = "id=\"previous\">&larr;", type = "html", fixed = TRUE), 
-                   c = list(at = "id=\"next\">Next &rarr;", type = "html", fixed = TRUE), 
+                   c = list(at = "id=\"next\">Next &rarr;", type = "html", fixed = TRUE)), 
               inFile = "index.html", outFile = "index.html")
    
 -->
@@ -49,10 +50,11 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>.
 5. Open R and execute the following commands to install the Tessera libraries:
    
    ```r
-      install.packages(c("devtools", "rJava", "plyr"))
+      install.packages(c("devtools", "rJava", "plyr", "maps"))
       library(devtools)
       install_github("tesseradata/datadr")
       install_github("tesseradata/trelliscope")
+      install_github("hafen/housingData")
    ```
 
 6. Download the CSP Tessera demo files and unzip them on your computer:

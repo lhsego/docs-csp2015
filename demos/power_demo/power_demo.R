@@ -28,6 +28,9 @@
 ################################################################################
 setwd("power_demo")
 
+# Remove any left-over objects in the Global environment
+rm(list = ls())
+
 ################################################################################
 # Let's look at a couple of Trelliscope displays of these data
 ################################################################################
@@ -42,7 +45,7 @@ vdbConn("vdb_power")
 
 # Launch the trelliscope viewer.  Use Ctrl-C or ESC to stop the reviewer and return
 # the R prompt
-myport <- 8100 # use this when running locally
+myport <- 8100 # use this when running locally on your own computer
 # myport <- Sys.getenv("TR_PORT") # use this on demo cluster
 view(port = myport)
 
@@ -56,7 +59,7 @@ library(trelliscope)
 # Let's clear the workspace of any residual objects
 rm(list = ls())
 
-# We'll begin by unzipping and reading in the data
+# We'll begin by reading in the data
 d <- read.csv("retailBuildings.csv")
 
 # Here are the first 6 rows
@@ -143,7 +146,7 @@ power.by.time <- function(x) {
 
 } # power.by.time()
 
-# Test the plot
+# Test the plot on a single subset
 power.by.time(byDate[[8]][[2]])
 
 # Next we create cognostics function that defines the cognostics (measures of interest)
@@ -221,7 +224,6 @@ power.v.temp(byDate[[8]][[2]])
 makeDisplay(byDate, name = "Power_vs_Temp_by_Day",
             desc = "Power vs. Temperature for 2010 buildings by day",
             panelFn = power.v.temp, cogFn = kwCog)
-
 
 # Launch the trelliscope viewer (must be in Firefox, Chrome, or Safari--not Internet Explorer)
 myport <- 8100 # use this when running locally

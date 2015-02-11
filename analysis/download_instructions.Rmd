@@ -49,10 +49,11 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>.
 
 5. Open R and execute the following commands to install the Tessera libraries:
    ```{r eval=FALSE, echo=TRUE}
-      install.packages(c("devtools", "rJava", "plyr"))
+      install.packages(c("devtools", "rJava", "plyr", "maps"))
       library(devtools)
       install_github("tesseradata/datadr")
       install_github("tesseradata/trelliscope")
+      install_github("hafen/housingData")
    ```
 
 6. Download the CSP Tessera demo files and unzip them on your computer:
