@@ -1,7 +1,7 @@
 ################################################################################
 # The goal of this demonstration is to illustrate a fairly simple use of
 # Trelliscope to visualize power usage and outdoor air temperatures measured
-# at retail buildings.
+# at four retail buildings in 2010.
 ################################################################################
 
 # This dataset contains recordings of the energy consumption and outdoor air temperature
