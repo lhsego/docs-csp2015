@@ -7,6 +7,7 @@
 # This dataset contains recordings of the energy consumption and outdoor air temperature
 # of four retail buildings at various locations in the U.S. at 15 min. intervals during 2010.
 # The measurements have been anonymized by applying a random linear transformation.
+# 
 # The variables in the data are described below:
 #
 # building - An integer identifying each of the four buildings
