@@ -46,7 +46,7 @@ to program in R, but it is not necessary. You may download it here:
 
 4. Open R and execute the following commands to install the Tessera libraries:
    ```{r eval=FALSE, echo=TRUE}
-      install.packages(c("devtools", "rJava", "plyr", "maps"))
+      install.packages(c("devtools", "plyr", "maps"))
       library(devtools)
       install_github("tesseradata/datadr")
       install_github("tesseradata/trelliscope")
