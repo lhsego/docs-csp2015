@@ -13,7 +13,9 @@ To create index.html, do this in R:
                    c = list(at = "id=\"previous\">&larr;", type = "html", fixed = TRUE), 
                    c = list(at = "id=\"next\">Next &rarr;", type = "html", fixed = TRUE)), 
               inFile = "index.html", outFile = "index.html")
-   
+
+Then in a text editor edit links in 1&2 to remove interior <a> tags on each 
+(so that the links open in new tabs).
 -->
 
 # Tessera Demo at the Conference on Statistical Practice 2015 #
@@ -40,26 +42,21 @@ http://cran.r-project.org</a>.
 to program in R, but it is not necessary. You may download it here:
 <a href="http://www.rstudio.com/" target="_blank">http://www.rstudio.com/</a>.
 
-3. Make sure you have Java JDK (1.4 or newer) installed. If not go here to 
-install it: 
-<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">
-http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>.
+3. You will need a non-Internet Explorer browser installed on your computer.  Firefox, Safari, or Chrome will all work fine.
 
-4. You will need a non-Internet Explorer browser installed on your computer.  Firefox, Safari, or Chrome will all work fine.
-
-5. Open R and execute the following commands to install the Tessera libraries:
+4. Open R and execute the following commands to install the Tessera libraries:
    ```{r eval=FALSE, echo=TRUE}
-      install.packages(c("devtools", "rJava", "plyr", "maps"))
+      install.packages(c("devtools", "plyr", "maps"))
       library(devtools)
       install_github("tesseradata/datadr")
       install_github("tesseradata/trelliscope")
       install_github("hafen/housingData")
    ```
 
-6. Download the CSP Tessera demo files and unzip them on your computer:
+5. Download the CSP Tessera demo files and unzip them on your computer:
 [Tessera_demo_CSP2015.zip](Tessera_demo_CSP2015.zip)
 
-7. The zip file contains a folder called **demos**.  Set your working directory in R to this folder,
+6. The zip file contains a folder called **demos**.  Set your working directory in R to this folder,
 using something like `setwd("mypaths/demos")`.  The **demos** folder 
 contains a folder for each of the three demos:  **power_demo**, **netflow_demo**, and **housing_demo**.
 Each demonstration folder has a single **.R** file which contains the code for the demonstration. Open that 
