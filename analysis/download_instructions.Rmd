@@ -13,7 +13,9 @@ To create index.html, do this in R:
                    c = list(at = "id=\"previous\">&larr;", type = "html", fixed = TRUE), 
                    c = list(at = "id=\"next\">Next &rarr;", type = "html", fixed = TRUE)), 
               inFile = "index.html", outFile = "index.html")
-   
+
+Then in a text editor edit links in 1,2,3 to remove interior <a> tags on each 
+(so that the links open in new tabs).
 -->
 
 # Tessera Demo at the Conference on Statistical Practice 2015 #
