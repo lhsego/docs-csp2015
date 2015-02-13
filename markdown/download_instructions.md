@@ -7,13 +7,15 @@ To create index.html, do this in R:
    buildDocs("analysis", outLoc=".", copyrightText="")
 
    # Comment out copyright text, and 'Previous' and 'Next' links since they
-   # aren't relevant (and the break).  Ignore the warning.
+   # aren't relevant (and they break).  Ignore the warning.
    library(Smisc)
    streamEdit(list(c = list(at = "<p>&copy; , ", type = "html", fixed = TRUE), 
                    c = list(at = "id=\"previous\">&larr;", type = "html", fixed = TRUE), 
                    c = list(at = "id=\"next\">Next &rarr;", type = "html", fixed = TRUE)), 
               inFile = "index.html", outFile = "index.html")
-   
+
+Then in a text editor edit links in 1&2 to remove interior <a> tags on each 
+(so that the links open in new tabs).
 -->
 
 # Tessera Demo at the Conference on Statistical Practice 2015 #
@@ -32,7 +34,7 @@ please follow these instructions. These tools will allow you to use and test
 Tessera on your own computer without Hadoop or a similar parallel 
 processing backend.
 
-1. If you do not already have R version 3.0.2 or later, please download and
+1. If you do not already have the most recent version of R, (version 3.1.2), please download and
 install it here: <a href="http://cran.r-project.org" target="_blank">
 http://cran.r-project.org</a>. 
 
@@ -40,27 +42,30 @@ http://cran.r-project.org</a>.
 to program in R, but it is not necessary. You may download it here:
 <a href="http://www.rstudio.com/" target="_blank">http://www.rstudio.com/</a>.
 
-3. Make sure you have Java JDK (1.4 or newer) installed. If not go here to 
-install it: 
-<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">
-http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>.
+3. You will need a non-Internet Explorer browser installed on your computer.  Firefox, Safari, or Chrome will all work fine.
 
-4. You will need a non-Internet Explorer browser installed on your computer.  Firefox, Safari, or Chrome will all work fine.
-
-5. Open R and execute the following commands to install the Tessera libraries:
+4. Open R and execute the following commands to install Tessera and other libraries you'll need for the demos:
    
    ```r
-      install.packages(c("devtools", "rJava", "plyr", "maps"))
+      install.packages(c("devtools", "plyr", "maps"))
       library(devtools)
       install_github("tesseradata/datadr")
       install_github("tesseradata/trelliscope")
       install_github("hafen/housingData")
    ```
-
-6. Download the CSP Tessera demo files and unzip them on your computer:
+   **For Windows users:**  when installing `devtools`, you may notice the following warning, which
+   you can ignore:
+   
+   ```r
+   > library(devtools)
+   WARNING: Rtools is required to build R packages, but no version of Rtools compatible with R 3.1.2 was found. (Only the following incompatible version(s) of Rtools were found:3.2)
+   Please download and install Rtools 3.1 from http://cran.r-project.org/bin/windows/Rtools/ and then run find_rtools().
+   ```
+ 
+5. Download the CSP Tessera demo files and unzip them on your computer:
 [Tessera_demo_CSP2015.zip](Tessera_demo_CSP2015.zip)
 
-7. The zip file contains a folder called **demos**.  Set your working directory in R to this folder,
+6. The zip file contains a folder called **demos**.  Set your working directory in R to this folder,
 using something like `setwd("mypaths/demos")`.  The **demos** folder 
 contains a folder for each of the three demos:  **power_demo**, **netflow_demo**, and **housing_demo**.
 Each demonstration folder has a single **.R** file which contains the code for the demonstration. Open that 
