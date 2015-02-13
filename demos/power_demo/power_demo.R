@@ -12,7 +12,7 @@
 #
 # building - An integer identifying each of the four buildings
 # dateTime - The date and time when the power and temperature were recorded
-# year - Integer indicating the year of the measurement (all
+# year - Integer indicating the year of the measurement (all #is "(all" a typo?  Or did some info drop off?#
 # date - The date of the measurement
 # quarter - The quarter of the year (Q1, Q2, Q3, Q4)
 # month - The month, represented as an integer (1, 2, ..., 12)
@@ -71,7 +71,7 @@ head(d)
 # dateTime and date are stored as factors
 str(d)
 
-# Let's convert the datetime and date to a POSIXct format so R can compute with
+# Let's convert the dateTime and date to a POSIXct format so R can compute with
 # them as dates
 d$dateTime <- as.POSIXct(d$dateTime)
 d$date <- as.POSIXct(d$date)
@@ -166,7 +166,7 @@ kwCog <- function(x) { list(
   meanPower = cogMean(x$Power.KW, desc = "Mean Power (KW)"),
   rangePower = cogRange(x$Power.KW, desc = "Range of Power (Max - Min) (KW)"),
 
-  # Note how we use 'unique()' below, because for each subset, the value of month, week,
+  # Note that we use 'unique()' below because, for each subset, the value of month, week,
   # and day are all repeated for a single date. So we use unique() to get a scalar
   # value of these date variables
   month = cog(unique(x$monthName), desc = "Month Name"),
