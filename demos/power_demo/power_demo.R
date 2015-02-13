@@ -12,7 +12,7 @@
 #
 # building - An integer identifying each of the four buildings
 # dateTime - The date and time when the power and temperature were recorded
-# year - Integer indicating the year of the measurement (all #is "(all" a typo?  Or did some info drop off?#
+# year - Integer indicating the year of the measurement
 # date - The date of the measurement
 # quarter - The quarter of the year (Q1, Q2, Q3, Q4)
 # month - The month, represented as an integer (1, 2, ..., 12)

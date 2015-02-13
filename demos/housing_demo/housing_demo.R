@@ -285,8 +285,3 @@ makeDisplay(slopesByState,
 
 # Open trelliscope
 view(port=myport)
-
-# When I select the county_price_for_each_state thumb, the graph does not load.  
-# This happens when I use the Trelliscope short cut code starting at line 24 
-# and when I run through the entire code starting at line 35.  I attached a screen shot
-# with the commit
