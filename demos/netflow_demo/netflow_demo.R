@@ -3,6 +3,43 @@
 #### Using DataDR and Trelliscope with Hadoop for distributed computing.
 ###############################################################################
 
+# The NetFlow dataset is a simulated dataset of computer network traffic. 
+# The packet data is captured at the firewall and aggregated into session
+# records. Each record identifies the source and destination of the first 
+# seen packet in that session. You can see more information about the data here:  
+# http://hcil2.cs.umd.edu/newvarepository/VAST%20Challenge%202013/challenges/MC3%20-%20Big%20Marketing/
+# The variables in the dataset are described below:
+# 
+# dateTimeStr - date/timestamp in the form 20130411085433.710938 
+#       (2013-04-11 08:54:33.710938)
+# ipLayerProtocol - IP layer protocol code
+# ipLayerProtocolCode - text name of IP protocol code (e.g. 6=TCP)
+# firstSeenSrcIp - IP address of the source of the first packet seen
+# firstSeenDestIp - IP address of the destination of the first packet seen in 
+#       this session
+# firstSeenSrcPort - source port of the first packet captured in this session
+# firstSeenDestPort - destination port of the first packet captured in this 
+#       session
+# moreFragments - if nonzero, this session continues into a subsequent record
+# contFragments - if nonzero, this record is not the first session record but 
+#       a continuation
+# durationSeconds - session duration in seconds
+# firstSeenSrcPayloadBytes - total payload bytes in this session from packets 
+#       originating at the firstSeenSrcIp
+# firstSeenDestPayloadBytes - total payload bytes in this session from packets 
+#       originating at the firstSeenDstIp
+# firstSeenSrcTotalBytes - total header+payload bytes in this session from 
+#       packets originating at the firstSeenSrcIp
+# firstSeenDestTotalBytes - total header+payload bytes in this session from 
+#       packets originating at the firstSeenDstIp
+# firstSeenSrcPacketCount - total number of packets in this session 
+#       originating at the firstSeenSrcIp
+# firstSeenDestPacketCount - total number of packets in this session 
+#       originating at the firstSeenDstIp
+# recordForceOut - if nonzero the record was flushed to data file before 
+#       session timeout (15 minutes) usually by program shutdown
+
+
 # Load necessary libraries and initialize environment
 library(datadr)
 library(trelliscope)
@@ -104,7 +141,11 @@ head(bigTimeAgg)
 
 # Variables to filter on
 bigTimes <- sort(unique(bigTimeAgg$timeMinute[bigTimeAgg$Freq > 1000]))
-badIPs <- c("10.138.214.18", "10.17.15.10", "10.12.15.152", "10.170.32.110", "10.170.32.181", "10.10.11.102", "10.247.106.27", "10.247.58.182", "10.78.100.150", "10.38.217.48", "10.6.6.7", "10.12.14.15", "10.15.7.85", "10.156.165.120", "10.0.0.42", "10.200.20.2", "10.70.68.127", "10.138.235.111", "10.13.77.49", "10.250.178.101")
+badIPs <- c("10.138.214.18", "10.17.15.10", "10.12.15.152", "10.170.32.110", 
+   "10.170.32.181", "10.10.11.102", "10.247.106.27", "10.247.58.182", 
+   "10.78.100.150", "10.38.217.48", "10.6.6.7", "10.12.14.15", "10.15.7.85", 
+   "10.156.165.120", "10.0.0.42", "10.200.20.2", "10.70.68.127", 
+   "10.138.235.111", "10.13.77.49", "10.250.178.101")
 httpIPs <- c("172.20.0.15", "172.20.0.4", "172.10.0.4", "172.30.0.4")
 
 # Add a data transformation that filters out some records and adds
@@ -148,7 +189,8 @@ plot(log10(splitRowDistn(nfByHost)))
 # Use recombine to roll data up to counts by hour for each host
 hostTimeAgg <- recombine(nfByHost, 
                          apply = function(x) {
-                           timeHour <- as.POSIXct(trunc(x$date, 0, units = "hours"))
+                           timeHour <- as.POSIXct(trunc(x$date, 0, 
+                              units = "hours"))
                            res <- data.frame(xtabs(~ timeHour))
                            res$timeHour <- as.POSIXct(res$timeHour)
                            res
@@ -178,9 +220,9 @@ timeCog <- function(x) {
     nobs = cog(sum(x$Freq), "log 10 total number of connections"),
     timeCover = cog(nrow(x), desc = "number of hours containing connections"),
     medHourCt = cog(median(sqrt(x$Freq)), 
-                    desc = "median square root number of connections"),
+         desc = "median square root number of connections"),
     madHourCt = cog(mad(sqrt(x$Freq)), 
-                    desc = "median absolute deviation square root number of connections"),
+         desc = "median absolute deviation square root number of connections"),
     max = cog(max(x$Freq), desc = "maximum number of connections in an hour")
   )
 }
@@ -205,15 +247,16 @@ view(port=myport)
 
 # Use recombine again to get hourly counts by "incoming", "outgoing"
 hostTimeDirAgg <- recombine(nfByHost, 
-                            apply = function(x) {
-                              x$timeHour <- as.POSIXct(trunc(x$date, 0, units = "hours"))
-                              res <- data.frame(xtabs(~ timeHour + srcIsHost, data = x))
-                              res$timeHour <- as.POSIXct(res$timeHour)
-                              res$direction <- "incoming"
-                              res$direction[as.logical(as.character(res$srcIsHost))] <- "outgoing"
-                              subset(res, Freq > 0)
-                            }, 
-                            combine = combDdo()
+                   apply = function(x) {
+                     x$timeHour <- as.POSIXct(trunc(x$date, 0, units = "hours"))
+                     res <- data.frame(xtabs(~ timeHour + srcIsHost, data = x))
+                     res$timeHour <- as.POSIXct(res$timeHour)
+                     res$direction <- "incoming"
+                     res$direction[as.logical(as.character(res$srcIsHost))] 
+                           <- "outgoing"
+                     subset(res, Freq > 0)
+                   }, 
+                   combine = combDdo()
 )
 
 # New panel function that groups data by incoming/outgoing
@@ -236,23 +279,23 @@ timeCog2 <- function(x) {
     incomingNobs = cog(sum(x$Freq[ind.incoming]), 
                        desc="log 10 total number of incoming connections"),
     outgoingNobs = cog(sum(x$Freq[!ind.incoming]), 
-                       desc="log 10 total number of outgoing connections"),
+                  desc="log 10 total number of outgoing connections"),
     incomingTimeCover = cog(sum(ind.incoming), 
-                            desc = "number of hours containing incoming connections"),
+                  desc = "number of hours containing incoming connections"),
     outgoingTimeCover = cog(sum(!ind.incoming), 
-                            desc = "number of hours containing outgoing connections"),
+                  desc = "number of hours containing outgoing connections"),
     incomingMedHourCt = cog(median(sqrt(x$Freq[ind.incoming]), na.rm=TRUE), 
-                            desc = "median square root number of incoming connections"),
+                  desc = "median square root number of incoming connections"),
     outgoingMedHourCt = cog(median(sqrt(x$Freq[!ind.incoming]), na.rm=TRUE), 
-                            desc = "median square root number of outgoing connections"),
+                  desc = "median square root number of outgoing connections"),
     incomingMadHourCt = cog(mad(sqrt(x$Freq[ind.incoming])), 
-                            desc = "median absolute deviation square root number of incoming connections"),
+                  desc = "median absolute deviation square root number of incoming connections"),
     outgoingMadHourCt = cog(mad(sqrt(x$Freq[!ind.incoming])), 
-                            desc = "median absolute deviation square root number of outgoing connections"),
+                  desc = "median absolute deviation square root number of outgoing connections"),
     incomingMax = cog(max(c(0, x$Freq[ind.incoming])), 
-                      desc = "maximum number of incoming connections in an hour"),
+                  desc = "maximum number of incoming connections in an hour"),
     outgoingMax = cog(max(c(0, x$Freq[!ind.incoming])), 
-                      desc = "maximum number of outgoing connections in an hour")
+                  desc = "maximum number of outgoing connections in an hour")
   )
   cog.values[unlist(lapply(cog.values, is.na))] <- -1
   cog.values
