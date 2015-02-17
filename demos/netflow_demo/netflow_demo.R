@@ -80,8 +80,7 @@ rhoptions(file.types.remove.regex="(/_meta|/_rh_meta|/_outputs|/_SUCCESS|/_LOG|/
 # Set time zone to "UTC" for use with dates in the data
 Sys.setenv(TZ = "UTC")
 
-# Set working directories on local machine and HDFS
-setwd("~")
+# Set working directory on HDFS
 hdfs.setwd(Sys.getenv("HDFS_USER_VAST"))
 
 # Look for text data file in HDFS
@@ -160,7 +159,6 @@ nfRaw <- addTransform(nfRaw,
                          firstSeenDestIp %in% c(httpIPs, badIPs)))
        if(nrow(x) > 0) {
           return(getHost(x))
-#         return(x)
        } else {
          x$hostIP <- character(0)
          x$srcIsHost <- logical(0)
@@ -252,8 +250,7 @@ hostTimeDirAgg <- recombine(nfByHost,
                      res <- data.frame(xtabs(~ timeHour + srcIsHost, data = x))
                      res$timeHour <- as.POSIXct(res$timeHour)
                      res$direction <- "incoming"
-                     res$direction[as.logical(as.character(res$srcIsHost))] 
-                           <- "outgoing"
+                     res$direction[as.logical(as.character(res$srcIsHost))] <- "outgoing"
                      subset(res, Freq > 0)
                    }, 
                    combine = combDdo()
