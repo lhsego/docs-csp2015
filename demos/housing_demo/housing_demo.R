@@ -4,6 +4,20 @@
 #### sales data
 ###############################################################################
 
+# The housing dataset contains data about housing sales data aggregated to the 
+# county level in the United States between 2008-10-01 and 2014-03-01. This  
+# is Zillow.com data provided by Quandl (https://www.quandl.com/c/housing). 
+# The data variables are as follows:
+#
+# fips - Federal Information Processing Standard, a 5 digit count code
+# county - US county name
+# state - US state name
+# time - date (the data is aggregated monthly)
+# nSold - number sold this month
+# medListPriceSqft - median list price per square foot
+# medSoldPriceSqft - median sold price per square foot
+
+
 # Load necessary libraries
 library(datadr)
 library(trelliscope)
