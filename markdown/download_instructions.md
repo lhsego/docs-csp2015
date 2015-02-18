@@ -42,7 +42,7 @@ http://cran.r-project.org</a>.
 to program in R, but it is not necessary. You may download it here:
 <a href="http://www.rstudio.com/" target="_blank">http://www.rstudio.com/</a>.
 
-3. You will need a non-Internet Explorer browser installed on your computer.  Firefox, Safari, or Chrome will all work fine.
+3. You will need the Firefox or Chrome browser installed on your computer.  Internet Explorer and Safari sometimes have problems displaying Trelliscope views.
 
 4. Open R and execute the following commands to install Tessera and other libraries you'll need for the demos:
    
