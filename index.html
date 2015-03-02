@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    
-    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="assets/custom/custom.css" rel="stylesheet">
     <!-- font-awesome -->
     <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    
+
     <!-- prism -->
     <link href="assets/prism/prism.css" rel="stylesheet">
     <link href="assets/prism/prism.r.css" rel="stylesheet">
@@ -35,7 +35,6 @@
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <!-- <link href='http://fonts.googleapis.com/css?family=Lustria' rel='stylesheet' type='text/css'> -->
     <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
     
 
     <!-- Fav and touch icons -->
@@ -54,7 +53,6 @@
         <ul class="nav nav-pills pull-right">
            
         </ul>
-        
         <p class="myHeader">Tessera Demo at the Conference on Statistical Practice 2015</p>
       </div>
 
@@ -69,6 +67,16 @@
       
       <li class='active'>
          <a target='_self' class='nav-not-header' href='#download-demo-materials'>Download Demo Materials</a>
+      </li>
+
+
+      <li class='active'>
+         <a target='_self' class='nav-not-header' href='#investigating-the-data-with-trelliscope'>Investigating the data with Trelliscope</a>
+      </li>
+
+
+      <li class='active'>
+         <a target='_self' class='nav-not-header' href='#exploring-the-housing-data-set'>Exploring the Housing Data Set</a>
       </li>
 
    </ul>
@@ -124,12 +132,607 @@ file in your editor of choice and begin!</p></li>
 
 <h4>We look forward to seeing you at CSP!</h4>
 
+<hr>
+
+<h2>output: html_document</h2>
+
+<h2>Housing Sales Data</h2>
+
+<p>The housing dataset contains data about housing sales aggregated to the 
+county level in the United States between 2008-10-01 and 2014-03-01. This<br>
+is Zillow.com data provided by <a href="https://www.quandl.com/c/housing">Quandl</a>. 
+The data variables are as follows:</p>
+
+<table><thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>fips</td>
+<td>Federal Information Processing Standard, a 5 digit count code</td>
+</tr>
+<tr>
+<td>county</td>
+<td>US county name</td>
+</tr>
+<tr>
+<td>state</td>
+<td>US state name</td>
+</tr>
+<tr>
+<td>time</td>
+<td>date (the data is aggregated monthly)</td>
+</tr>
+<tr>
+<td>nSold</td>
+<td>number sold this month</td>
+</tr>
+<tr>
+<td>medListPriceSqft</td>
+<td>median list price per square foot</td>
+</tr>
+<tr>
+<td>medSoldPriceSqft</td>
+<td>median sold price per square foot</td>
+</tr>
+</tbody></table>
+
+</div>
+
+
+<div class='tab-pane' id='investigating-the-data-with-trelliscope'>
+<h3>Investigating the data with Trelliscope</h3>
+
+<p>The datadr, trelliscope, and housingData packages need to be imported for the following demo. We would also ask that you set the working directory to the location of the housing demo visual data base (vdb) directory. This will allow you, the user, to connect to the data base and interact with the trelliscope output. </p>
+
+<pre><code class="r"># Load necessary libraries
+library(datadr)
+library(trelliscope)
+library(housingData)
+
+# Set the working directory. You will need to provide the complete file path.
+setwd(&quot;housing_demo&quot;)
+
+# Remove any left-over objects in the Global environment
+rm(list = ls())
+</code></pre>
+
+<p>The following will launch two pre-made trelliscope displays:</p>
+
+<ul>
+<li>median list/sold price per sq ft vs time</li>
+<li>median list/sold price per sq ft vs time by state</li>
+</ul>
+
+<p>Each panel represents the median listed (blue) and sold (pink) housing value plotted over time. Note that some of the panels only have one of the two values. The purpose of looking at pre-made displays is to get the user acquainted with the Trelliscope interface. We encourage you to explore the data and search for trends and anomalies. The following could will launch a Trelliscope browser from your local machine. </p>
+
+<pre><code class="r"># To see the Trelliscope output, execute this block of code. We will 
+# go into further details below about how to set up your own Trelliscope
+# visual data base. 
+vdbConn(&quot;vdb_housing&quot;, autoYes = TRUE)
+
+# use this when running locally on your own computer
+myport &lt;- 8100 
+
+# myport &lt;- Sys.getenv(&quot;TR_PORT&quot;) # use this on demo cluster
+
+view(port = myport)
+</code></pre>
+
+<h3>Challenge Questions</h3>
+
+<p>Now that you have the trelliscope display open, we have a few challenge questions that we would like to see if you can answer. No one&#39;s grading you on this task. In order to familiarize yourself with the interface and get a sense of the power of the trelliscope package, see if you can answer the following set of questions:</p>
+
+<ul>
+<li>Can you find the county with the largest positive slope in list price per square foot? Can you find the county with the largest negative slope? Hint: use the Table Sort/Filter or Univariate Filter</li>
+<li>Can you find the state that has the largest range of county trends in list price? Hint: use the Bivariate Filter.</li>
+<li>Can you find the county with the largest increasing price trend in the South? Hint: use the Table Sort/Filter to filter first. </li>
+</ul>
+
+</div>
+
+
+<div class='tab-pane' id='exploring-the-housing-data-set'>
+<h3>Exploring the Housing Data Set</h3>
+
+<p>This activity will teach you how to create your own Trelliscope displays as well as some basic functionality of the Datadr package using the housing data set. We will be using the same data from the pre-made displays, but now you will be writing the code to generate the output. First, we will create a distributed data frame using the data.  We will begin by importing the necessary packages, get a high level overview of the data, and create our first distributed data frame using the <code>divide()</code> function from datadr.  </p>
+
+<pre><code class="r"># If you have not already done so, import the necessary packages
+library(datadr)
+library(trelliscope)
+library(housingData)
+
+# Take a peek at the first 6 rows of housing
+head(housing)
+</code></pre>
+
+<pre><code>   fips         county state       time nSold medListPriceSqft
+1 06001 Alameda County    CA 2008-10-01    NA         307.9787
+2 06001 Alameda County    CA 2008-11-01    NA         299.1667
+3 06001 Alameda County    CA 2008-11-01    NA               NA
+4 06001 Alameda County    CA 2008-12-01    NA         289.8815
+5 06001 Alameda County    CA 2009-01-01    NA         288.5000
+6 06001 Alameda County    CA 2009-02-01    NA         287.0370
+  medSoldPriceSqft
+1         325.8118
+2               NA
+3         318.1150
+4         305.7878
+5         291.5977
+6               NA
+</code></pre>
+
+<pre><code class="r"># Let&#39;s get a sense of the dimensions of our data frame
+dim(housing)
+</code></pre>
+
+<p>We are going to divide the data set by the variables &quot;county&quot; and &quot;state&quot;. This kind of data division is very similar to the functionality provided by the <code>plyr</code> package. </p>
+
+<pre><code class="r"># We will create a distributed data frame by dividing our data by county and state
+byCounty &lt;- divide(housing, by = c(&quot;county&quot;, &quot;state&quot;), update = TRUE)
+</code></pre>
+
+<pre><code class="r"># byCounty is a Divided Data Frame one of the primary data types in datadr
+class(byCounty)
+</code></pre>
+
+<p>Calling the distributed data frame (<code>ddf()</code>) that was just created lets the user know the size of the object in terms of memory and other meta data specific to the object. In this ddf, each element is itself a data frame. </p>
+
+<pre><code class="r"># Look at byCounty object
+byCounty
+</code></pre>
+
+<pre><code>
+Distributed data frame backed by &#39;kvMemory&#39; connection
+
+ attribute      | value
+----------------+-----------------------------------------------------------
+ names          | fips(cha), time(Dat), nSold(num), and 2 more
+ nrow           | 224369
+ size (stored)  | 16.45 MB
+ size (object)  | 16.45 MB
+ # subsets      | 2883
+
+* Other attributes: getKeys(), splitSizeDistn(), splitRowDistn(), summary()
+* Conditioning variables: county, state
+</code></pre>
+
+<pre><code class="r"># Look at first division. It will consist of a key-value pair.
+# The key should look something like county=X|state=Y and the value
+# should be the data frame corresponding to that key.
+byCounty[[1]]
+</code></pre>
+
+<pre><code>$key
+[1] &quot;county=Abbeville County|state=SC&quot;
+
+$value
+   fips       time nSold medListPriceSqft medSoldPriceSqft
+1 45001 2008-10-01    NA         73.06226               NA
+2 45001 2008-11-01    NA         70.71429               NA
+3 45001 2008-12-01    NA         70.71429               NA
+4 45001 2009-01-01    NA         73.43750               NA
+5 45001 2009-02-01    NA         78.69565               NA
+...
+</code></pre>
+
+<p>A common procedure for EDA involves gathering a wide variety of summary statistics. The datadr package has some predefined functions for performing these calculations on distributed data frames / objects. </p>
+
+<pre><code class="r"># Look at summary statistics for each key-value pair. 
+summary(byCounty)
+
+# Basic data object information
+
+length(byCounty) ## number of data divisions
+
+names(byCounty) ## column names
+
+getKeys(byCounty) ## data division keys (state &amp; county names in this example)
+</code></pre>
+
+<p>We can get a sense of the number of rows in each element of the ddf as well as the amount of memory taken up by each element using <code>splitRowDistn()</code> and <code>splitSizeDistn()</code>.</p>
+
+<pre><code class="r">splitRowDistn(byCounty) ## percentiles of number of rows per division
+
+splitSizeDistn(byCounty) ## percentiles of number of bytes per division
+</code></pre>
+
+<p>You can access the elements of the distributed data frame (ddf) using the key or by index, just like you would with a traditional list.  </p>
+
+<pre><code class="r"># A data division can be accessed by by its named key or by number
+byCounty[[&quot;county=Benton County|state=WA&quot;]]
+</code></pre>
+
+<pre><code>$key
+[1] &quot;county=Benton County|state=WA&quot;
+
+$value
+   fips       time nSold medListPriceSqft medSoldPriceSqft
+1 53005 2008-10-01   137         106.6351         106.2179
+2 53005 2008-11-01    80         106.9650               NA
+3 53005 2008-11-01    NA               NA         105.2370
+4 53005 2008-12-01    95         107.6642         105.6311
+5 53005 2009-01-01    73         107.6868         105.8892
+...
+</code></pre>
+
+<pre><code class="r"># byCounty[[176]] # If you wish to access the data frame by index 
+</code></pre>
+
+<p>Finally, you can use the <code>drQuantile()</code> function to compute the sample quantiles for the elements in the ddf object.</p>
+
+<pre><code class="r"># Look at quantiles of median list price/sqft 
+priceQ &lt;- drQuantile(byCounty, var = &quot;medListPriceSqft&quot;)
+xyplot(q~fval, data=priceQ, main=&quot;Median List Price/Sqft Quantiles&quot;)
+</code></pre>
+
+<p><img src="figures/knitr/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11"> </p>
+
+<h3>Divide and Recombine</h3>
+
+<p>Suppose we are interested in figuring out the trend component of each time series in our distributed data frame. We can do this by creating a linear model for each subdivision and extracting the slope parameter. We wish to incorporate this information into our pre-existing ddf and use it in our analysis. </p>
+
+<pre><code class="r"># Calculate linear model for each data division to see the trend in prices
+
+# Create a function to calculate a linear model and extract the slope parameter
+lmCoef &lt;- function(x) {
+   data.frame(getSplitVars(x), slope=coef(lm(medListPriceSqft ~ time, data = x))[2])
+}
+
+# Test lmCoef on one division
+kvApply(lmCoef, byCounty[[176]])
+</code></pre>
+
+<pre><code>            county state       slope
+time Benton County    WA 0.007726753
+</code></pre>
+
+<pre><code class="r"># Add the function transform to the DDF
+byCountySlope &lt;- addTransform(byCounty, lmCoef)
+
+# Now look at data with the transformation
+byCountySlope[[176]]
+</code></pre>
+
+<pre><code>$key
+[1] &quot;county=Benton County|state=WA&quot;
+
+$value
+            county state       slope
+time Benton County    WA 0.007726753
+</code></pre>
+
+<pre><code class="r"># Recombine the slope data into a single data.frame
+countySlopes &lt;- recombine(byCountySlope, combRbind)
+
+# Look at the recombined data
+head(countySlopes)
+</code></pre>
+
+<pre><code>            county state         county.1 state.1         slope
+1 Abbeville County    SC Abbeville County      SC -0.0002323686
+2    Acadia Parish    LA    Acadia Parish      LA  0.0019518441
+3  Accomack County    VA  Accomack County      VA -0.0092717711
+4       Ada County    ID       Ada County      ID -0.0030197554
+5     Adair County    IA     Adair County      IA -0.0308381951
+6     Adair County    KY     Adair County      KY  0.0034399585
+</code></pre>
+
+<p>Sometimes you will want to actively combine two distributed data objects/frames together to create a new data set. We will demonstrate how to perform these types of operations using the <code>drJoin()</code> function.</p>
+
+<pre><code class="r"># Look at geoCounty which contains more information about US counties
+head(geoCounty)
+</code></pre>
+
+<pre><code>   fips         county state       lon      lat rMapState rMapCounty
+1 01001 Autauga County    AL -86.64565 32.54009   alabama    autauga
+2 01003 Baldwin County    AL -87.72627 30.73831   alabama    baldwin
+3 01005 Barbour County    AL -85.39733 31.87403   alabama    barbour
+4 01007    Bibb County    AL -87.12526 32.99902   alabama       bibb
+5 01009  Blount County    AL -86.56271 33.99044   alabama     blount
+6 01011 Bullock County    AL -85.71680 32.10634   alabama    bullock
+</code></pre>
+
+<pre><code class="r"># Divide geoCounty on county and state just like we did with the housing data
+geo &lt;- divide(geoCounty, by = c(&quot;county&quot;, &quot;state&quot;))
+geo[[1]]
+</code></pre>
+
+<pre><code>$key
+[1] &quot;county=Abbeville County|state=SC&quot;
+
+$value
+   fips       lon      lat      rMapState rMapCounty
+1 45001 -82.45851 34.23021 south carolina  abbeville
+</code></pre>
+
+<pre><code class="r"># Get some wikipedia data on counties and divide by county/state
+wikiByCounty &lt;- divide(wikiCounty, by = c(&quot;county&quot;, &quot;state&quot;))
+
+# Join divided housing, geo and wiki data together
+# This forms a Distributed Data Object (DDO)
+joinedData &lt;- drJoin(housing = byCounty, slope=byCountySlope, geo = geo, wiki=wikiByCounty)
+</code></pre>
+
+<pre><code class="r"># Note that this is no longer a distributed data frame
+class(joinedData)
+
+joinedData[[176]]
+
+length(joinedData)
+
+# Filter dataset to remove divisions without housing sales data
+joinedData &lt;- drFilter(joinedData, function(x) {
+   !is.null(x$housing)
+})
+
+# See that the length has decreased - some data divisions have been removed
+length(joinedData)
+</code></pre>
+
+<h4>Trelliscope: an interactive divide and recombine visualization tool</h4>
+
+<p>The data is now ready to be ingested into Trelliscope. In this section, you will learn how to connect to a visual data base, create basic functions for plotting, and develop and use cognostics to improve data interpretability. A cognostic is usually, but not always, a summary statistic or some form of meta data to be included along with plots. These values can be useful in determining patterns or anomalies in visual displays. </p>
+
+<pre><code class="r"># Define a visualization database directory where the plots and metadata
+# will be saved. Unless a complete file path is specified, the vdb will be
+# generated in the working directory. 
+vdbConn(&quot;vdb_housing&quot;, autoYes=TRUE)
+</code></pre>
+
+<pre><code>vdb connection object: [name:none]; path=C:\Users\venz586\Documents\docs-csp2015\vdb_housing
+</code></pre>
+
+<pre><code class="r"># Define a plot function
+timePanel &lt;- function(x) {
+   xyplot(medListPriceSqft + medSoldPriceSqft ~ time,
+      data = x$housing, auto.key = TRUE, ylab = &quot;Price / Sq. Ft.&quot;)
+}
+
+# Test the plot function on a single division
+kvApply(timePanel, joinedData[[176]])
+</code></pre>
+
+<p><img src="figures/knitr/unnamed-chunk-15-1.png" alt="plot of chunk unnamed-chunk-15"> </p>
+
+<p>We have defined a simple plot function. It would be useful to define a set of cognostics that can give us a large set of angles with which to attack the data anlysis problem at hand. Some simple cognostics are included in the trelliscope package such as <code>cogMean()</code> and <code>cogRange()</code> which are self-explanatory. You are free to define any other measure of the data using the <code>cog()</code> function.  </p>
+
+<pre><code class="r"># Define a cognostics function: this is used to define information and 
+# statistics that will be available in the Trelliscope UI for sorting and 
+# filtering and also to display/link useful meta information.
+priceCog &lt;- function(a) { 
+   x &lt;- a$housing
+   st &lt;- getSplitVar(a, &quot;state&quot;)
+   ct &lt;- getSplitVar(a, &quot;county&quot;)
+   zillowString &lt;- paste(ct, st)
+   zillowString &lt;- gsub(&quot; &quot;, &quot;-&quot;, zillowString)
+   list(
+      fips = cog(x$fips[1], desc = &quot;fips code&quot;),
+      region = cog(state.region[state.abb == ifelse(st == &quot;DC&quot;, &quot;MD&quot;, st)]),
+      division = cog(state.division[state.abb == ifelse(st == &quot;DC&quot;, &quot;MD&quot;, st)]),
+      slope = cog(a$slope$slope, desc = &quot;list price slope&quot;),
+      meanList = cogMean(x$medListPriceSqft),
+      meanSold = cogMean(x$medSoldPriceSqft),
+      listRange = cogRange(x$medListPriceSqft),
+      soldRange = cogRange(x$medSoldPriceSqft),
+      nObs = cog(length(which(!is.na(x$medListPriceSqft))), 
+         desc = &quot;number of non-NA list prices&quot;),
+      lat = cog(a$geo$lat, desc = &quot;county latitude&quot;),
+      lon = cog(a$geo$lon, desc = &quot;county longitude&quot;),
+      pop2013 = cog(log10(a$wiki$pop2013), desc = &quot;log base 10 population in 2013&quot;),
+      wikiHref = cogHref(a$wiki$href, &quot;wiki link&quot;),
+      zillowHref = cogHref(sprintf(&quot;http://www.zillow.com/homes/%s_rb/&quot;, zillowString), &quot;zillow link&quot;)
+   )
+}
+
+# Test on a single division
+kvApply(priceCog, joinedData[[176]])
+</code></pre>
+
+<pre><code>$fips
+[1] &quot;53005&quot;
+
+$region
+[1] &quot;West&quot;
+
+$division
+[1] &quot;Pacific&quot;
+
+$slope
+[1] 0.007726753
+
+$meanList
+[1] 114.1784
+
+$meanSold
+[1] 109.8766
+
+$listRange
+[1] 15.04786
+
+$soldRange
+[1] 12.5142
+
+$nObs
+[1] 66
+
+$lat
+[1] 46.23413
+
+$lon
+[1] -119.5155
+
+$pop2013
+[1] 5.265963
+
+$wikiHref
+[1] &quot;&lt;a href=\&quot;http://en.wikipedia.org/wiki/Benton_County,_Washington\&quot; target=\&quot;_blank\&quot;&gt;wiki link&lt;/a&gt;&quot;
+
+$zillowHref
+[1] &quot;&lt;a href=\&quot;http://www.zillow.com/homes/Benton-County-WA_rb/\&quot; target=\&quot;_blank\&quot;&gt;zillow link&lt;/a&gt;&quot;
+</code></pre>
+
+<pre><code class="r"># Create the display: this creates and saves display files and information in
+# the vdb directory defined above
+makeDisplay(joinedData,
+   name = &quot;list_sold_vs_time_datadr_tut&quot;,
+   desc = &quot;List and sold price over time&quot;,
+   panelFn = timePanel, 
+   cogFn = priceCog,
+   width = 400, height = 400,
+   lims = list(x = &quot;same&quot;))
+
+# Open Trelliscope in a browser
+myport &lt;- 8100 # use this when running locally
+# myport &lt;- Sys.getenv(&quot;TR_PORT&quot;) # use this on demo cluster
+view(port=myport)
+</code></pre>
+
+<hr>
+
+<h2>output: html_document</h2>
+
+<h1>Computer network traffic</h1>
+
+<p>The NetFlow dataset is a simulated dataset of computer network traffic. 
+The packet data is captured at the firewall and aggregated into session
+records. Each record identifies the source and destination of the first 
+seen packet in that session. You can see more information about the data 
+<a href="http://hcil2.cs.umd.edu/newvarepository/VAST%20Challenge%202013/challenges/MC3%20-%20Big%20Marketing/">here</a>.<br>
+The variables in the data are described below:</p>
+
+<table><thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>dateTimeStr</td>
+<td>date/timestamp in the form 20130411085433.710938 (2013-04-11 08:54:33.710938)</td>
+</tr>
+<tr>
+<td>ipLayerProtocol</td>
+<td>IP layer protocol code</td>
+</tr>
+<tr>
+<td>ipLayerProtocolCode</td>
+<td>text name of IP protocol code (e.g. 6=TCP)</td>
+</tr>
+<tr>
+<td>firstSeenSrcIp</td>
+<td>IP address of the source of the first packet seen</td>
+</tr>
+<tr>
+<td>firstSeenDestIp</td>
+<td>IP address of the destination of the first packet seen in this session</td>
+</tr>
+<tr>
+<td>firstSeenSrcPort</td>
+<td>source port of the first packet captured in this session</td>
+</tr>
+<tr>
+<td>firstSeenDestPort</td>
+<td>destination port of the first packet captured in this session</td>
+</tr>
+<tr>
+<td>moreFragments</td>
+<td>if nonzero, this session continues into a subsequent record</td>
+</tr>
+<tr>
+<td>contFragments</td>
+<td>if nonzero, this record is not the first session record but a continuation</td>
+</tr>
+<tr>
+<td>durationSeconds</td>
+<td>session duration in seconds</td>
+</tr>
+<tr>
+<td>firstSeenSrcPayloadBytes</td>
+<td>total payload bytes in this session from packets originating at the firstSeenSrcIp</td>
+</tr>
+<tr>
+<td>firstSeenDestPayloadBytes</td>
+<td>total payload bytes in this session from packets originating at the firstSeenDstIp</td>
+</tr>
+<tr>
+<td>firstSeenSrcTotalBytes</td>
+<td>total header+payload bytes in this session from packets originating at the firstSeenSrcIp</td>
+</tr>
+<tr>
+<td>firstSeenDestTotalBytes</td>
+<td>total header+payload bytes in this session from packets originating at the firstSeenDstIp</td>
+</tr>
+<tr>
+<td>firstSeenSrcPacketCount</td>
+<td>total number of packets in this session originating at the firstSeenSrcIp</td>
+</tr>
+<tr>
+<td>firstSeenDestPacketCount</td>
+<td>total number of packets in this session originating at the firstSeenDstIp</td>
+</tr>
+<tr>
+<td>recordForceOut</td>
+<td>if nonzero the record was flushed to data file before session timeout (15 minutes) usually by program shutdown</td>
+</tr>
+</tbody></table>
+
+<h1>Preliminaries</h1>
+
+<p>Let&#39;s set the working directory for this example. You need to change the path in the call to <code>setwd()</code> below to correctly point to the <code>netflow_demo</code> directory.</p>
+
+<pre><code class="r">setwd(&quot;netflow_demo&quot;)
+</code></pre>
+
+<p>And let&#39;s remove any possible left-over objects in the Global environment:</p>
+
+<pre><code class="r">rm(list = ls())
+</code></pre>
+
+<p>And load the requisite packages:</p>
+
+<pre><code class="r">library(trelliscope)
+library(plyr)
+</code></pre>
+
+<h1>Pre-made Trelliscope Displays</h1>
+
+<p>The following will launch two pre-made trelliscope displays:</p>
+
+<ul>
+<li>Hourly counts of connections vs time </li>
+<li>Hourly counts of connections vs source/destination
+where each panel shows data for a specific host or destination IP address. </li>
+</ul>
+
+<p>The purpose of this activity is to launch the trelliscope display and then explore the data---to look for patterns, bad data, anomalies, etc. The code required to generate these displays is shown next.</p>
+
+<pre><code class="r">vdbConn(&quot;vdb_netflow&quot;, autoYes = TRUE)
+myport &lt;- 8100 # use this when running locally on your own computer
+# myport &lt;- Sys.getenv(&quot;TR_PORT&quot;) # use this on demo cluster
+view(port = myport)
+</code></pre>
+
+<h2>Challenge question</h2>
+
+<p>The following question is provided, free of charge, to help you become better acquainted with the trelliscope interface. The question will not be graded; it is strictly for learning purposes. </p>
+
+<ul>
+<li>There is a set of workstations that were infected with malware and now form a botnet. This botnet has strated a recurring Denial of Service attack against an external IP address. Can you find the machines in question? (Hint: Look for high numbers of outgoing connections)</li>
+</ul>
+
+<h1>Trelliscope and Hadoop</h1>
+
+<p>The time has come for you, the user, to do some of the coding work. In particular, the following demo will teach you how to use hadoop and trelliscope together to visually analyze a large and complete data set. Luckily for us, we&#39;ve already covered this demo <a href="http://tessera.io/docs-r-intro-bootcamp/#activity-22-using-tessera-with-hadoop-to-analyze-large-data">here</a>. The necessary information will be covered in sections 2.2 and 2.3 of the <a href="http://tessera.io/docs-r-intro-bootcamp/">R boot camp</a>. We encourage you to go step by step through the process, particuarly since Hadoop has a steep learning curve.   </p>
+
 </div>
 
    
    <ul class="pager">
-<!--      <li><a href="#" id="previous">&larr; Previous</a></li> -->
-<!--      <li><a href="#" id="next">Next &rarr;</a></li> -->
+      <li><a href="#" id="previous">&larr; Previous</a></li> 
+      <li><a href="#" id="next">Next &rarr;</a></li> 
    </ul>
 </div>
 
@@ -140,13 +743,13 @@ file in your editor of choice and begin!</p></li>
 <hr>
 
 <div class="footer">
-<!--   <p>&copy; , 2015</p>-->
+   <p>&copy; , 2015</p>
 </div>
 </div> <!-- /container -->
 
 <script src="assets/jquery/jquery.js"></script>
 <script type='text/javascript' src='assets/custom/custom.js'></script>
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.js"></script>
 <script src="assets/custom/jquery.ba-hashchange.min.js"></script>
 <script src="assets/custom/nav.js"></script>
 
