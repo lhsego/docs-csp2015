@@ -4,7 +4,7 @@ To create index.html, do this in R:
 
    library(buildDocs)
    setwd(".../docs-csp2015")
-   buildDocs("analysis", outLoc=".", copyrightText="")
+   buildDocs("analysis", outLoc="~/docs-csp2015", copyrightText="")
 
    # Comment out copyright text, and 'Previous' and 'Next' links since they
    # aren't relevant (and they break).  Ignore the warning.
