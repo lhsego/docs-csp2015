@@ -1,7 +1,4 @@
----
-output: html_document
----
-## Housing Sales Data 
+## Housing Sales Data ##
 
 The housing dataset contains data about housing sales aggregated to the 
 county level in the United States between 2008-10-01 and 2014-03-01. This  
@@ -16,11 +13,11 @@ state | US state name
 time | date (the data is aggregated monthly)
 nSold | number sold this month
 medListPriceSqft | median list price per square foot
-medSoldPriceSqft | median sold price per square foot
+medSoldPriceSqft |  median sold price per square foot
 
-### Investigating the data with Trelliscope ###
+### Data Exploration - Housing Sales Data ###
 
-The datadr, trelliscope, and housingData packages need to be imported for the following demo. We would also ask that you set the working directory to the location of the housing demo visual data base (vdb) directory. This will allow you, the user, to connect to the data base and interact with the trelliscope output. 
+The `datadr`, `trelliscope`, and `housingData` packages need to be imported for the following demo. Make sure to set the working directory to the location of the housing demo visual data base (vdb) directory. This will allow you to connect to the data base and interact with the trelliscope output. 
 
 
 ```r
@@ -40,7 +37,7 @@ The following will launch two pre-made trelliscope displays:
 - median list/sold price per sq ft vs time
 - median list/sold price per sq ft vs time by state
 
-Each panel represents the median listed (blue) and sold (pink) housing value plotted over time. Note that some of the panels only have one of the two values. The purpose of looking at pre-made displays is to get the user acquainted with the Trelliscope interface. We encourage you to explore the data and search for trends and anomalies. The following could will launch a Trelliscope browser from your local machine. 
+Each panel represents the median listed (blue) and sold (pink) housing value plotted over time. Note that some of the panels only have one of the two values. The purpose of looking at pre-made displays is to get the user acquainted with the trelliscope interface. We encourage you to explore the data and search for trends and anomalies. 
 
 
 ```r
@@ -57,17 +54,19 @@ myport <- 8100
 view(port = myport)
 ```
 
-### Challenge Questions
+### Challenge Questions ###
 
 Now that you have the trelliscope display open, we have a few challenge questions that we would like to see if you can answer. No one's grading you on this task. In order to familiarize yourself with the interface and get a sense of the power of the trelliscope package, see if you can answer the following set of questions:
 
-- Can you find the county with the largest positive slope in list price per square foot? Can you find the county with the largest negative slope? Hint: use the Table Sort/Filter or Univariate Filter
-- Can you find the state that has the largest range of county trends in list price? Hint: use the Bivariate Filter.
-- Can you find the county with the largest increasing price trend in the South? Hint: use the Table Sort/Filter to filter first. 
+1. Can you find the county with the largest positive slope in list price per square foot? Can you find the county with the largest negative slope? (Hint: use the Table Sort/Filter or Univariate Filter.)
 
-### Exploring the Housing Data Set ###
+2. Can you find the state that has the largest range of county trends in list price? (Hint: use the Bivariate Filter.)
 
-This activity will teach you how to create your own Trelliscope displays as well as some basic functionality of the Datadr package using the housing data set. We will be using the same data from the pre-made displays, but now you will be writing the code to generate the output. First, we will create a distributed data frame using the data.  We will begin by importing the necessary packages, get a high level overview of the data, and create our first distributed data frame using the `divide()` function from datadr.  
+3. Can you find the county with the largest increasing price trend in the South? (Hint: use the Table Sort/Filter to filter first.) 
+
+### Code - Housing Sales Data ###
+
+This activity will teach you how to create your own trelliscope displays as well as some basic functionality of the datadr package using the housing data set. We will be using the same data from the pre-made displays, but now you will be writing the code to generate the output. First, we will create a distributed data frame using the data.  We will begin by importing the necessary packages, get a high level overview of the data, and create our first distributed data frame using the `divide()` function from datadr.  
 
 
 ```r
@@ -82,18 +81,18 @@ head(housing)
 
 ```
    fips         county state       time nSold medListPriceSqft
-1 06001 Alameda County    CA 2008-10-01    NA         307.9787
-2 06001 Alameda County    CA 2008-11-01    NA         299.1667
+1 06001 Alameda County    CA 2008-10-01    NA            308.0
+2 06001 Alameda County    CA 2008-11-01    NA            299.2
 3 06001 Alameda County    CA 2008-11-01    NA               NA
-4 06001 Alameda County    CA 2008-12-01    NA         289.8815
-5 06001 Alameda County    CA 2009-01-01    NA         288.5000
-6 06001 Alameda County    CA 2009-02-01    NA         287.0370
+4 06001 Alameda County    CA 2008-12-01    NA            289.9
+5 06001 Alameda County    CA 2009-01-01    NA            288.5
+6 06001 Alameda County    CA 2009-02-01    NA            287.0
   medSoldPriceSqft
-1         325.8118
+1            325.8
 2               NA
-3         318.1150
-4         305.7878
-5         291.5977
+3            318.1
+4            305.8
+5            291.6
 6               NA
 ```
 
@@ -117,7 +116,7 @@ byCounty <- divide(housing, by = c("county", "state"), update = TRUE)
 class(byCounty)
 ```
 
-Calling the distributed data frame (`ddf()`) that was just created lets the user know the size of the object in terms of memory and other meta data specific to the object. In this ddf, each element is itself a data frame. 
+Calling the distributed data frame (`ddf()`) that was just created lets the user know the size of the object in terms of memory and other metadata specific to the object. In this ddf, each element is itself a data frame. 
 
 
 ```r
@@ -154,11 +153,11 @@ $key
 
 $value
    fips       time nSold medListPriceSqft medSoldPriceSqft
-1 45001 2008-10-01    NA         73.06226               NA
-2 45001 2008-11-01    NA         70.71429               NA
-3 45001 2008-12-01    NA         70.71429               NA
-4 45001 2009-01-01    NA         73.43750               NA
-5 45001 2009-02-01    NA         78.69565               NA
+1 45001 2008-10-01    NA            73.06               NA
+2 45001 2008-11-01    NA            70.71               NA
+3 45001 2008-12-01    NA            70.71               NA
+4 45001 2009-01-01    NA            73.44               NA
+5 45001 2009-02-01    NA            78.70               NA
 ...
 ```
 
@@ -201,11 +200,11 @@ $key
 
 $value
    fips       time nSold medListPriceSqft medSoldPriceSqft
-1 53005 2008-10-01   137         106.6351         106.2179
-2 53005 2008-11-01    80         106.9650               NA
-3 53005 2008-11-01    NA               NA         105.2370
-4 53005 2008-12-01    95         107.6642         105.6311
-5 53005 2009-01-01    73         107.6868         105.8892
+1 53005 2008-10-01   137            106.6            106.2
+2 53005 2008-11-01    80            107.0               NA
+3 53005 2008-11-01    NA               NA            105.2
+4 53005 2008-12-01    95            107.7            105.6
+5 53005 2009-01-01    73            107.7            105.9
 ...
 ```
 
@@ -222,9 +221,9 @@ priceQ <- drQuantile(byCounty, var = "medListPriceSqft")
 xyplot(q~fval, data=priceQ, main="Median List Price/Sqft Quantiles")
 ```
 
-![plot of chunk unnamed-chunk-11](figures/knitr/unnamed-chunk-11-1.png) 
+![plot of chunk unnamed-chunk-11](figures/knitr/unnamed-chunk-11.png) 
 
-### Divide and Recombine
+### Divide and Recombine ###
 
 Suppose we are interested in figuring out the trend component of each time series in our distributed data frame. We can do this by creating a linear model for each subdivision and extracting the slope parameter. We wish to incorporate this information into our pre-existing ddf and use it in our analysis. 
 
@@ -239,46 +238,18 @@ lmCoef <- function(x) {
 
 # Test lmCoef on one division
 kvApply(lmCoef, byCounty[[176]])
-```
 
-```
-            county state       slope
-time Benton County    WA 0.007726753
-```
-
-```r
 # Add the function transform to the DDF
 byCountySlope <- addTransform(byCounty, lmCoef)
 
 # Now look at data with the transformation
 byCountySlope[[176]]
-```
 
-```
-$key
-[1] "county=Benton County|state=WA"
-
-$value
-            county state       slope
-time Benton County    WA 0.007726753
-```
-
-```r
 # Recombine the slope data into a single data.frame
 countySlopes <- recombine(byCountySlope, combRbind)
 
 # Look at the recombined data
 head(countySlopes)
-```
-
-```
-            county state         county.1 state.1         slope
-1 Abbeville County    SC Abbeville County      SC -0.0002323686
-2    Acadia Parish    LA    Acadia Parish      LA  0.0019518441
-3  Accomack County    VA  Accomack County      VA -0.0092717711
-4       Ada County    ID       Ada County      ID -0.0030197554
-5     Adair County    IA     Adair County      IA -0.0308381951
-6     Adair County    KY     Adair County      KY  0.0034399585
 ```
 
 Sometimes you will want to actively combine two distributed data objects/frames together to create a new data set. We will demonstrate how to perform these types of operations using the `drJoin()` function.
@@ -287,44 +258,18 @@ Sometimes you will want to actively combine two distributed data objects/frames 
 ```r
 # Look at geoCounty which contains more information about US counties
 head(geoCounty)
-```
 
-```
-   fips         county state       lon      lat rMapState rMapCounty
-1 01001 Autauga County    AL -86.64565 32.54009   alabama    autauga
-2 01003 Baldwin County    AL -87.72627 30.73831   alabama    baldwin
-3 01005 Barbour County    AL -85.39733 31.87403   alabama    barbour
-4 01007    Bibb County    AL -87.12526 32.99902   alabama       bibb
-5 01009  Blount County    AL -86.56271 33.99044   alabama     blount
-6 01011 Bullock County    AL -85.71680 32.10634   alabama    bullock
-```
-
-```r
 # Divide geoCounty on county and state just like we did with the housing data
 geo <- divide(geoCounty, by = c("county", "state"))
 geo[[1]]
-```
 
-```
-$key
-[1] "county=Abbeville County|state=SC"
-
-$value
-   fips       lon      lat      rMapState rMapCounty
-1 45001 -82.45851 34.23021 south carolina  abbeville
-```
-
-```r
 # Get some wikipedia data on counties and divide by county/state
 wikiByCounty <- divide(wikiCounty, by = c("county", "state"))
 
 # Join divided housing, geo and wiki data together
 # This forms a Distributed Data Object (DDO)
 joinedData <- drJoin(housing = byCounty, slope=byCountySlope, geo = geo, wiki=wikiByCounty)
-```
 
-
-```r
 # Note that this is no longer a distributed data frame
 class(joinedData)
 
@@ -341,9 +286,7 @@ joinedData <- drFilter(joinedData, function(x) {
 length(joinedData)
 ```
 
-#### Trelliscope: an interactive divide and recombine visualization tool
-
-The data is now ready to be ingested into Trelliscope. In this section, you will learn how to connect to a visual data base, create basic functions for plotting, and develop and use cognostics to improve data interpretability. A cognostic is usually, but not always, a summary statistic or some form of meta data to be included along with plots. These values can be useful in determining patterns or anomalies in visual displays. 
+The data is now ready to be ingested into trelliscope. To use trelliscope, the user needs to define a visual data base and create basic functions for plotting. On top of this, a user can develop and use cognostics to improve data interpretability. A cognostic is usually, but not always, a summary statistic or some form of metadata to be included along with plots. These values can be useful in determining patterns or anomalies in visual displays. 
 
 
 ```r
@@ -354,7 +297,8 @@ vdbConn("vdb_housing", autoYes=TRUE)
 ```
 
 ```
-vdb connection object: [name:none]; path=C:\Users\venz586\Documents\docs-csp2015\vdb_housing
+Error: /people/venz586/docs-csp2015/vdb_housing is not a valid VDB
+directory
 ```
 
 ```r
@@ -368,7 +312,7 @@ timePanel <- function(x) {
 kvApply(timePanel, joinedData[[176]])
 ```
 
-![plot of chunk unnamed-chunk-15](figures/knitr/unnamed-chunk-15-1.png) 
+![plot of chunk unnamed-chunk-14](figures/knitr/unnamed-chunk-14.png) 
 
 We have defined a simple plot function. It would be useful to define a set of cognostics that can give us a large set of angles with which to attack the data anlysis problem at hand. Some simple cognostics are included in the trelliscope package such as `cogMean()` and `cogRange()` which are self-explanatory. You are free to define any other measure of the data using the `cog()` function.  
 
@@ -417,31 +361,31 @@ $division
 [1] "Pacific"
 
 $slope
-[1] 0.007726753
+[1] 0.007727
 
 $meanList
-[1] 114.1784
+[1] 114.2
 
 $meanSold
-[1] 109.8766
+[1] 109.9
 
 $listRange
-[1] 15.04786
+[1] 15.05
 
 $soldRange
-[1] 12.5142
+[1] 12.51
 
 $nObs
 [1] 66
 
 $lat
-[1] 46.23413
+[1] 46.23
 
 $lon
-[1] -119.5155
+[1] -119.5
 
 $pop2013
-[1] 5.265963
+[1] 5.266
 
 $wikiHref
 [1] "<a href=\"http://en.wikipedia.org/wiki/Benton_County,_Washington\" target=\"_blank\">wiki link</a>"

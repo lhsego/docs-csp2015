@@ -1,7 +1,18 @@
+
+
 setwd("power_demo")
+
+
+
 rm(list = ls())
+
+
+
 library(trelliscope)
 library(plyr)
+
+
+
 # Load some preconfigured global plotting limits
 load("plottingLims.Rdata")
 
@@ -19,6 +30,9 @@ myport <- 8100
 # the R prompt
 view(port = myport)
 
+
+
+
 # Load the trelliscope package if you haven't already
 library(trelliscope)
 library(datadr)
@@ -27,11 +41,14 @@ library(datadr)
 rm(list = ls())
 
 # You will need to change this. Be sure this is pointed to the directory containing retailBuildings.csv
-setwd("C:/Users/venz586/Documents/docs-csp2015/demos/power_demo/")
+setwd("~/docs-csp2015/demos/power_demo")
 
 # We'll begin by reading in the data. Be sure to supply
 # the correct filepath or this will fail. 
 d <- read.csv("retailBuildings.csv")
+
+
+
 # Observe the first 6 rows of the dataset
 head(d)
 
@@ -40,11 +57,15 @@ head(d)
 # dateTime and date are stored as factors
 str(d)
 
+
+
+
 # Let's convert the dateTime and date to a POSIXct format so R can compute with
 # them as dates
 d$dateTime <- as.POSIXct(d$dateTime)
 d$date <- as.POSIXct(d$date)
 str(d)
+
 # The summary method applied to a data frame can be helpful to get
 # a feel for the values in the data
 summary(d)
@@ -52,6 +73,7 @@ summary(d)
 # It would be nice to see a tabulation of the categorial variables.
 # We can do that like this:
 with(d, table(building))
+
 # To make tables for all the categorical variables, let's create a
 # vector with the names of these variables so we can easily select them:
 sel <- c("building", "year", "quarter", "month", "monthName", "week", "weekday")
@@ -65,7 +87,8 @@ apply(d[,sel], MARGIN = 2, table)
 # two categorical variables.  For example, let's look at month by building:
 with(d, table(month, building))
 
-# import the plyr package
+
+
 library(plyr)
 byDate <- divide(d, by = "date", postTransFn = function(x) arrange(x, building, dateTime))
 
@@ -110,19 +133,13 @@ power.by.time <- function(x) {
   return(NULL)
 
 } # power.by.time()
+
 # Test the plot on a single subset
 power.by.time(byDate[[8]][[2]])
 
 
-# Next we create cognostics function that defines the cognostics (measures of 
-# interest) that will be calculated (and visualizable) for each plot.  Keep in 
-# mind that each cognostic should consist of a scalar value.  The input to the 
-# cognostics function ('x') is a dataframe that contains one split, or one 
-# subset, of the data.  In this case it is a dataframe that contains all the 
-# data for a given date.
-kwCog <- function(x) { 
-  
-  list(
+
+kwCog <- function(x) { list(
 
   # Compute the max and min for each day
   max = cog(max(x$Power.KW, na.rm = TRUE), desc = "Max Power (KW)"),
@@ -140,11 +157,13 @@ kwCog <- function(x) {
   week = cog(unique(x$week), desc = "Week in 2010"),
   day = cog(unique(x$day), desc = "Julian Day in 2010")
 
-  )
+)} # kwCog()
 
-} # kwCog()
 # Test the cognostics function for the 7th subset
 kwCog(byDate[[73]][[2]])
+
+
+
 # Open connection to the trelliscope visualization database (vdb)
 vdbConn("vdb_power", autoYes = TRUE)
 
@@ -184,8 +203,10 @@ power.v.temp <- function(x) {
   return(NULL)
 
 } # power.v.temp()
+
 # Test the plot on a single subset
 power.v.temp(byDate[[8]][[2]])
+
 # Make the trelliscope display
 makeDisplay(byDate, name = "Power_vs_Temp_by_Day",
             desc = "Power vs. Temperature for 2010 buildings by day",
@@ -196,3 +217,4 @@ makeDisplay(byDate, name = "Power_vs_Temp_by_Day",
 myport <- 8100 # use this when running locally
 # myport <- Sys.getenv("TR_PORT") # use this on demo cluster
 view(port = myport)
+

@@ -1,3 +1,5 @@
+
+
 # Load necessary libraries
 library(datadr)
 library(trelliscope)
@@ -8,6 +10,9 @@ setwd("housing_demo")
 
 # Remove any left-over objects in the Global environment
 rm(list = ls())
+
+
+
 # To see the Trelliscope output, execute this block of code. We will 
 # go into further details below about how to set up your own Trelliscope
 # visual data base. 
@@ -20,6 +25,9 @@ myport <- 8100
 
 view(port = myport)
 
+
+
+
 # If you have not already done so, import the necessary packages
 library(datadr)
 library(trelliscope)
@@ -28,12 +36,24 @@ library(housingData)
 # Take a peek at the first 6 rows of housing
 head(housing)
 
+
+
+
 # Let's get a sense of the dimensions of our data frame
 dim(housing)
+
+
+
 # We will create a distributed data frame by dividing our data by county and state
 byCounty <- divide(housing, by = c("county", "state"), update = TRUE)
+
+
+
 # byCounty is a Divided Data Frame one of the primary data types in datadr
 class(byCounty)
+
+
+
 # Look at byCounty object
 byCounty
 
@@ -41,6 +61,9 @@ byCounty
 # The key should look something like county=X|state=Y and the value
 # should be the data frame corresponding to that key.
 byCounty[[1]]
+
+
+
 # Look at summary statistics for each key-value pair. 
 summary(byCounty)
 
@@ -53,15 +76,27 @@ names(byCounty) ## column names
 getKeys(byCounty) ## data division keys (state & county names in this example)
 
 
+
+
+
 splitRowDistn(byCounty) ## percentiles of number of rows per division
 
 splitSizeDistn(byCounty) ## percentiles of number of bytes per division
+
+
+
 # A data division can be accessed by by its named key or by number
 byCounty[["county=Benton County|state=WA"]]
 # byCounty[[176]] # If you wish to access the data frame by index 
+
+
+
 # Look at quantiles of median list price/sqft 
 priceQ <- drQuantile(byCounty, var = "medListPriceSqft")
 xyplot(q~fval, data=priceQ, main="Median List Price/Sqft Quantiles")
+
+
+
 # Calculate linear model for each data division to see the trend in prices
 
 # Create a function to calculate a linear model and extract the slope parameter
@@ -84,6 +119,9 @@ countySlopes <- recombine(byCountySlope, combRbind)
 # Look at the recombined data
 head(countySlopes)
 
+
+
+
 # Look at geoCounty which contains more information about US counties
 head(geoCounty)
 
@@ -97,6 +135,7 @@ wikiByCounty <- divide(wikiCounty, by = c("county", "state"))
 # Join divided housing, geo and wiki data together
 # This forms a Distributed Data Object (DDO)
 joinedData <- drJoin(housing = byCounty, slope=byCountySlope, geo = geo, wiki=wikiByCounty)
+
 # Note that this is no longer a distributed data frame
 class(joinedData)
 
@@ -113,6 +152,9 @@ joinedData <- drFilter(joinedData, function(x) {
 length(joinedData)
 
 
+
+
+
 # Define a visualization database directory where the plots and metadata
 # will be saved. Unless a complete file path is specified, the vdb will be
 # generated in the working directory. 
@@ -126,6 +168,9 @@ timePanel <- function(x) {
 
 # Test the plot function on a single division
 kvApply(timePanel, joinedData[[176]])
+
+
+
 
 # Define a cognostics function: this is used to define information and 
 # statistics that will be available in the Trelliscope UI for sorting and 
@@ -158,6 +203,9 @@ priceCog <- function(a) {
 # Test on a single division
 kvApply(priceCog, joinedData[[176]])
 
+
+
+
 # Create the display: this creates and saves display files and information in
 # the vdb directory defined above
 makeDisplay(joinedData,
@@ -172,3 +220,4 @@ makeDisplay(joinedData,
 myport <- 8100 # use this when running locally
 # myport <- Sys.getenv("TR_PORT") # use this on demo cluster
 view(port=myport)
+

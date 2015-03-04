@@ -1,7 +1,4 @@
----
-output: html_document
----
-# Computer network traffic 
+## Computer Network Traffic ##
 
 The NetFlow dataset is a simulated dataset of computer network traffic. 
 The packet data is captured at the firewall and aggregated into session
@@ -30,7 +27,7 @@ firstSeenSrcPacketCount | total number of packets in this session originating at
 firstSeenDestPacketCount | total number of packets in this session originating at the firstSeenDstIp
 recordForceOut | if nonzero the record was flushed to data file before session timeout (15 minutes) usually by program shutdown
 
-# Preliminaries 
+### Data Exploration - Computer Network Traffice ###
 
 Let's set the working directory for this example. You need to change the path in the call to `setwd()` below to correctly point to the `netflow_demo` directory.
 
@@ -52,8 +49,6 @@ library(trelliscope)
 library(plyr)
 ```
 
-# Pre-made Trelliscope Displays 
-
 The following will launch two pre-made trelliscope displays:
 - Hourly counts of connections vs time 
 - Hourly counts of connections vs source/destination
@@ -69,12 +64,14 @@ myport <- 8100 # use this when running locally on your own computer
 view(port = myport)
 ```
 
-## Challenge question
+### Challenge Question ###
 
 The following question is provided, free of charge, to help you become better acquainted with the trelliscope interface. The question will not be graded; it is strictly for learning purposes. 
 
-- There is a set of workstations that were infected with malware and now form a botnet. This botnet has strated a recurring Denial of Service attack against an external IP address. Can you find the machines in question? (Hint: Look for high numbers of outgoing connections)
+1. There is a set of workstations that were infected with malware and now form a botnet. This botnet has launched a recurring Denial of Service attack against an external IP address. Can you find the machines in question? (Hint: Look for high numbers of outgoing connections.)
 
-# Trelliscope and Hadoop
+### Code - Computer Network Traffic ###
 
-The time has come for you, the user, to do some of the coding work. In particular, the following demo will teach you how to use hadoop and trelliscope together to visually analyze a large and complete data set. Luckily for us, we've already covered this demo [here](http://tessera.io/docs-r-intro-bootcamp/#activity-22-using-tessera-with-hadoop-to-analyze-large-data). The necessary information will be covered in sections 2.2 and 2.3 of the [R boot camp](http://tessera.io/docs-r-intro-bootcamp/). We encourage you to go step by step through the process, particuarly since Hadoop has a steep learning curve.   
+The time has come for you, the user, to do some of the coding work. In particular, the following demo will teach you how to use hadoop and trelliscope together to visually analyze the netflow data set. Luckily for us, we've already covered this demo [here](http://tessera.io/docs-r-intro-bootcamp/#activity-22-using-tessera-with-hadoop-to-analyze-large-data). The necessary information will be covered in sections 2.2 and 2.3 of the [R boot camp](http://tessera.io/docs-r-intro-bootcamp/).
+
+
