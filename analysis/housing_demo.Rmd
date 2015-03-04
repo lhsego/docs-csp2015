@@ -1,7 +1,4 @@
----
-output: html_document
----
-## Housing Sales Data 
+## Housing Sales Data ##
 
 The housing dataset contains data about housing sales aggregated to the 
 county level in the United States between 2008-10-01 and 2014-03-01. This  
