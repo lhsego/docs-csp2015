@@ -13,14 +13,14 @@ state | US state name
 time | date (the data is aggregated monthly)
 nSold | number sold this month
 medListPriceSqft | median list price per square foot
-medSoldPriceSqft | median sold price per square foot
+medSoldPriceSqft |  median sold price per square foot
 
-### Investigating the data with Trelliscope ###
+### Data Exploration - Housing Sales Data ###
 
-The datadr, trelliscope, and housingData packages need to be imported for the following demo. We would also ask that you set the working directory to the location of the housing demo visual data base (vdb) directory. This will allow you, the user, to connect to the data base and interact with the trelliscope output. 
+The `datadr`, `trelliscope`, and `housingData` packages need to be imported for the following demo. Make sure to set the working directory to the location of the housing demo visual data base (vdb) directory. This will allow you to connect to the data base and interact with the trelliscope output. 
 
 ```{r eval = FALSE}
-# Load necessary libraries
+# Load necessary libraries.
 library(datadr)
 library(trelliscope)
 library(housingData)
@@ -36,7 +36,7 @@ The following will launch two pre-made trelliscope displays:
 - median list/sold price per sq ft vs time
 - median list/sold price per sq ft vs time by state
 
-Each panel represents the median listed (blue) and sold (pink) housing value plotted over time. Note that some of the panels only have one of the two values. The purpose of looking at pre-made displays is to get the user acquainted with the Trelliscope interface. We encourage you to explore the data and search for trends and anomalies. The following could will launch a Trelliscope browser from your local machine. 
+Each panel represents the median listed (blue) and sold (pink) housing value plotted over time. Note that some of the panels only have one of the two values. The purpose of looking at pre-made displays is to get the user acquainted with the trelliscope interface. We encourage you to explore the data and search for trends and anomalies. 
 
 ```{r eval = F, results = 'hide', message = F}
 # To see the Trelliscope output, execute this block of code. We will 
@@ -52,17 +52,19 @@ myport <- 8100
 view(port = myport)
 ```
 
-### Challenge Questions
+### Challenge Questions ###
 
 Now that you have the trelliscope display open, we have a few challenge questions that we would like to see if you can answer. No one's grading you on this task. In order to familiarize yourself with the interface and get a sense of the power of the trelliscope package, see if you can answer the following set of questions:
 
-- Can you find the county with the largest positive slope in list price per square foot? Can you find the county with the largest negative slope? Hint: use the Table Sort/Filter or Univariate Filter
-- Can you find the state that has the largest range of county trends in list price? Hint: use the Bivariate Filter.
-- Can you find the county with the largest increasing price trend in the South? Hint: use the Table Sort/Filter to filter first. 
+1. Can you find the county with the largest positive slope in list price per square foot? Can you find the county with the largest negative slope? (Hint: use the Table Sort/Filter or Univariate Filter.)
 
-### Exploring the Housing Data Set ###
+2. Can you find the state that has the largest range of county trends in list price? (Hint: use the Bivariate Filter.)
 
-This activity will teach you how to create your own Trelliscope displays as well as some basic functionality of the Datadr package using the housing data set. We will be using the same data from the pre-made displays, but now you will be writing the code to generate the output. First, we will create a distributed data frame using the data.  We will begin by importing the necessary packages, get a high level overview of the data, and create our first distributed data frame using the `divide()` function from datadr.  
+3. Can you find the county with the largest increasing price trend in the South? (Hint: use the Table Sort/Filter to filter first.) 
+
+### Code - Housing Sales Data ###
+
+This activity will teach you how to create your own trelliscope displays as well as some basic functionality of the datadr package using the housing data set. We will be using the same data from the pre-made displays, but now you will be writing the code to generate the output. First, we will create a distributed data frame using the data.  We will begin by importing the necessary packages, get a high level overview of the data, and create our first distributed data frame using the `divide()` function from datadr.  
 
 ```{r eval = TRUE, message = FALSE}
 
@@ -93,7 +95,7 @@ byCounty <- divide(housing, by = c("county", "state"), update = TRUE)
 class(byCounty)
 ```
 
-Calling the distributed data frame (`ddf()`) that was just created lets the user know the size of the object in terms of memory and other meta data specific to the object. In this ddf, each element is itself a data frame. 
+Calling the distributed data frame (`ddf()`) that was just created lets the user know the size of the object in terms of memory and other metadata specific to the object. In this ddf, each element is itself a data frame. 
 
 ```{r eval = T}
 # Look at byCounty object
@@ -146,11 +148,11 @@ priceQ <- drQuantile(byCounty, var = "medListPriceSqft")
 xyplot(q~fval, data=priceQ, main="Median List Price/Sqft Quantiles")
 ```
 
-### Divide and Recombine
+### Divide and Recombine ###
 
 Suppose we are interested in figuring out the trend component of each time series in our distributed data frame. We can do this by creating a linear model for each subdivision and extracting the slope parameter. We wish to incorporate this information into our pre-existing ddf and use it in our analysis. 
 
-```{r eval=T, message = F}
+```{r eval=T, message = F, results = "hide"}
 # Calculate linear model for each data division to see the trend in prices
 
 # Create a function to calculate a linear model and extract the slope parameter
@@ -176,7 +178,7 @@ head(countySlopes)
 
 Sometimes you will want to actively combine two distributed data objects/frames together to create a new data set. We will demonstrate how to perform these types of operations using the `drJoin()` function.
 
-```{r eval = T}
+```{r eval = T, message = F, results = "hide"}
 
 # Look at geoCounty which contains more information about US counties
 head(geoCounty)
@@ -191,9 +193,7 @@ wikiByCounty <- divide(wikiCounty, by = c("county", "state"))
 # Join divided housing, geo and wiki data together
 # This forms a Distributed Data Object (DDO)
 joinedData <- drJoin(housing = byCounty, slope=byCountySlope, geo = geo, wiki=wikiByCounty)
-```
 
-```{r eval = F, message = F}
 # Note that this is no longer a distributed data frame
 class(joinedData)
 
@@ -211,11 +211,9 @@ length(joinedData)
 
 ```
 
-#### Trelliscope: an interactive divide and recombine visualization tool
+The data is now ready to be ingested into trelliscope. To use trelliscope, the user needs to define a visual data base and create basic functions for plotting. On top of this, a user can develop and use cognostics to improve data interpretability. A cognostic is usually, but not always, a summary statistic or some form of metadata to be included along with plots. These values can be useful in determining patterns or anomalies in visual displays. 
 
-The data is now ready to be ingested into Trelliscope. In this section, you will learn how to connect to a visual data base, create basic functions for plotting, and develop and use cognostics to improve data interpretability. A cognostic is usually, but not always, a summary statistic or some form of meta data to be included along with plots. These values can be useful in determining patterns or anomalies in visual displays. 
-
-```{r eval = T}
+```{r eval = T, message = F}
 
 # Define a visualization database directory where the plots and metadata
 # will be saved. Unless a complete file path is specified, the vdb will be
