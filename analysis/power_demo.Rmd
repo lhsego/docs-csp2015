@@ -81,8 +81,7 @@ This activity will teach you how to create your own Trelliscope displays. We wil
 
 We'll start by importing the necessary libraries and reading in the power data. Note that you will have to supply the correct filepath in the call to `read.csv()` below.
 
-```{r eval = F, results = "hide", message = FALSE}
-
+```{r eval = FALSE, results = "hide", message = FALSE}
 # Load the trelliscope package if you haven't already
 library(trelliscope)
 library(datadr)
@@ -91,16 +90,34 @@ library(datadr)
 rm(list = ls())
 
 # You will need to change this. Be sure this is pointed to the directory containing retailBuildings.csv
-setwd("~/docs-csp2015/demos/power_demo")
+#setwd("~/docs-csp2015/demos/power_demo")
 
 # We'll begin by reading in the data. Be sure to supply
 # the correct filepath or this will fail. 
 d <- read.csv("retailBuildings.csv")
 ```
 
+```{r eval = TRUE, echo=FALSE, message = FALSE}
+# Load the trelliscope package if you haven't already
+library(trelliscope)
+library(datadr)
+
+# this command is causing a problem for some reason when we buildDocs:
+#rm(list = ls())
+
+# comment out setwd here:
+#setwd("~/docs-csp2015/demos/power_demo")
+
+# We'll begin by reading in the data. Be sure to supply
+# the correct filepath or this will fail. 
+#getwd()
+d <- read.csv("demos/power_demo/retailBuildings.csv")
+```
+
+
 It's standard practice, when analyzing a new set of data, to get a sense of the underlying structure. The R programming language has many convenient functions for doing this and `str()` is one of the best for getting a sense of the dimensions and entries in the data set.   
 
-```{r eval = F, comment = ''}
+```{r eval = TRUE, comment = ''}
 # Observe the first 6 rows of the dataset
 head(d)
 
@@ -113,7 +130,7 @@ str(d)
 
 It would be useful to get an idea of the number of entries of each variable in our data set as well as a summary of each variable. We can use the `table()` and `summary()` functions to gather this data. 
 
-```{r eval = FALSE}
+```{r eval = TRUE}
 # Let's convert the dateTime and date to a POSIXct format so R can compute with
 # them as dates
 d$dateTime <- as.POSIXct(d$dateTime)
@@ -144,7 +161,7 @@ with(d, table(month, building))
 
 Now we are going to subdivide the data into meaningful groups and make a plot of each group. Suppose that we would like to see a time series plot of the energy consumption of each building for each day. To accomplish this, we need to divide the data by date to create a distributed data frame (`ddf`) object. This can be accomplished by using the `divide()` function from the datadr package. We will then sort each resulting data frame by building and dateTime using the `arrange()` function from the plyr package. 
 
-```{r eval = F}
+```{r eval = TRUE}
 library(plyr)
 byDate <- divide(d, by = "date", postTransFn = function(x) arrange(x, building, dateTime))
 
