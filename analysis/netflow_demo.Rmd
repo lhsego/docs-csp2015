@@ -1,5 +1,7 @@
 ## Computer Network Traffic ##
 
+### Data Description - Computer Network Traffic ###
+
 The NetFlow dataset is a simulated dataset of computer network traffic. 
 The packet data is captured at the firewall and aggregated into session
 records. Each record identifies the source and destination of the first 
@@ -27,7 +29,7 @@ firstSeenSrcPacketCount | total number of packets in this session originating at
 firstSeenDestPacketCount | total number of packets in this session originating at the firstSeenDstIp
 recordForceOut | if nonzero the record was flushed to data file before session timeout (15 minutes) usually by program shutdown
 
-### Data Exploration - Computer Network Traffice ###
+### Data Exploration - Computer Network Traffic ###
 
 Let's set the working directory for this example. You need to change the path in the call to `setwd()` below to correctly point to the `netflow_demo` directory.
 
@@ -60,9 +62,9 @@ myport <- 8100 # use this when running locally on your own computer.
 view(port = myport)
 ```
 
-### Challenge Question ###
+### Challenge Question - Computer Network Traffic ###
 
-The following question is provided, free of charge, to help you become better acquainted with the trelliscope interface. The question will not be graded; it is strictly for learning purposes. 
+The following question is provided, free of charge, to help you become better acquainted with the trelliscope interface.
 
 1. There is a set of workstations that were infected with malware and now form a botnet. This botnet has launched a recurring Denial of Service attack against an external IP address. Can you find the machines in question? (Hint: Look for high numbers of outgoing connections.)
 
