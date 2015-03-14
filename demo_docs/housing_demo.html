@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Housing Sales Data</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h2>Housing Sales Data</h2>
+
+<p>The housing dataset contains data about housing sales aggregated to the 
+county level in the United States between 2008-10-01 and 2014-03-01. This<br/>
+is Zillow.com data provided by <a href="https://www.quandl.com/c/housing">Quandl</a>. 
+The data variables are as follows:</p>
+
+<table><thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>fips</td>
+<td>Federal Information Processing Standard, a 5 digit count code</td>
+</tr>
+<tr>
+<td>county</td>
+<td>US county name</td>
+</tr>
+<tr>
+<td>state</td>
+<td>US state name</td>
+</tr>
+<tr>
+<td>time</td>
+<td>date (the data is aggregated monthly)</td>
+</tr>
+<tr>
+<td>nSold</td>
+<td>number sold this month</td>
+</tr>
+<tr>
+<td>medListPriceSqft</td>
+<td>median list price per square foot</td>
+</tr>
+<tr>
+<td>medSoldPriceSqft</td>
+<td>median sold price per square foot</td>
+</tr>
+</tbody></table>
+
+<h3>Investigating the data with Trelliscope</h3>
+
+<p>The datadr, trelliscope, and housingData packages need to be imported for the following demo. We would also ask that you set the working directory to the location of the housing demo visual data base (vdb) directory. This will allow you, the user, to connect to the data base and interact with the trelliscope output. </p>
+
+<pre><code class="r"># Load necessary libraries
+library(datadr)
+library(trelliscope)
+library(housingData)
+
+# Set the working directory. You will need to provide the complete file path.
+setwd(&quot;housing_demo&quot;)
+
+# Remove any left-over objects in the Global environment
+rm(list = ls())
+</code></pre>
+
+<p>The following will launch two pre-made trelliscope displays:</p>
+
+<ul>
+<li>median list/sold price per sq ft vs time</li>
+<li>median list/sold price per sq ft vs time by state</li>
+</ul>
+
+<p>Each panel represents the median listed (blue) and sold (pink) housing value plotted over time. Note that some of the panels only have one of the two values. The purpose of looking at pre-made displays is to get the user acquainted with the Trelliscope interface. We encourage you to explore the data and search for trends and anomalies. The following could will launch a Trelliscope browser from your local machine. </p>
+
+<pre><code class="r"># To see the Trelliscope output, execute this block of code. We will 
+# go into further details below about how to set up your own Trelliscope
+# visual data base. 
+vdbConn(&quot;vdb_housing&quot;, autoYes = TRUE)
+
+# use this when running locally on your own computer
+myport &lt;- 8100 
+
+# myport &lt;- Sys.getenv(&quot;TR_PORT&quot;) # use this on demo cluster
+
+view(port = myport)
+</code></pre>
+
+<h3>Challenge Questions</h3>
+
+<p>Now that you have the trelliscope display open, we have a few challenge questions that we would like to see if you can answer. No one&#39;s grading you on this task. In order to familiarize yourself with the interface and get a sense of the power of the trelliscope package, see if you can answer the following set of questions:</p>
+
+<ul>
+<li>Can you find the county with the largest positive slope in list price per square foot? Can you find the county with the largest negative slope? Hint: use the Table Sort/Filter or Univariate Filter</li>
+<li>Can you find the state that has the largest range of county trends in list price? Hint: use the Bivariate Filter.</li>
+<li>Can you find the county with the largest increasing price trend in the South? Hint: use the Table Sort/Filter to filter first. </li>
+</ul>
+
+<h3>Exploring the Housing Data Set</h3>
+
+<p>This activity will teach you how to create your own Trelliscope displays as well as some basic functionality of the Datadr package using the housing data set. We will be using the same data from the pre-made displays, but now you will be writing the code to generate the output. First, we will create a distributed data frame using the data.  We will begin by importing the necessary packages, get a high level overview of the data, and create our first distributed data frame using the <code>divide()</code> function from datadr.  </p>
+
+<pre><code class="r"># If you have not already done so, import the necessary packages
+library(datadr)
+library(trelliscope)
+library(housingData)
+
+# Take a peek at the first 6 rows of housing
+head(housing)
+</code></pre>
+
+<pre><code>##    fips         county state       time nSold medListPriceSqft
+## 1 06001 Alameda County    CA 2008-10-01    NA         307.9787
+## 2 06001 Alameda County    CA 2008-11-01    NA         299.1667
+## 3 06001 Alameda County    CA 2008-11-01    NA               NA
+## 4 06001 Alameda County    CA 2008-12-01    NA         289.8815
+## 5 06001 Alameda County    CA 2009-01-01    NA         288.5000
+## 6 06001 Alameda County    CA 2009-02-01    NA         287.0370
+##   medSoldPriceSqft
+## 1         325.8118
+## 2               NA
+## 3         318.1150
+## 4         305.7878
+## 5         291.5977
+## 6               NA
+</code></pre>
+
+<pre><code class="r"># Let&#39;s get a sense of the dimensions of our data frame
+dim(housing)
+</code></pre>
+
+<p>We are going to divide the data set by the variables &ldquo;county&rdquo; and &ldquo;state&rdquo;. This kind of data division is very similar to the functionality provided by the <code>plyr</code> package. </p>
+
+<pre><code class="r"># We will create a distributed data frame by dividing our data by county and state
+byCounty &lt;- divide(housing, by = c(&quot;county&quot;, &quot;state&quot;), update = TRUE)
+</code></pre>
+
+<pre><code class="r"># byCounty is a Divided Data Frame one of the primary data types in datadr
+class(byCounty)
+</code></pre>
+
+<p>Calling the distributed data frame (<code>ddf()</code>) that was just created lets the user know the size of the object in terms of memory and other meta data specific to the object. In this ddf, each element is itself a data frame. </p>
+
+<pre><code class="r"># Look at byCounty object
+byCounty
+</code></pre>
+
+<pre><code>## 
+## Distributed data frame backed by &#39;kvMemory&#39; connection
+## 
+##  attribute      | value
+## ----------------+-----------------------------------------------------------
+##  names          | fips(cha), time(Dat), nSold(num), and 2 more
+##  nrow           | 224369
+##  size (stored)  | 16.45 MB
+##  size (object)  | 16.45 MB
+##  # subsets      | 2883
+## 
+## * Other attributes: getKeys(), splitSizeDistn(), splitRowDistn(), summary()
+## * Conditioning variables: county, state
+</code></pre>
+
+<pre><code class="r"># Look at first division. It will consist of a key-value pair.
+# The key should look something like county=X|state=Y and the value
+# should be the data frame corresponding to that key.
+byCounty[[1]]
+</code></pre>
+
+<pre><code>## $key
+## [1] &quot;county=Abbeville County|state=SC&quot;
+## 
+## $value
+##    fips       time nSold medListPriceSqft medSoldPriceSqft
+## 1 45001 2008-10-01    NA         73.06226               NA
+## 2 45001 2008-11-01    NA         70.71429               NA
+## 3 45001 2008-12-01    NA         70.71429               NA
+## 4 45001 2009-01-01    NA         73.43750               NA
+## 5 45001 2009-02-01    NA         78.69565               NA
+## ...
+</code></pre>
+
+<p>A common procedure for EDA involves gathering a wide variety of summary statistics. The datadr package has some predefined functions for performing these calculations on distributed data frames / objects. </p>
+
+<pre><code class="r"># Look at summary statistics for each key-value pair. 
+summary(byCounty)
+
+# Basic data object information
+
+length(byCounty) ## number of data divisions
+
+names(byCounty) ## column names
+
+getKeys(byCounty) ## data division keys (state &amp; county names in this example)
+</code></pre>
+
+<p>We can get a sense of the number of rows in each element of the ddf as well as the amount of memory taken up by each element using <code>splitRowDistn()</code> and <code>splitSizeDistn()</code>.</p>
+
+<pre><code class="r">splitRowDistn(byCounty) ## percentiles of number of rows per division
+
+splitSizeDistn(byCounty) ## percentiles of number of bytes per division
+</code></pre>
+
+<p>You can access the elements of the distributed data frame (ddf) using the key or by index, just like you would with a traditional list.  </p>
+
+<pre><code class="r"># A data division can be accessed by by its named key or by number
+byCounty[[&quot;county=Benton County|state=WA&quot;]]
+</code></pre>
+
+<pre><code>## $key
+## [1] &quot;county=Benton County|state=WA&quot;
+## 
+## $value
+##    fips       time nSold medListPriceSqft medSoldPriceSqft
+## 1 53005 2008-10-01   137         106.6351         106.2179
+## 2 53005 2008-11-01    80         106.9650               NA
+## 3 53005 2008-11-01    NA               NA         105.2370
+## 4 53005 2008-12-01    95         107.6642         105.6311
+## 5 53005 2009-01-01    73         107.6868         105.8892
+## ...
+</code></pre>
+
+<pre><code class="r"># byCounty[[176]] # If you wish to access the data frame by index 
+</code></pre>
+
+<p>Finally, you can use the <code>drQuantile()</code> function to compute the sample quantiles for the elements in the ddf object.</p>
+
+<pre><code class="r"># Look at quantiles of median list price/sqft 
+priceQ &lt;- drQuantile(byCounty, var = &quot;medListPriceSqft&quot;)
+xyplot(q~fval, data=priceQ, main=&quot;Median List Price/Sqft Quantiles&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-11"/> </p>
+
+<h3>Divide and Recombine</h3>
+
+<p>Suppose we are interested in figuring out the trend component of each time series in our distributed data frame. We can do this by creating a linear model for each subdivision and extracting the slope parameter. We wish to incorporate this information into our pre-existing ddf and use it in our analysis. </p>
+
+<pre><code class="r"># Calculate linear model for each data division to see the trend in prices
+
+# Create a function to calculate a linear model and extract the slope parameter
+lmCoef &lt;- function(x) {
+   data.frame(getSplitVars(x), slope=coef(lm(medListPriceSqft ~ time, data = x))[2])
+}
+
+# Test lmCoef on one division
+kvApply(lmCoef, byCounty[[176]])
+</code></pre>
+
+<pre><code>##             county state       slope
+## time Benton County    WA 0.007726753
+</code></pre>
+
+<pre><code class="r"># Add the function transform to the DDF
+byCountySlope &lt;- addTransform(byCounty, lmCoef)
+
+# Now look at data with the transformation
+byCountySlope[[176]]
+</code></pre>
+
+<pre><code>## $key
+## [1] &quot;county=Benton County|state=WA&quot;
+## 
+## $value
+##             county state       slope
+## time Benton County    WA 0.007726753
+</code></pre>
+
+<pre><code class="r"># Recombine the slope data into a single data.frame
+countySlopes &lt;- recombine(byCountySlope, combRbind)
+
+# Look at the recombined data
+head(countySlopes)
+</code></pre>
+
+<pre><code>##             county state         county.1 state.1         slope
+## 1 Abbeville County    SC Abbeville County      SC -0.0002323686
+## 2    Acadia Parish    LA    Acadia Parish      LA  0.0019518441
+## 3  Accomack County    VA  Accomack County      VA -0.0092717711
+## 4       Ada County    ID       Ada County      ID -0.0030197554
+## 5     Adair County    IA     Adair County      IA -0.0308381951
+## 6     Adair County    KY     Adair County      KY  0.0034399585
+</code></pre>
+
+<p>Sometimes you will want to actively combine two distributed data objects/frames together to create a new data set. We will demonstrate how to perform these types of operations using the <code>drJoin()</code> function.</p>
+
+<pre><code class="r"># Look at geoCounty which contains more information about US counties
+head(geoCounty)
+</code></pre>
+
+<pre><code>##    fips         county state       lon      lat rMapState rMapCounty
+## 1 01001 Autauga County    AL -86.64565 32.54009   alabama    autauga
+## 2 01003 Baldwin County    AL -87.72627 30.73831   alabama    baldwin
+## 3 01005 Barbour County    AL -85.39733 31.87403   alabama    barbour
+## 4 01007    Bibb County    AL -87.12526 32.99902   alabama       bibb
+## 5 01009  Blount County    AL -86.56271 33.99044   alabama     blount
+## 6 01011 Bullock County    AL -85.71680 32.10634   alabama    bullock
+</code></pre>
+
+<pre><code class="r"># Divide geoCounty on county and state just like we did with the housing data
+geo &lt;- divide(geoCounty, by = c(&quot;county&quot;, &quot;state&quot;))
+geo[[1]]
+</code></pre>
+
+<pre><code>## $key
+## [1] &quot;county=Abbeville County|state=SC&quot;
+## 
+## $value
+##    fips       lon      lat      rMapState rMapCounty
+## 1 45001 -82.45851 34.23021 south carolina  abbeville
+</code></pre>
+
+<pre><code class="r"># Get some wikipedia data on counties and divide by county/state
+wikiByCounty &lt;- divide(wikiCounty, by = c(&quot;county&quot;, &quot;state&quot;))
+
+# Join divided housing, geo and wiki data together
+# This forms a Distributed Data Object (DDO)
+joinedData &lt;- drJoin(housing = byCounty, slope=byCountySlope, geo = geo, wiki=wikiByCounty)
+</code></pre>
+
+<pre><code class="r"># Note that this is no longer a distributed data frame
+class(joinedData)
+
+joinedData[[176]]
+
+length(joinedData)
+
+# Filter dataset to remove divisions without housing sales data
+joinedData &lt;- drFilter(joinedData, function(x) {
+   !is.null(x$housing)
+})
+
+# See that the length has decreased - some data divisions have been removed
+length(joinedData)
+</code></pre>
+
+<h4>Trelliscope: an interactive divide and recombine visualization tool</h4>
+
+<p>The data is now ready to be ingested into Trelliscope. In this section, you will learn how to connect to a visual data base, create basic functions for plotting, and develop and use cognostics to improve data interpretability. A cognostic is usually, but not always, a summary statistic or some form of meta data to be included along with plots. These values can be useful in determining patterns or anomalies in visual displays. </p>
+
+<pre><code class="r"># Define a visualization database directory where the plots and metadata
+# will be saved. Unless a complete file path is specified, the vdb will be
+# generated in the working directory. 
+vdbConn(&quot;vdb_housing&quot;, autoYes=TRUE)
+</code></pre>
+
+<pre><code>## vdb connection object: [name:none]; path=C:\Users\venz586\Documents\docs-csp2015\demo_docs\vdb_housing
+</code></pre>
+
+<pre><code class="r"># Define a plot function
+timePanel &lt;- function(x) {
+   xyplot(medListPriceSqft + medSoldPriceSqft ~ time,
+      data = x$housing, auto.key = TRUE, ylab = &quot;Price / Sq. Ft.&quot;)
+}
+
+# Test the plot function on a single division
+kvApply(timePanel, joinedData[[176]])
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-15"/> </p>
+
+<p>We have defined a simple plot function. It would be useful to define a set of cognostics that can give us a large set of angles with which to attack the data anlysis problem at hand. Some simple cognostics are included in the trelliscope package such as <code>cogMean()</code> and <code>cogRange()</code> which are self-explanatory. You are free to define any other measure of the data using the <code>cog()</code> function.  </p>
+
+<pre><code class="r"># Define a cognostics function: this is used to define information and 
+# statistics that will be available in the Trelliscope UI for sorting and 
+# filtering and also to display/link useful meta information.
+priceCog &lt;- function(a) { 
+   x &lt;- a$housing
+   st &lt;- getSplitVar(a, &quot;state&quot;)
+   ct &lt;- getSplitVar(a, &quot;county&quot;)
+   zillowString &lt;- paste(ct, st)
+   zillowString &lt;- gsub(&quot; &quot;, &quot;-&quot;, zillowString)
+   list(
+      fips = cog(x$fips[1], desc = &quot;fips code&quot;),
+      region = cog(state.region[state.abb == ifelse(st == &quot;DC&quot;, &quot;MD&quot;, st)]),
+      division = cog(state.division[state.abb == ifelse(st == &quot;DC&quot;, &quot;MD&quot;, st)]),
+      slope = cog(a$slope$slope, desc = &quot;list price slope&quot;),
+      meanList = cogMean(x$medListPriceSqft),
+      meanSold = cogMean(x$medSoldPriceSqft),
+      listRange = cogRange(x$medListPriceSqft),
+      soldRange = cogRange(x$medSoldPriceSqft),
+      nObs = cog(length(which(!is.na(x$medListPriceSqft))), 
+         desc = &quot;number of non-NA list prices&quot;),
+      lat = cog(a$geo$lat, desc = &quot;county latitude&quot;),
+      lon = cog(a$geo$lon, desc = &quot;county longitude&quot;),
+      pop2013 = cog(log10(a$wiki$pop2013), desc = &quot;log base 10 population in 2013&quot;),
+      wikiHref = cogHref(a$wiki$href, &quot;wiki link&quot;),
+      zillowHref = cogHref(sprintf(&quot;http://www.zillow.com/homes/%s_rb/&quot;, zillowString), &quot;zillow link&quot;)
+   )
+}
+
+# Test on a single division
+kvApply(priceCog, joinedData[[176]])
+</code></pre>
+
+<pre><code>## $fips
+## [1] &quot;53005&quot;
+## 
+## $region
+## [1] &quot;West&quot;
+## 
+## $division
+## [1] &quot;Pacific&quot;
+## 
+## $slope
+## [1] 0.007726753
+## 
+## $meanList
+## [1] 114.1784
+## 
+## $meanSold
+## [1] 109.8766
+## 
+## $listRange
+## [1] 15.04786
+## 
+## $soldRange
+## [1] 12.5142
+## 
+## $nObs
+## [1] 66
+## 
+## $lat
+## [1] 46.23413
+## 
+## $lon
+## [1] -119.5155
+## 
+## $pop2013
+## [1] 5.265963
+## 
+## $wikiHref
+## [1] &quot;&lt;a href=\&quot;http://en.wikipedia.org/wiki/Benton_County,_Washington\&quot; target=\&quot;_blank\&quot;&gt;wiki link&lt;/a&gt;&quot;
+## 
+## $zillowHref
+## [1] &quot;&lt;a href=\&quot;http://www.zillow.com/homes/Benton-County-WA_rb/\&quot; target=\&quot;_blank\&quot;&gt;zillow link&lt;/a&gt;&quot;
+</code></pre>
+
+<pre><code class="r"># Create the display: this creates and saves display files and information in
+# the vdb directory defined above
+makeDisplay(joinedData,
+   name = &quot;list_sold_vs_time_datadr_tut&quot;,
+   desc = &quot;List and sold price over time&quot;,
+   panelFn = timePanel, 
+   cogFn = priceCog,
+   width = 400, height = 400,
+   lims = list(x = &quot;same&quot;))
+
+# Open Trelliscope in a browser
+myport &lt;- 8100 # use this when running locally
+# myport &lt;- Sys.getenv(&quot;TR_PORT&quot;) # use this on demo cluster
+view(port=myport)
+</code></pre>
+
+</body>
+
+</html>
+

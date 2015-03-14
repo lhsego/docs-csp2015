@@ -3,7 +3,7 @@ Comments:
 To create index.html, do this in R:
 
    library(buildDocs)
-   setwd(".../docs-csp2015")
+   setwd("~/docs-csp2015")
    buildDocs("analysis", outLoc=".", copyrightText="")
 
    # Comment out copyright text, and 'Previous' and 'Next' links since they

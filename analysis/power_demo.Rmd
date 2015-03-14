@@ -1,0 +1,293 @@
+## Power Utilization in Retail Buildings ##
+
+### Data Description - Power Data ###
+
+This dataset contains recordings of the energy consumption and outdoor air temperature of four retail buildings at various locations in the U.S. at 15 minute intervals during 2010. The measurements have
+been anonymized by applying a random linear transformation.
+The variables in the data are described below:
+
+Variable | Description
+---------|-----------------
+building | An integer identifying each of the four buildings
+dateTime | The date and time when the power and temperature were recorded
+year | Integer indicating the year of the measurement
+date | The date of the measurement
+quarter | The quarter of the year (Q1, Q2, Q3, Q4)
+month | The month, represented as an integer (1, 2, ..., 12)
+monthName | The name of the month ("January", "Februrary", ..., "December")
+week |  Integer indicating the week in 2010 (1, 2, 3, ..., 52)
+weekDay | The day of the week ("Monday", "Tuesday", ..., "Sunday")
+day | Integer indicating the Julian day in 2010 (number of days since Jan 1, 2010)
+OAT.F | Outdoor Air Temperature measured in Farenheit
+Power.KW | Instantaneous power consumption by the building at the date time, measured in Kilowatts
+
+### Data Exploration - Power Utilization ###
+
+Let's begin by setting the working directory for this example. You may have to change the path in the command below to correctly point to the `power_demo` directory.
+
+```{r eval = FALSE}
+setwd("power_demo")
+```
+
+And let's remove any possible left-over objects in the Global environment:
+```{r eval = FALSE, results = "hide"}
+rm(list = ls())
+```
+
+And load the requisite packages:
+```{r results = "hide", message = FALSE}
+library(trelliscope)
+library(plyr)
+```
+
+The following will launch two pre-made trelliscope displays:
+- Power vs. Time 
+- Power vs. Outdoor Air Temp 
+where each panel shows data for all four buildings for a single day.  
+
+The purpose of this activity is to launch the Trelliscope display and then explore the data---to look for patterns, bad data, anomalies, etc. The code required to generate these displays is shown next.
+
+```{r eval = F, results = "hide", message = FALSE}
+# Load some preconfigured global plotting limits.
+load("plottingLims.Rdata")
+
+# Open the connection to the pre-existing trelliscope visualization.
+# ("vdb_power" is a folder in "power_demo")
+vdbConn("~/docs-csp2015/demos/power_demo/vdb_power")
+
+# use this port when running locally on your own computer
+myport <- 8100 
+
+# use this port on the AWS demo cluster
+# myport <- Sys.getenv("TR_PORT") 
+
+# Launch the trelliscope viewer.  Use Ctrl-C or ESC to stop the reviewer and return
+# the R prompt
+view(port = myport)
+```
+
+### Challenge Questions - Power Utilization ###
+Do your best to answer the following questions. We have placed them here to help you learn how to use trelliscope. Be sure to pull up the trelliscope display (if it's not already open) from the code above.
+
+1. Without manually scrolling through all the panels, can you identify the days when the power consumption pattern is noticeably different than normal consumption patterns?
+
+2. Given the data, can you conclude that there are faulty sensors on or in the buildings?
+
+3. Is there a seasonal trend in power consumption?
+
+4. Given that each building is in a unique location, can you conclude that outdoor air temperature is correlated with power usage? 
+
+### Code - Power Utilization ###
+
+This activity will teach you how to create your own trelliscope displays. We will be using the same data as presented in the pre-made displays, but you will have the opportunity to interact with the underlying code. This tutorial will demonstrate how to generate your own plots and how to create and use cognostics to aid in the interpretability of said plots.
+
+We'll start by importing the necessary libraries and reading in the power data. Note that you will have to supply the correct filepath in the call to `read.csv()` below.
+
+```{r eval = TRUE, results = "hide", message = FALSE}
+# Load the trelliscope package if you haven't already
+library(trelliscope)
+library(datadr)
+
+# You will need to change this. Be sure this is pointed to the directory containing retailBuildings.csv
+setwd("~/docs-csp2015/demos/power_demo")
+
+# We'll begin by reading in the data. Be sure to supply
+# the correct filepath or this will fail. 
+d <- read.csv("retailBuildings.csv")
+```
+
+It's standard practice, when analyzing a new set of data, to get a sense of the underlying structure. The R programming language has many convenient functions for doing this and `str()` is one of the best for getting a sense of the dimensions and entries in the data set.   
+
+```{r eval = F}
+# Observe the first 6 rows of the dataset
+head(d)
+```
+
+```{r eval = T}
+# Now let's look at the structure of the data.
+# Notice how there are 139740 rows and 12 columns, and that
+# dateTime and date are stored as factors
+str(d)
+```
+
+It would be useful to get an idea of the number of entries of each variable in our data set as well as a summary of each variable. We can use the `table()` and `summary()` functions to gather this data. 
+
+```{r eval = TRUE, results = 'hide', message = F}
+# Let's convert the dateTime and date to a POSIXct format so R can compute with
+# them as dates
+d$dateTime <- as.POSIXct(d$dateTime)
+d$date <- as.POSIXct(d$date)
+str(d)
+```
+
+```{r eval = TRUE}
+# The summary method applied to a data frame can be helpful to get
+# a feel for the values in the data
+summary(d)
+```
+
+```{r eval = TRUE, results = 'hide', message = F}
+# It would be nice to see a tabulation of the categorial variables.
+# We can do that like this:
+with(d, table(building))
+
+# To make tables for all the categorical variables, let's create a
+# vector with the names of these variables so we can easily select them:
+sel <- c("building", "year", "quarter", "month", "monthName", "week", "weekday")
+
+# Now we use that vector to select those columns of 'd', and we can apply
+# the table() function to each column (column-wise summaries are indicated by
+# MARGIN = 2)
+apply(d[,sel], MARGIN = 2, table)
+
+# We can also make cross tabulations to get a sense of the counts of
+# two categorical variables.  For example, let's look at month by building:
+with(d, table(month, building))
+```
+
+Now we are going to subdivide the data into meaningful groups and make a plot of each group. Suppose that we would like to see a time series plot of the energy consumption of each building for each day. To accomplish this, we need to divide the data by date to create a distributed data frame (`ddf`) object. This can be accomplished by using the `divide()` function from the datadr package. We will then sort each resulting data frame by building and dateTime using the `arrange()` function from the plyr package. 
+
+```{r eval = TRUE, results = 'hide', message = F}
+library(plyr)
+byDate <- divide(d, by = "date", postTransFn = function(x) arrange(x, building, dateTime))
+
+# Let's look at a single element of the ddf:
+str(byDate[1])
+
+# Now let's compute the range of the power so we can use the same axes for all 
+# the plots
+powerLims <- range(d$Power.KW)
+tempLims <- range(d$OAT.F)
+
+# Now we create a function to plot the power usage in all 5 buildings for a 
+# single day
+power.by.time <- function(x) {
+
+  # Get the x and y axis limits
+  # Global limits for y
+  ylim <- powerLims
+  # Local limits for x
+  xlim <- range(x$dateTime)
+
+  # Set plotting options
+  par(las = 2, mar = c(4, 4, 0.5, 0.5))
+
+  # Create a blank plot
+  with(x, plot(dateTime, Power.KW, type = "n", xlim = xlim, ylim = ylim,
+               xlab = "", ylab = "Power (KW)"))
+
+  # Add in the data for each building, giving each building a different color
+  for (i in as.character(2:5)) {
+    with(x[x$building == i,], 
+       lines(dateTime, Power.KW, col = as.numeric(i) - 1, lwd = 2))
+  }
+
+  # Add a legend to the plot
+  legend(xlim[1] + 0.5 * diff(xlim), ylim[1],
+         paste("Building", 2:5),
+         lty = 1, col = c(2:5) - 1, lwd = 3, yjust = 0)
+
+  # Returning NULL is required by trelliscope when the plotting function is 
+  # base R code (as opposed to plots generated by lattice or ggplot)
+  return(NULL)
+
+} # power.by.time()
+```
+
+```{r eval = T, message = F}
+# Test the plot on a single subset
+power.by.time(byDate[[8]][[2]])
+```
+
+There is a function in the trelliscope package for building cognostics (measurements of interest) that will be calculated and visualized for the plots that you generate. Cognostics are usually scalar valued measurements like summary statistics, but they can also generate or gather metadata as well. The input to the cognostics function ('x') is a data frame that contains one split (subset) of the data. In the following code, the subset is a data frame that contains all the power data for a given day. 
+
+```{r eval = T}
+kwCog <- function(x) { list(
+
+  # Compute the max and min for each day
+  max = cog(max(x$Power.KW, na.rm = TRUE), desc = "Max Power (KW)"),
+  min = cog(min(x$Power.KW, na.rm = TRUE), desc = "Min Power (KW)"),
+
+  # Some common statistics are built into trelliscope with their own cognostics functions.
+  # For example, cogMean() and cogRange().
+  meanPower = cogMean(x$Power.KW, desc = "Mean Power (KW)"),
+  rangePower = cogRange(x$Power.KW, desc = "Range of Power (Max - Min) (KW)"),
+
+  # Note that we use 'unique()' below because, for each subset, the value of 
+  # month, week, and day are all repeated for a single date. So we use unique() 
+  # to get a scalar value of these date variables
+  month = cog(unique(x$monthName), desc = "Month Name"),
+  week = cog(unique(x$week), desc = "Week in 2010"),
+  day = cog(unique(x$day), desc = "Julian Day in 2010")
+
+)} # kwCog()
+
+# Test the cognostics function for the 7th subset
+kwCog(byDate[[73]][[2]])
+```
+
+We now have the necessary pieces to create our own visual data base. The visual data base is used by trelliscope (along with a plot function) to genereate output on the `shiny` server. 
+
+```{r eval = F, results = 'hide', message = F}
+# Open connection to the trelliscope visualization database (vdb)
+vdbConn("vdb_power", autoYes = TRUE)
+
+# Create first display using Trelliscope's makeDisplay() function.  This writes
+# the various plots to the vdb that can then be viewed with trelliscope.
+makeDisplay(byDate, name = "Power_by_Day",
+            desc = "Power time series for 2010 buildings by day",
+            panelFn = power.by.time, cogFn = kwCog)
+```
+
+It's always a good idea to test your plotting function on a single data entry before uploading data to the trelliscope server. 
+
+```{r eval = T, message = F}
+# Let's also create a related display of power versus temperature by date
+power.v.temp <- function(x) {
+
+  # Get the limits
+  xlim <- tempLims
+  ylim <- powerLims
+
+  # Set plotting parameters
+  par(las = 1, mar = c(4, 4, 0.5, 0.5))
+
+  # Create a blank plot for outdoor air temp vs. power
+  with(x, plot(OAT.F, Power.KW, type = "n", xlim = xlim, ylim = ylim,
+               xlab = "Outside Air Temp (F)", ylab = "Power (KW)"))
+
+  # Add points for each building with a different color
+  for (i in as.character(2:5)) {
+    with(x[x$building == i,], points(OAT.F, Power.KW, col = as.numeric(i)-1))
+  }
+
+  # Add in the legend
+  legend(xlim[1], ylim[2],
+         paste("Building", 2:5),
+         pch = 1,
+         col = c(2:5) - 1)
+
+  # Returning NULL is required by trelliscope when the plotting function is 
+  # base R code (as opposed to plots generated by lattice or ggplot)
+  return(NULL)
+
+} # power.v.temp()
+
+# Test the plot on a single subset
+power.v.temp(byDate[[8]][[2]])
+```
+
+To use trelliscope, we need to connect to our visual data base and bring up the R Shiny server. 
+
+```{r eval = F}
+# Make the trelliscope display
+makeDisplay(byDate, name = "Power_vs_Temp_by_Day",
+            desc = "Power vs. Temperature for 2010 buildings by day",
+            panelFn = power.v.temp, cogFn = kwCog)
+
+# Launch the trelliscope viewer (must be in Firefox, Chrome, or Safari--not 
+# Internet Explorer)
+myport <- 8100 # use this when running locally
+# myport <- Sys.getenv("TR_PORT") # use this on demo cluster
+view(port = myport)
+```
