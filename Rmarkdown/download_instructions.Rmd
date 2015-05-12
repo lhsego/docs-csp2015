@@ -91,7 +91,7 @@ sometimes have problems displaying Trelliscope views.
 
 2. The zip file contains a folder called **demos**.  Set your working directory in R to this folder,
 using something like `setwd("mypaths_to_demos/demos")`.  The **demos** folder 
-contains a folder for each of the three demos:  **power_demo**, **netflow_demo**, and **housing_demo**.
+contains a folder for each of the three demos:  **power_demo**, **housing_demo**, and **netflow_demo**.
 Each demonstration folder has a single **.R** file which contains the code for the demonstration. Open that 
 file in your editor of choice and begin!
 

@@ -1,6 +1,6 @@
 ## Power Utilization in Retail Buildings ##
 
-### Data Description ###
+### Data Description - Power ###
 
 This dataset contains recordings of the energy consumption and outdoor air temperature of four retail 
 buildings at various locations in the U.S. at 15 minute intervals during 2010. The measurements have
@@ -22,7 +22,7 @@ day | Integer indicating the Julian day in 2010 (number of days since Jan 1, 201
 OAT.F | Outdoor Air Temperature measured in Farenheit
 Power.KW | Instantaneous power consumption by the building at the date time, measured in Kilowatts
 
-### Trelliscope View ###
+### Trelliscope View - Power ###
 
 The purpose of this activity is to launch the `trelliscope` display and then explore the power
 consumption data: to look for patterns, bad data, anomalies, etc. 
@@ -65,7 +65,7 @@ myport <- 8100
 view(port = myport)
 ```
 
-### Challenge Questions ###
+### Challenge Questions - Power ###
 
 Do your best to answer the following questions. We have placed them here to help 
 you learn how to use `trelliscope`. Be sure to launch the `trelliscope` display 
@@ -81,7 +81,7 @@ power consumption pattern is noticeably different than normal consumption patter
 4. Given that each building is in a unique location, can you conclude that outdoor air temperature 
 is correlated with power usage? 
 
-### Code to Create Trelliscope View ###
+### Code to Create Trelliscope View - Power ###
 
 This activity will teach you how to create your own `trelliscope` displays. We will be using the same 
 data as presented in the pre-made display, but you will have the opportunity to interact with the 
@@ -90,7 +90,7 @@ and use cognostics to filter and sort the plots.
 
 There are several key steps to creating a Trelliscope view that we will discuss below:
 - Load the `trelliscope` package and other requisite packages
-- Summarize the data as needed to get an initial feel for the data
+- Get an initial feel for the data using tabular summaries
 - Divide the data using `divide()` from the `datadr` package
 - Define the **panel** and **cognostics** functions
 - Establish a connection to a visualization data base (vdb) using `vdbConn()` from the 
@@ -114,7 +114,7 @@ Now we'll load the necessary libraries and read in the power data.
 library(trelliscope)
 library(datadr)
 
-# You will need to adjust replace the first part of path with the location where you
+# You will need to replace the first part of path with the location where you
 # unzipped the demonstration files
 setwd("~/correct_path/power_demo")
 
