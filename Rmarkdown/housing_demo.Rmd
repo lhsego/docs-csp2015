@@ -132,39 +132,38 @@ str(housing)
 #### Divide the Data ####
 
 Using the `divide()` function of the `datadr` package, we are going to divide the data set 
-by the variables **county** and **state** and thereby create a divided data frame (ddf), 
-one of the primary data types in the `datadr` package.  Each element in the ddf is as subset of the
+by the variables **county** and **state** and thereby create a divided data frame (DDF), 
+one of the primary data types in the `datadr` package.  Each element in the DDF is as subset of the
 original housing dataset, containing the data for a unique county and state combination. 
 
 ```{r eval = TRUE, message = FALSE}
 # We will create a distributed data frame by dividing our data by county and state
 byCounty <- divide(housing, by = c("county", "state"), update = TRUE)
 
-# Note that "byCounty" is a distributed data frame (ddf)
+# Note that "byCounty" is a distributed data frame (DDF)
 class(byCounty)
 ```
 
-**ddf** objects have a printing method that shows the size of the object in terms of memory 
-and other metadata related to the ddf:
+**DDF** objects have a printing method that shows the size of the object in terms of memory 
+and other metadata related to the DDF:
 
 ```{r eval = TRUE}
-# Show (print) the ddf object:
+# Show (print) the DDF object:
 byCounty
 ```
-Let's look at first division in the ddf. It will consist of a key-value pair.
+Let's look at first division in the DDF. It will consist of a key-value pair.
 The key should look something like "county=X|state=Y" and the value
 should be the data frame corresponding to that key.
 
 ```{r eval = TRUE}
-# Display the first division of the ddf
+# Display the first division of the DDF
 byCounty[[1]]
 ```
 
 Exploratory data analysis often begins with computing a
 variety of summary statistics.  The `datadr` package has some predefined functions 
-for performing these calculations on ddfs:
+for performing these calculations on DDFs:
 
-### Check these
 ```{r eval = FALSE}
 # Display the number of data divisions, corresponding to the number of unique counties
 length(byCounty) 
@@ -173,78 +172,85 @@ length(byCounty)
 names(byCounty)
 
 # Data division keys (state & county names in this example)
-getKeys(byCounty) 
+head(getKeys(byCounty))
 
-# Look at summary statistics for each key-value pair:
+# Look at summary statistics for each variable
 summary(byCounty)
 ```
 
-We can get a sense of the number of rows in each element of the ddf as well as the amount of 
+We can get a sense of the number of rows in each element of the DDF as well as the amount of 
 memory taken up by each element using `splitRowDistn()` and `splitSizeDistn()`.
 
-```{r eval = TRUE, message = FALSE}
+```{r eval = TRUE, message = FALSE, fig.width = 4.5, fig.height = 4.5}}
 # Percentiles of number of rows per division
-splitRowDistn(byCounty) 
+plot(splitRowDistn(byCounty), xlab = "Percentile", 
+     ylab = "Number of rows per division", main = "Number of Rows")
 
 # Percentiles of number of bytes per division
-splitSizeDistn(byCounty) 
+plot(splitSizeDistn(byCounty), xlab = "Percentile", 
+     ylab = "Number of bytes per division", main = "Number of Bytes")
 ```
 
-You can access the elements of the distributed data frame (ddf) using the key or by index, 
+You can access the elements of the distributed data frame (DDF) using the key or by index, 
 just like you would with a traditional list.
 
 ```{r eval = TRUE}
-# A data division can be accessed by by its named key or by number
+# A data division can be accessed by by its named key 
 byCounty[["county=Benton County|state=WA"]]
-```
 
-```{r eval = FALSE}
-# If you wish to access the data frame by index 
+# A data division can be accessed by index number
 byCounty[[176]] 
 ```
 
-Finally, you can use the `drQuantile()` function to compute the sample quantiles for the elements in the ddf object.
+Finally, you can use the `drQuantile()` function to compute the sample quantiles for the elements in the DDF object.
 
-```{r eval = TRUE}
-# Look at quantiles of median list price/sqft 
+```{r eval = TRUE, fig.width = 4.5, fig.height = 4.5}
+# Create a plot of the quantiles of median list price/sqft 
 priceQ <- drQuantile(byCounty, var = "medListPriceSqft")
-xyplot(q~fval, data=priceQ, main="Median List Price/Sqft Quantiles")
+xyplot(q ~ fval, data = priceQ, main = "Median List Price/Sqft Quantiles")
 ```
 
-#### Divide and Recombine ####
+#### Recombine the data ####
 
-Suppose we are interested in figuring out the trend component of each time series in our ddf.
+Suppose we are interested in the trend component of each time series in our DDF.
 We can do this by creating a linear model for each subdivision and extracting the slope parameter. 
-We wish to incorporate this information into our pre-existing ddf and use it in our analysis. 
+We wish to incorporate this information into our pre-existing DDF and use it in our analysis. 
 
-```{r eval=T, message = F, results = "hide"}
-# Calculate linear model for each data division to see the trend in prices
+We begin by creating a transformation function that will calculate the slope for each division and then
+testing the function on a single division.
 
-# Create a function to calculate a linear model and extract the slope parameter
+```{r eval = TRUE, message = FALSE, results = "hide"}
+# Create a function to calculate a linear model for a division and extract the slope parameter
 lmCoef <- function(x) {
-   data.frame(getSplitVars(x), slope=coef(lm(medListPriceSqft ~ time, data = x))[2])
+   data.frame(getSplitVars(x), slope = coef(lm(medListPriceSqft ~ time, data = x))[2])
 }
 
 # Test lmCoef on one division
-kvApply(lmCoef, byCounty[[176]])
+kvApply(byCounty[[176]], lmCoef)
+```
 
+The next step is to add the linear slope transformation function to the DDF and then recombine it
+using row binding to form a regular data frame.
+
+```{r eval = TRUE, message = TRUE}
 # Add the function transform to the DDF
 byCountySlope <- addTransform(byCounty, lmCoef)
 
 # Now look at data with the transformation
 byCountySlope[[176]]
 
-# Recombine the slope data into a single data.frame
+# Recombine the slope data into a single data frame using the combRbind() method
 countySlopes <- recombine(byCountySlope, combRbind)
 
 # Look at the recombined data
 head(countySlopes)
+str(countySlopes)
 ```
-
 Sometimes you will want to actively combine two distributed data objects/frames together to create 
 a new data set. We will demonstrate how to perform these types of operations using the `drJoin()` function.
+Let's begin by looking at the **geoCounty** data frame which is part of the `housingData` package.
 
-```{r eval = T, message = F, results = "hide"}
+```{r eval = TRUE, message = FALSE}
 
 # Look at geoCounty which contains more information about US counties
 head(geoCounty)
@@ -252,32 +258,74 @@ head(geoCounty)
 # Divide geoCounty on county and state just like we did with the housing data
 geo <- divide(geoCounty, by = c("county", "state"))
 geo[[1]]
-
-# Get some wikipedia data on counties and divide by county/state
-wikiByCounty <- divide(wikiCounty, by = c("county", "state"))
-
-# Join divided housing, geo and wiki data together
-# This forms a Distributed Data Object (DDO)
-joinedData <- drJoin(housing = byCounty, slope=byCountySlope, geo = geo, wiki=wikiByCounty)
-
-# Note that this is no longer a distributed data frame
-class(joinedData)
-
-joinedData[[176]]
-
-length(joinedData)
-
-# Filter dataset to remove divisions without housing sales data
-joinedData <- drFilter(joinedData, function(x) {
-   !is.null(x$housing)
-})
-
-# See that the length has decreased - some data divisions have been removed
-length(joinedData)
-
 ```
 
-The data is now ready to be ingested into trelliscope. To use trelliscope, the user needs to define 
+Let's also include some population data for each county from Wikipedia.  This is included in the
+ **wikiCounty** dataset, also a part of the `housingData` package.
+
+```{r eval = TRUE, message = FALSE}
+# Look at the Wikepedia county data
+head(wikiCounty)
+
+# Divide it by county/state
+wikiByCounty <- divide(wikiCounty, by = c("county", "state"))
+```
+Now we will join the divided housing, geoCounty, and wikiCounty data together to create a 
+distributed data object (DDO).  
+
+```{r eval = TRUE, message = FALSE}
+# Join housing, geoCounty, and wikiCounty for each county/state key
+joinedData <- drJoin(housing = byCounty, slope = byCountySlope, geo = geo, wiki = wikiByCounty)
+
+# Note that this is no longer a DDF, but now a DDO with a different structure
+class(joinedData)
+
+# Look at the 176th key-value pair
+joinedData[[176]]
+```
+
+Note that we now have more key-value pairs than we originally had with the Zillow housing data:
+```{r eval = TRUE}
+# Display the number of key-value pairs
+length(joinedData)
+length(byCounty)
+```
+Note that the **geo** and **wikiByCounty** DDF's
+have additional counties not included in the housing DDFs (**byCounty** and **byCountySlope**).
+```{r eval = TRUE, message = FALSE}
+# geo contains more 225 more keys (counties) than byCounty
+length(setdiff(unlist(getKeys(geo)), unlist(getKeys(byCounty))))
+
+# Likewise, wikiByCounty contains 260 more keys (counties) than byCounty
+length(setdiff(unlist(getKeys(wikiByCounty)), unlist(getKeys(byCounty))))
+```
+These extra counties do not contain housing data.  We can see an example here:
+```{r eval = TRUE, message = FALSE}
+# Identify keys in the joined data that don't have housing data
+findNoHousing <- drLapply(joinedData, function(x) is.null(x$housing), combine = combRbind)
+
+# Look at the structure of the output
+str(findNoHousing)
+
+# Find some cases where there is no housing data
+head(findNoHousing[findNoHousing$val,])
+
+# Display a case with no housing data
+joinedData[["county=Adams County|state=IA"]]
+```
+To remove these extra counties with no housing data, we can use `drFilter()` and apply a
+function to each subset that will remove the keys (counties) with missing housing data
+
+``{r eval = TRUE}
+# Filter dataset to remove divisions without housing sales data
+joinedData <- drFilter(joinedData, function(x) !is.null(x$housing))
+
+# And now we're back to the original set of keys we had with the housing data
+setequal(unlist(getKeys(joinedData)), unlist(getKeys(byCounty)))
+```
+CONTINUE HERE
+The data are now ready to be ingested into `trelliscope`. To use `trelliscope`, the user 
+needs to define 
 a visual data base and create basic functions for plotting. On top of this, a user can develop and 
 use cognostics to improve data interpretability. A cognostic is usually, but not always, a summary 
 statistic or some form of metadata to be included along with plots. These values can be useful in 
