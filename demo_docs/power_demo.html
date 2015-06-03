@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Power utilization in retail buildings</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h2>Power utilization in retail buildings</h2>
+
+<p>This dataset contains recordings of the energy consumption and outdoor air temperature of four retail buildings at various locations in the U.S. at 15 minute intervals during 2010. The measurements have
+been anonymized by applying a random linear transformation.
+The variables in the data are described below:</p>
+
+<table><thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>building</td>
+<td>An integer identifying each of the four buildings</td>
+</tr>
+<tr>
+<td>dateTime</td>
+<td>The date and time when the power and temperature were recorded</td>
+</tr>
+<tr>
+<td>year</td>
+<td>Integer indicating the year of the measurement (all</td>
+</tr>
+<tr>
+<td>date</td>
+<td>The date of the measurement</td>
+</tr>
+<tr>
+<td>quarter</td>
+<td>The quarter of the year (Q1, Q2, Q3, Q4)</td>
+</tr>
+<tr>
+<td>month</td>
+<td>The month, represented as an integer (1, 2, &hellip;, 12)</td>
+</tr>
+<tr>
+<td>monthName</td>
+<td>The name of the month (&ldquo;January&rdquo;, &ldquo;Februrary&rdquo;, &hellip;, &ldquo;December&rdquo;)</td>
+</tr>
+<tr>
+<td>week</td>
+<td>Integer indicating the week in 2010 (1, 2, 3, &hellip;, 53)</td>
+</tr>
+<tr>
+<td>weekDay</td>
+<td>The day of the week (&ldquo;Monday&rdquo;, &ldquo;Tuesday&rdquo;, &hellip;, &ldquo;Sunday&rdquo;)</td>
+</tr>
+<tr>
+<td>day</td>
+<td>Integer indicating the Julian day in 2010 (number of days since Jan 1, 2010)</td>
+</tr>
+<tr>
+<td>OAT.F</td>
+<td>Outdoor Air Temperature measured in Farenheit</td>
+</tr>
+<tr>
+<td>Power.KW</td>
+<td>Instantaneous power consumption by the building at the date time, measured in Kilowatts</td>
+</tr>
+</tbody></table>
+
+<h1>Preliminaries</h1>
+
+<p>Let&#39;s begin by setting the working directory for this example. You may have to change the path in the command below to correctly point to the <code>power_demo</code> directory.</p>
+
+<pre><code class="r">setwd(&quot;power_demo&quot;)
+</code></pre>
+
+<p>And let&#39;s remove any possible left-over objects in the Global environment:</p>
+
+<pre><code class="r">rm(list = ls())
+</code></pre>
+
+<p>And load the requisite packages:</p>
+
+<pre><code class="r">library(trelliscope)
+library(plyr)
+</code></pre>
+
+<h1>Pre-made Trelliscope Displays</h1>
+
+<p>The following will launch two pre-made trelliscope displays:</p>
+
+<ul>
+<li>Power vs. Time </li>
+<li>Power vs. Outdoor Air Temp 
+where each panel shows data for all four buildings for a single day.<br/></li>
+</ul>
+
+<p>The purpose of this activity is to launch the Trelliscope display and then explore the data&mdash;to look for patterns, bad data, anomalies, etc. The code required to generate these displays is shown next.</p>
+
+<pre><code class="r"># Load some preconfigured global plotting limits
+load(&quot;plottingLims.Rdata&quot;)
+
+# Open the connection to the pre-existing trelliscope visualization.
+# (&quot;vdb_power&quot; is a folder in &quot;power_demo&quot;)
+vdbConn(&quot;vdb_power&quot;)
+
+# use this port when running locally on your own computer
+myport &lt;- 8100 
+
+# use this port on the AWS demo cluster
+# myport &lt;- Sys.getenv(&quot;TR_PORT&quot;) 
+
+# Launch the trelliscope viewer.  Use Ctrl-C or ESC to stop the reviewer and return
+# the R prompt
+view(port = myport)
+</code></pre>
+
+<h2>Challenge Questions</h2>
+
+<p>Do your best to answer the following questions. We have placed them here to help you learn how to use trelliscope. Don&#39;t worry if you don&#39;t know the answer. The results will not show up on your transcript. Be sure to pull up the trelliscope display (if it&#39;s not already open) from the code above.</p>
+
+<ul>
+<li>Without manually scrolling through all the panels, can you identify the days when the power consumption pattern is noticeably different than normal consumption patterns?</li>
+<li>Given the data, can you conclude that there are faulty sensors on or in the buildings?</li>
+<li>Is there a seasonal trend in power consumption?</li>
+<li>Given that each building is in a unique location, can you conclude that outdoor air temperature is correlated with power usage? </li>
+</ul>
+
+<h1>Making your own Trelliscope Displays</h1>
+
+<p>This activity will teach you how to create your own Trelliscope displays. We will be using the same data as presented in the pre-made displays, but you will have the opportunity to interact with the underlying code. This tutorial will demonstrate how to generate your own plots and how to create and use cognostics to aid in the interpretability of said plots.</p>
+
+<p>We&#39;ll start by importing the necessary libraries and reading in the power data. Note that you will have to supply the correct filepath in the call to <code>read.csv()</code> below.</p>
+
+<pre><code class="r"># Load the trelliscope package if you haven&#39;t already
+library(trelliscope)
+library(datadr)
+
+# Let&#39;s clear the workspace of any residual objects
+rm(list = ls())
+
+# You will need to change this. Be sure this is pointed to the directory containing retailBuildings.csv
+setwd(&quot;C:/Users/venz586/Documents/docs-csp2015/demos/power_demo/&quot;)
+
+# We&#39;ll begin by reading in the data. Be sure to supply
+# the correct filepath or this will fail. 
+d &lt;- read.csv(&quot;retailBuildings.csv&quot;)
+</code></pre>
+
+<p>It&#39;s standard practice, when analyzing a new set of data, to get a sense of the underlying structure. The R programming language has many convenient functions for doing this and <code>str()</code> is one of the best for getting a sense of the dimensions and entries in the data set.   </p>
+
+<pre><code class="r"># Observe the first 6 rows of the dataset
+head(d)
+</code></pre>
+
+<pre><code>  building            dateTime year       date quarter month monthName
+1        2 2010-01-01 01:15:00 2010 2010-01-01      Q1     1   January
+2        2 2010-01-01 01:30:00 2010 2010-01-01      Q1     1   January
+3        2 2010-01-01 01:45:00 2010 2010-01-01      Q1     1   January
+4        2 2010-01-01 02:00:00 2010 2010-01-01      Q1     1   January
+5        2 2010-01-01 02:15:00 2010 2010-01-01      Q1     1   January
+6        2 2010-01-01 02:30:00 2010 2010-01-01      Q1     1   January
+  week weekday day    OAT.F Power.KW
+1    1  Friday   1 43.79894 126.7764
+2    1  Friday   1 43.79894 127.3692
+3    1  Friday   1 43.79894 124.4899
+4    1  Friday   1 43.79894 124.5745
+5    1  Friday   1 43.09446 123.3042
+6    1  Friday   1 43.09446 122.4574
+</code></pre>
+
+<pre><code class="r"># Now let&#39;s look at the structure of the data.
+# Notice how there are 139740 rows and 12 columns, and that
+# dateTime and date are stored as factors
+str(d)
+</code></pre>
+
+<pre><code>&#39;data.frame&#39;:   139740 obs. of  12 variables:
+ $ building : int  2 2 2 2 2 2 2 2 2 2 ...
+ $ dateTime : Factor w/ 34935 levels &quot;2010-01-01 01:15:00&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
+ $ year     : int  2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
+ $ date     : Factor w/ 364 levels &quot;2010-01-01&quot;,&quot;2010-01-02&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ quarter  : Factor w/ 4 levels &quot;Q1&quot;,&quot;Q2&quot;,&quot;Q3&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ month    : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ monthName: Factor w/ 12 levels &quot;April&quot;,&quot;August&quot;,..: 5 5 5 5 5 5 5 5 5 5 ...
+ $ week     : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ weekday  : Factor w/ 7 levels &quot;Friday&quot;,&quot;Monday&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ day      : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ OAT.F    : num  43.8 43.8 43.8 43.8 43.1 ...
+ $ Power.KW : num  127 127 124 125 123 ...
+</code></pre>
+
+<p>It would be useful to get an idea of the number of entries of each variable in our data set as well as a summary of each variable. We can use the <code>table()</code> and <code>summary()</code> functions to gather this data. </p>
+
+<pre><code class="r"># Let&#39;s convert the dateTime and date to a POSIXct format so R can compute with
+# them as dates
+d$dateTime &lt;- as.POSIXct(d$dateTime)
+d$date &lt;- as.POSIXct(d$date)
+str(d)
+</code></pre>
+
+<pre><code class="r"># The summary method applied to a data frame can be helpful to get
+# a feel for the values in the data
+summary(d)
+</code></pre>
+
+<pre><code>    building                   dateTime           year     
+ Min.   :2.00   2010-01-01 01:15:00:     4   Min.   :2010  
+ 1st Qu.:2.75   2010-01-01 01:30:00:     4   1st Qu.:2010  
+ Median :3.50   2010-01-01 01:45:00:     4   Median :2010  
+ Mean   :3.50   2010-01-01 02:00:00:     4   Mean   :2010  
+ 3rd Qu.:4.25   2010-01-01 02:15:00:     4   3rd Qu.:2010  
+ Max.   :5.00   2010-01-01 02:30:00:     4   Max.   :2010  
+                (Other)            :139716                 
+         date        quarter        month          monthName    
+ 2010-01-02:   384   Q1:34524   Min.   : 1.000   August :11904  
+ 2010-01-03:   384   Q2:34944   1st Qu.: 4.000   July   :11904  
+ 2010-01-04:   384   Q3:35328   Median : 7.000   May    :11904  
+ 2010-01-05:   384   Q4:34944   Mean   : 6.512   October:11904  
+ 2010-01-06:   384              3rd Qu.:10.000   March  :11888  
+ 2010-01-07:   384              Max.   :12.000   January:11884  
+ (Other)   :137436                               (Other):68352  
+      week            weekday           day            OAT.F       
+ Min.   : 1.00   Friday   :19948   Min.   :  1.0   Min.   : 4.351  
+ 1st Qu.:14.00   Monday   :19968   1st Qu.: 91.0   1st Qu.:44.543  
+ Median :27.00   Saturday :19968   Median :182.0   Median :53.089  
+ Mean   :26.55   Sunday   :19952   Mean   :181.9   Mean   :55.245  
+ 3rd Qu.:40.00   Thursday :19968   3rd Qu.:273.0   3rd Qu.:69.160  
+ Max.   :53.00   Tuesday  :19968   Max.   :364.0   Max.   :92.901  
+                 Wednesday:19968                                   
+    Power.KW    
+ Min.   :  0.0  
+ 1st Qu.:192.0  
+ Median :254.8  
+ Mean   :257.9  
+ 3rd Qu.:317.4  
+ Max.   :543.3  
+
+</code></pre>
+
+<pre><code class="r"># It would be nice to see a tabulation of the categorial variables.
+# We can do that like this:
+with(d, table(building))
+</code></pre>
+
+<pre><code>building
+    2     3     4     5 
+34935 34935 34935 34935 
+</code></pre>
+
+<pre><code class="r"># To make tables for all the categorical variables, let&#39;s create a
+# vector with the names of these variables so we can easily select them:
+sel &lt;- c(&quot;building&quot;, &quot;year&quot;, &quot;quarter&quot;, &quot;month&quot;, &quot;monthName&quot;, &quot;week&quot;, &quot;weekday&quot;)
+
+# Now we use that vector to select those columns of &#39;d&#39;, and we can apply
+# the table() function to each column (column-wise summaries are indicated by
+# MARGIN = 2)
+apply(d[,sel], MARGIN = 2, table)
+
+# We can also make cross tabulations to get a sense of the counts of
+# two categorical variables.  For example, let&#39;s look at month by building:
+with(d, table(month, building))
+</code></pre>
+
+<p>Now that we&#39;ve observed the data from the outside, the time has come to get our hands dirty. We will accomplish this task by subdividing the data into meaningful groups and making a plot of each group. A time series plot of the energy consumption of each building per day would be useful. To accomplish this, we&#39;ll need to divide the data by date and create a <em>distributed data frame</em> (ddf) object using the <code>divide()</code> function from the datadr package. After that, we will sort each data frame by building and dateTime using the <code>arrange()</code> function from the plyr package. </p>
+
+<pre><code class="r"># import the plyr package
+library(plyr)
+byDate &lt;- divide(d, by = &quot;date&quot;, postTransFn = function(x) arrange(x, building, dateTime))
+
+# Let&#39;s look at a single element of the ddf:
+str(byDate[1])
+
+# Now let&#39;s compute the range of the power so we can use the same axes for all 
+# the plots
+powerLims &lt;- range(d$Power.KW)
+tempLims &lt;- range(d$OAT.F)
+
+# Now we create a function to plot the power usage in all 5 buildings for a 
+# single day
+power.by.time &lt;- function(x) {
+
+  # Get the x and y axis limits
+  # Global limits for y
+  ylim &lt;- powerLims
+  # Local limits for x
+  xlim &lt;- range(x$dateTime)
+
+  # Set plotting options
+  par(las = 2, mar = c(4, 4, 0.5, 0.5))
+
+  # Create a blank plot
+  with(x, plot(dateTime, Power.KW, type = &quot;n&quot;, xlim = xlim, ylim = ylim,
+               xlab = &quot;&quot;, ylab = &quot;Power (KW)&quot;))
+
+  # Add in the data for each building, giving each building a different color
+  for (i in as.character(2:5)) {
+    with(x[x$building == i,], 
+       lines(dateTime, Power.KW, col = as.numeric(i) - 1, lwd = 2))
+  }
+
+  # Add a legend to the plot
+  legend(xlim[1] + 0.5 * diff(xlim), ylim[1],
+         paste(&quot;Building&quot;, 2:5),
+         lty = 1, col = c(2:5) - 1, lwd = 3, yjust = 0)
+
+  # Returning NULL is required by trelliscope when the plotting function is 
+  # base R code (as opposed to plots generated by lattice or ggplot)
+  return(NULL)
+
+} # power.by.time()
+</code></pre>
+
+<pre><code class="r"># Test the plot on a single subset
+power.by.time(byDate[[8]][[2]])
+</code></pre>
+
+<pre><code>## Warning in xy.coords(x, y, xlabel, ylabel, log): NAs introduced by
+## coercion
+</code></pre>
+
+<pre><code>## Error in plot.window(...): invalid &#39;xlim&#39; value
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAA1BMVEX///+nxBvIAAAACXBIWXMAAAsSAAALEgHS3X78AAABDUlEQVR4nO3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOBv4mUAASET0xEAAAAASUVORK5CYII=" alt="plot of chunk unnamed-chunk-11"/> </p>
+
+<h2>Using cognostics to improve EDA</h2>
+
+<p>Sometimes it is useful to display order statistics or other information along with the phyiscal plot. These extra bits of information are called &ldquo;cognostics&rdquo; and they can help the user get a better sense of the big picture. Some cognostics are built into the trelliscope package, but users are also free to create their own. </p>
+
+<pre><code class="r"># Next we create cognostics function that defines the cognostics (measures of 
+# interest) that will be calculated (and visualizable) for each plot.  Keep in 
+# mind that each cognostic should consist of a scalar value.  The input to the 
+# cognostics function (&#39;x&#39;) is a dataframe that contains one split, or one 
+# subset, of the data.  In this case it is a dataframe that contains all the 
+# data for a given date.
+kwCog &lt;- function(x) { 
+
+  list(
+
+  # Compute the max and min for each day
+  max = cog(max(x$Power.KW, na.rm = TRUE), desc = &quot;Max Power (KW)&quot;),
+  min = cog(min(x$Power.KW, na.rm = TRUE), desc = &quot;Min Power (KW)&quot;),
+
+  # Some common statistics are built into trelliscope with their own cognostics functions.
+  # For example, cogMean() and cogRange().
+  meanPower = cogMean(x$Power.KW, desc = &quot;Mean Power (KW)&quot;),
+  rangePower = cogRange(x$Power.KW, desc = &quot;Range of Power (Max - Min) (KW)&quot;),
+
+  # Note that we use &#39;unique()&#39; below because, for each subset, the value of 
+  # month, week, and day are all repeated for a single date. So we use unique() 
+  # to get a scalar value of these date variables
+  month = cog(unique(x$monthName), desc = &quot;Month Name&quot;),
+  week = cog(unique(x$week), desc = &quot;Week in 2010&quot;),
+  day = cog(unique(x$day), desc = &quot;Julian Day in 2010&quot;)
+
+  )
+
+} # kwCog()
+</code></pre>
+
+<p>Let&#39;s take a look at the information gathered from our cognostics function. You may have noticed that trelliscope has some pre-defined cognostics like <code>cogMean()</code> and <code>cogRange()</code>. You can define your own cognostics by using the <code>cog()</code> function. </p>
+
+<pre><code class="r"># Test the cognostics function for the 7th subset
+kwCog(byDate[[73]][[2]])
+</code></pre>
+
+<pre><code>## $max
+## [1] 373.5434
+## 
+## $min
+## [1] 164.8856
+## 
+## $meanPower
+## [1] 235.155
+## 
+## $rangePower
+## [1] 208.6579
+## 
+## $month
+## [1] &quot;March&quot;
+## 
+## $week
+## [1] 11
+## 
+## $day
+## [1] 73
+</code></pre>
+
+<p>In trelliscope, you have to define a plotting function for the visual data base. We will create a simple function for plotting power consumption versus temperature and apply it to <code>byDate</code>.</p>
+
+<pre><code class="r"># Open connection to the trelliscope visualization database (vdb)
+vdbConn(&quot;vdb_power&quot;, autoYes = TRUE)
+
+# Create first display using Trelliscope&#39;s makeDisplay() function.  This writes
+# the various plots to the vdb that can then be viewed with trelliscope.
+makeDisplay(byDate, name = &quot;Power_by_Day&quot;,
+            desc = &quot;Power time series for 2010 buildings by day&quot;,
+            panelFn = power.by.time, cogFn = kwCog)
+</code></pre>
+
+<pre><code>## Warning in xy.coords(x, y, xlabel, ylabel, log): NAs introduced by
+## coercion
+</code></pre>
+
+<pre><code>## Error in plot.window(...): invalid &#39;xlim&#39; value
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAA1BMVEX///+nxBvIAAAACXBIWXMAAAsSAAALEgHS3X78AAABDUlEQVR4nO3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOBv4mUAASET0xEAAAAASUVORK5CYII=" alt="plot of chunk unnamed-chunk-14"/> </p>
+
+<pre><code class="r"># Let&#39;s also create a related display of power versus temperature by date
+power.v.temp &lt;- function(x) {
+
+  # Get the limits
+  xlim &lt;- tempLims
+  ylim &lt;- powerLims
+
+  # Set plotting parameters
+  par(las = 1, mar = c(4, 4, 0.5, 0.5))
+
+  # Create a blank plot for outdoor air temp vs. power
+  with(x, plot(OAT.F, Power.KW, type = &quot;n&quot;, xlim = xlim, ylim = ylim,
+               xlab = &quot;Outside Air Temp (F)&quot;, ylab = &quot;Power (KW)&quot;))
+
+  # Add points for each building with a different color
+  for (i in as.character(2:5)) {
+    with(x[x$building == i,], points(OAT.F, Power.KW, col = as.numeric(i)-1))
+  }
+
+  # Add in the legend
+  legend(xlim[1], ylim[2],
+         paste(&quot;Building&quot;, 2:5),
+         pch = 1,
+         col = c(2:5) - 1)
+
+  # Returning NULL is required by trelliscope when the plotting function is 
+  # base R code (as opposed to plots generated by lattice or ggplot)
+  return(NULL)
+
+} # power.v.temp()
+</code></pre>
+
+<p>It&#39;s almost always a good idea to test a function on a single element of a distributed data object before attempting to apply it over the entire object. </p>
+
+<pre><code class="r"># Test the plot on a single subset
+power.v.temp(byDate[[8]][[2]])
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-15"/> </p>
+
+<pre><code>## NULL
+</code></pre>
+
+<pre><code class="r"># Make the trelliscope display
+makeDisplay(byDate, name = &quot;Power_vs_Temp_by_Day&quot;,
+            desc = &quot;Power vs. Temperature for 2010 buildings by day&quot;,
+            panelFn = power.v.temp, cogFn = kwCog)
+
+# Launch the trelliscope viewer (must be in Firefox, Chrome, or Safari--not 
+# Internet Explorer)
+myport &lt;- 8100 # use this when running locally
+# myport &lt;- Sys.getenv(&quot;TR_PORT&quot;) # use this on demo cluster
+view(port = myport)
+</code></pre>
+
+</body>
+
+</html>
+
