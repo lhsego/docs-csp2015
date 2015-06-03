@@ -26,7 +26,7 @@ library(housingData)
 ################################################################################
 #### Let's set the working directory for this example. You may have to change the
 #### path in the command below to correctly point to the 'housing_demo' directory
-setwd("~/demos/housing_demo")
+setwd("housing_demo")
 
 # Remove any left-over objects in the Global environment
 rm(list = ls())
@@ -96,7 +96,7 @@ lmCoef <- function(x) {
 }
 
 # Test lmCoef on one division
-kvApply(lmCoef, byCounty[[176]])
+lmCoef(byCounty[[176]]$value)
 
 # Add the function transform to the DDF
 byCountySlope <- addTransform(byCounty, lmCoef)
@@ -154,7 +154,7 @@ timePanel <- function(x) {
 }
 
 # Test the plot function on a single division
-kvApply(timePanel, joinedData[[176]])
+timePanel(joinedData[[176]]$value)
 
 # Define a cognostics function: this is used to define information and 
 # statistics that will be available in the Trelliscope UI for sorting and 
@@ -185,7 +185,7 @@ priceCog <- function(a) {
 }
 
 # Test on a single division
-kvApply(priceCog, joinedData[[176]])
+priceCog(joinedData[[176]]$value)
 
 # Create the display: this creates and saves display files and information in
 # the vdb directory defined above
@@ -215,6 +215,9 @@ geoSlopeData <- addTransform(geoSlopeData, function(x) {
    data.frame(x$slope, x$geo)
 })
 geoSlopeData[[1]]
+
+# Persist the transformation 
+geoSlopeData <- drPersist(geoSlopeData)
 
 # Create a dataset of county slope and geo data divided by state
 slopesByState <- divide(geoSlopeData, by="state", update=TRUE)
@@ -253,7 +256,7 @@ stateMapPanelFn <- function(x) {
 }
 
 # Test on one data division
-kvApply(stateMapPanelFn, slopesByState[["state=WA"]])
+stateMapPanelFn(slopesByState[["state=WA"]]$value)
 
 # Cognostics function that includes slope statistics, lat and lon ranges
 # and a link to the corresponding county plots for the selected state
@@ -287,7 +290,7 @@ mapCog <- function(x) {
 }
 
 # Test cognostics function on one division
-kvApply(mapCog, slopesByState[["state=WA"]])
+mapCog(slopesByState[["state=WA"]]$value)
 
 # Make the new display
 makeDisplay(slopesByState,
