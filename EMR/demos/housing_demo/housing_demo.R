@@ -26,7 +26,7 @@ library(housingData)
 ################################################################################
 #### Let's set the working directory for this example. You may have to change the
 #### path in the command below to correctly point to the 'housing_demo' directory
-setwd("housing_demo")
+setwd("~/demos/housing_demo")
 
 # Remove any left-over objects in the Global environment
 rm(list = ls())
