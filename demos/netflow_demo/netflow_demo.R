@@ -76,6 +76,7 @@ library(Rhipe)
 library(cyberTools)
 rhinit()
 rhoptions(file.types.remove.regex="(/_meta|/_rh_meta|/_outputs|/_SUCCESS|/_LOG|/_log|rhipe_debug|rhipe_merged_index_db)")
+rhoptions(runner="/home/hadoop/rhRunner.sh")
 
 # Set time zone to "UTC" for use with dates in the data
 Sys.setenv(TZ = "UTC")
@@ -174,7 +175,7 @@ nfWithInternalHost <- recombine(nfRaw, combDdo,
 
 # Divide data by host IP
 nfByHost <- divide(nfWithInternalHost, by = "hostIP",
-                   update=TRUE,
+                   update=TRUE, packages="data.table",
                    output = hdfsConn("nfByHost", autoYes=TRUE) 
   )
 
