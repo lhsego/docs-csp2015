@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+    
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/custom/custom.css" rel="stylesheet">
     <!-- font-awesome -->
     <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-
+    
     <!-- prism -->
     <link href="assets/prism/prism.css" rel="stylesheet">
     <link href="assets/prism/prism.r.css" rel="stylesheet">
@@ -35,6 +35,7 @@
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <!-- <link href='http://fonts.googleapis.com/css?family=Lustria' rel='stylesheet' type='text/css'> -->
     <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
     
 
     <!-- Fav and touch icons -->
@@ -53,6 +54,7 @@
         <ul class="nav nav-pills pull-right">
            
         </ul>
+        
         <p class="myHeader">Tessera Demo at the Conference on Statistical Practice 2015</p>
       </div>
 
@@ -66,73 +68,51 @@
    <li class='nav-header unselectable' data-edit-href='download_instructions.Rmd'>CSP 2015 Demo</li>
       
       <li class='active'>
+         <a target='_self' class='nav-not-header' href='#introduction'>Introduction</a>
+      </li>
+
+
+      <li class='active'>
          <a target='_self' class='nav-not-header' href='#download-demo-materials'>Download Demo Materials</a>
       </li>
 
 
-<li class='nav-header unselectable' data-edit-href='housing_demo.Rmd'>Housing Sales Data</li>
+<li class='nav-header unselectable' data-edit-href='housing_demo.Rmd'>Housing Sales</li>
       
       <li class='active'>
-         <a target='_self' class='nav-not-header' href='#data-description---housing-data'>Data Description - Housing Data</a>
+         <a target='_self' class='nav-not-header' href='#data-description---housing'>Data Description - Housing</a>
       </li>
 
 
       <li class='active'>
-         <a target='_self' class='nav-not-header' href='#data-exploration---housing-sales-data'>Data Exploration - Housing Sales Data</a>
+         <a target='_self' class='nav-not-header' href='#trelliscope-view---housing'>Trelliscope View - Housing</a>
       </li>
 
 
       <li class='active'>
-         <a target='_self' class='nav-not-header' href='#challenge-questions---housing-data'>Challenge Questions - Housing Data</a>
+         <a target='_self' class='nav-not-header' href='#challenge-questions---housing'>Challenge Questions - Housing</a>
       </li>
 
 
       <li class='active'>
-         <a target='_self' class='nav-not-header' href='#code---housing-sales-data'>Code - Housing Sales Data</a>
-      </li>
-
-
-<li class='nav-header unselectable' data-edit-href='netflow_demo.Rmd'>Computer Network Traffic</li>
-      
-      <li class='active'>
-         <a target='_self' class='nav-not-header' href='#data-description---computer-network-traffic'>Data Description - Computer Network Traffic</a>
-      </li>
-
-
-      <li class='active'>
-         <a target='_self' class='nav-not-header' href='#data-exploration---computer-network-traffic'>Data Exploration - Computer Network Traffic</a>
-      </li>
-
-
-      <li class='active'>
-         <a target='_self' class='nav-not-header' href='#challenge-question---computer-network-traffic'>Challenge Question - Computer Network Traffic</a>
-      </li>
-
-
-      <li class='active'>
-         <a target='_self' class='nav-not-header' href='#code---computer-network-traffic'>Code - Computer Network Traffic</a>
+         <a target='_self' class='nav-not-header' href='#code-to-create-trelliscope-view---housing'>Code to Create Trelliscope View - Housing</a>
       </li>
 
 
 <li class='nav-header unselectable' data-edit-href='power_demo.Rmd'>Power Utilization in Retail Buildings</li>
       
       <li class='active'>
-         <a target='_self' class='nav-not-header' href='#data-description---power-data'>Data Description - Power Data</a>
+         <a target='_self' class='nav-not-header' href='#data-description---power'>Data Description - Power</a>
       </li>
 
 
       <li class='active'>
-         <a target='_self' class='nav-not-header' href='#data-exploration---power-utilization'>Data Exploration - Power Utilization</a>
+         <a target='_self' class='nav-not-header' href='#challenge-questions---power'>Challenge Questions - Power</a>
       </li>
 
 
       <li class='active'>
-         <a target='_self' class='nav-not-header' href='#challenge-questions---power-utilization'>Challenge Questions - Power Utilization</a>
-      </li>
-
-
-      <li class='active'>
-         <a target='_self' class='nav-not-header' href='#code---power-utilization'>Code - Power Utilization</a>
+         <a target='_self' class='nav-not-header' href='#code-to-create-trelliscope-view---power'>Code to Create Trelliscope View - Power</a>
       </li>
 
    </ul>
@@ -140,28 +120,56 @@
 
 <div class="col-md-9 tab-content" id="main-content">
 
-<div class='tab-pane active' id='download-demo-materials'>
-<h3>Download Demo Materials</h3>
+<div class='tab-pane active' id='introduction'>
+<h3>Introduction</h3>
 
-<p>The Tessera team will be presenting an interactive demo at the 
+<p>The Tessera team presented an interactive demo at the 
 <a href="http://www.amstat.org/meetings/csp/2015/" target="_blank">
 2015 Conference on Statistical Practice</a> in 
 New Orleans on February 21, 2015.</p>
 
-<p>Participants who would like to download the Tessera tools prior to the demo 
-please follow these instructions. These tools will allow you to use and test 
-Tessera on your own computer without Hadoop or a similar parallel 
-processing backend.</p>
+<p>There were three demonstration activities involving different data sets:</p>
+
+<ul>
+<li>Housing sales</li>
+<li>Power utilization in retail buildings</li>
+<li>Computer network traffic</li>
+</ul>
+
+<p>Each demonstration contains four components:</p>
+
+<ul>
+<li>A description of the data set</li>
+<li>Simple code for launching a pre-created <code>trelliscope</code> view you can use to explore the data</li>
+<li>A set of challenge questions to guide your exploration of the data</li>
+<li>The R code used to create the <code>trelliscope</code> view</li>
+</ul>
+
+<p>These three demos are documented on this site, and you can run them on your
+own if you like.  To do so, you will first need to install some of
+the Tessera tools</p>
+
+</div>
+
+
+<div class='tab-pane' id='download-demo-materials'>
+<h3>Download Demo Materials</h3>
+
+<p>To run these demonstrations, you will first need to install R along with
+a local installation of Tessera.  A local installation means that Tessera can
+run on your own computer without requiring a computational backend like Hadoop.</p>
+
+<h4>Installation of R and Tessera</h4>
 
 <ol>
-<li><p>If you do not already have the most recent version of R, (version 3.1.2), please download and
+<li><p>If you do not already have the most recent version of R, please download and
 install it here: <a href="http://cran.r-project.org" target="_blank">
 <a href="http://cran.r-project.org">http://cran.r-project.org</a></a>. </p></li>
 <li><p>Optional: You may find the RStudio development environment an easier way
 to program in R, but it is not necessary. You may download it here:
-<a href="http://www.rstudio.com/" target="_blank"><a href="http://www.rstudio.com/">http://www.rstudio.com/</a></a>.</p></li>
-<li><p>You will need the Firefox or Chrome browser installed on your computer.  Internet Explorer and Safari sometimes have problems displaying Trelliscope views.</p></li>
-<li><p>Open R and execute the following commands to install Tessera and other libraries you&#39;ll need for the demos:</p>
+<a href="http://www.rstudio.com/" target="_blank"><a href="http://www.rstudio.com">http://www.rstudio.com</a></a>.</p></li>
+<li><p>Open R and execute the following commands to install Tessera and other libraries 
+you&#39;ll need for the demos:</p>
 
 <pre><code class="r">  install.packages(c(&quot;devtools&quot;, &quot;plyr&quot;, &quot;maps&quot;))
   library(devtools)
@@ -170,29 +178,38 @@ to program in R, but it is not necessary. You may download it here:
   install_github(&quot;hafen/housingData&quot;)
 </code></pre>
 
-<p><strong>For Windows users:</strong>  when installing <code>devtools</code>, you may notice the following warning, which
-you can ignore:</p>
+<p><strong>For Windows users:</strong>  when installing <code>devtools</code>, you may notice a warning like the following:</p>
 
 <pre><code class="r">&gt; library(devtools)
 WARNING: Rtools is required to build R packages, but no version of Rtools compatible with R 3.1.2 was found. (Only the following incompatible version(s) of Rtools were found:3.2)
 Please download and install Rtools 3.1 from http://cran.r-project.org/bin/windows/Rtools/ and then run find_rtools().
-</code></pre></li>
+</code></pre>
+
+<p><strong>For Mac users:</strong> when installing <code>devtools</code>, you may notice a similar warning indicating that <code>Xcode</code> is required.  </p>
+
+<p>For both Windows and Mac users, you can ignore these warnings because the Tessera packages do not include C or Fortran code that 
+requires compilation.</p></li>
+<li><p>You will need the Firefox or Chrome browser installed on your computer.  Internet Explorer and Safari 
+sometimes have problems displaying Trelliscope views.</p></li>
+</ol>
+
+<h4>Download demonstration files</h4>
+
+<ol>
 <li><p>Download the CSP Tessera demo files and unzip them on your computer:
 <a href="Tessera_demo_CSP2015.zip">Tessera_demo_CSP2015.zip</a></p></li>
 <li><p>The zip file contains a folder called <strong>demos</strong>.  Set your working directory in R to this folder,
-using something like <code>setwd(&quot;mypaths/demos&quot;)</code>.  The <strong>demos</strong> folder 
-contains a folder for each of the three demos:  <strong>power_demo</strong>, <strong>netflow_demo</strong>, and <strong>housing_demo</strong>.
+using something like <code>setwd(&quot;mypaths_to_demos/demos&quot;)</code>.  The <strong>demos</strong> folder 
+contains a folder for each of the three demos:  <strong>power_demo</strong>, <strong>housing_demo</strong>, and <strong>netflow_demo</strong>.
 Each demonstration folder has a single <strong>.R</strong> file which contains the code for the demonstration. Open that 
 file in your editor of choice and begin!</p></li>
 </ol>
 
-<h4>We look forward to seeing you at CSP!</h4>
-
 </div>
 
 
-<div class='tab-pane' id='data-description---housing-data'>
-<h3>Data Description - Housing Data</h3>
+<div class='tab-pane' id='data-description---housing'>
+<h3>Data Description - Housing</h3>
 
 <p>The housing dataset contains data about housing sales aggregated to the 
 county level in the United States between 2008-10-01 and 2014-03-01. This<br>
@@ -238,8 +255,8 @@ The data variables are as follows:</p>
 </div>
 
 
-<div class='tab-pane' id='data-exploration---housing-sales-data'>
-<h3>Data Exploration - Housing Sales Data</h3>
+<div class='tab-pane' id='trelliscope-view---housing'>
+<h3>Trelliscope View - Housing</h3>
 
 <p>The <code>datadr</code>, <code>trelliscope</code>, and <code>housingData</code> packages need to be imported for the following demo. Make sure to set the working directory to the location of the housing demo visual data base (vdb) directory. This will allow you to connect to the data base and interact with the trelliscope output. </p>
 
@@ -280,8 +297,8 @@ view(port = myport)
 </div>
 
 
-<div class='tab-pane' id='challenge-questions---housing-data'>
-<h3>Challenge Questions - Housing Data</h3>
+<div class='tab-pane' id='challenge-questions---housing'>
+<h3>Challenge Questions - Housing</h3>
 
 <p>Now that you have the trelliscope display open, we have a few challenge questions that we would like to see if you can answer. No one&#39;s grading you on this task. In order to familiarize yourself with the interface and get a sense of the power of the trelliscope package, see if you can answer the following set of questions:</p>
 
@@ -294,8 +311,8 @@ view(port = myport)
 </div>
 
 
-<div class='tab-pane' id='code---housing-sales-data'>
-<h3>Code - Housing Sales Data</h3>
+<div class='tab-pane' id='code-to-create-trelliscope-view---housing'>
+<h3>Code to Create Trelliscope View - Housing</h3>
 
 <p>This activity will teach you how to create your own trelliscope displays as well as some basic functionality of the datadr package using the housing data set. We will be using the same data from the pre-made displays, but now you will be writing the code to generate the output. We will begin by importing the necessary packages and create our first distributed data frame using the <code>divide()</code> function from datadr.  </p>
 
@@ -309,18 +326,18 @@ head(housing)
 </code></pre>
 
 <pre><code>   fips         county state       time nSold medListPriceSqft
-1 06001 Alameda County    CA 2008-10-01    NA            308.0
-2 06001 Alameda County    CA 2008-11-01    NA            299.2
+1 06001 Alameda County    CA 2008-10-01    NA         307.9787
+2 06001 Alameda County    CA 2008-11-01    NA         299.1667
 3 06001 Alameda County    CA 2008-11-01    NA               NA
-4 06001 Alameda County    CA 2008-12-01    NA            289.9
-5 06001 Alameda County    CA 2009-01-01    NA            288.5
-6 06001 Alameda County    CA 2009-02-01    NA            287.0
+4 06001 Alameda County    CA 2008-12-01    NA         289.8815
+5 06001 Alameda County    CA 2009-01-01    NA         288.5000
+6 06001 Alameda County    CA 2009-02-01    NA         287.0370
   medSoldPriceSqft
-1            325.8
+1         325.8118
 2               NA
-3            318.1
-4            305.8
-5            291.6
+3         318.1150
+4         305.7878
+5         291.5977
 6               NA
 </code></pre>
 
@@ -370,11 +387,11 @@ byCounty[[1]]
 
 $value
    fips       time nSold medListPriceSqft medSoldPriceSqft
-1 45001 2008-10-01    NA            73.06               NA
-2 45001 2008-11-01    NA            70.71               NA
-3 45001 2008-12-01    NA            70.71               NA
-4 45001 2009-01-01    NA            73.44               NA
-5 45001 2009-02-01    NA            78.70               NA
+1 45001 2008-10-01    NA         73.06226               NA
+2 45001 2008-11-01    NA         70.71429               NA
+3 45001 2008-12-01    NA         70.71429               NA
+4 45001 2009-01-01    NA         73.43750               NA
+5 45001 2009-02-01    NA         78.69565               NA
 ...
 </code></pre>
 
@@ -410,11 +427,11 @@ byCounty[[&quot;county=Benton County|state=WA&quot;]]
 
 $value
    fips       time nSold medListPriceSqft medSoldPriceSqft
-1 53005 2008-10-01   137            106.6            106.2
-2 53005 2008-11-01    80            107.0               NA
-3 53005 2008-11-01    NA               NA            105.2
-4 53005 2008-12-01    95            107.7            105.6
-5 53005 2009-01-01    73            107.7            105.9
+1 53005 2008-10-01   137         106.6351         106.2179
+2 53005 2008-11-01    80         106.9650               NA
+3 53005 2008-11-01    NA               NA         105.2370
+4 53005 2008-12-01    95         107.6642         105.6311
+5 53005 2009-01-01    73         107.6868         105.8892
 ...
 </code></pre>
 
@@ -428,7 +445,7 @@ priceQ &lt;- drQuantile(byCounty, var = &quot;medListPriceSqft&quot;)
 xyplot(q~fval, data=priceQ, main=&quot;Median List Price/Sqft Quantiles&quot;)
 </code></pre>
 
-<p><img src="figures/knitr/unnamed-chunk-12.png" alt="plot of chunk unnamed-chunk-12"> </p>
+<p><img src="figures/knitr/unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12"> </p>
 
 <h4>Divide and Recombine</h4>
 
@@ -443,8 +460,12 @@ lmCoef &lt;- function(x) {
 
 # Test lmCoef on one division
 kvApply(lmCoef, byCounty[[176]])
+</code></pre>
 
-# Add the function transform to the DDF
+<pre><code>Error in kvApply(lmCoef, byCounty[[176]]): could not find function &quot;fn&quot;
+</code></pre>
+
+<pre><code class="r"># Add the function transform to the DDF
 byCountySlope &lt;- addTransform(byCounty, lmCoef)
 
 # Now look at data with the transformation
@@ -507,7 +528,8 @@ timePanel &lt;- function(x) {
 kvApply(timePanel, joinedData[[176]])
 </code></pre>
 
-<p><img src="figures/knitr/unnamed-chunk-16.png" alt="plot of chunk unnamed-chunk-16"> </p>
+<pre><code>Error in kvApply(timePanel, joinedData[[176]]): could not find function &quot;fn&quot;
+</code></pre>
 
 <p>We have defined a simple plot function. It would be useful to define a set of cognostics that can give us a large set of angles with which to attack the data anlysis problem at hand. Some simple cognostics are included in the trelliscope package such as <code>cogMean()</code> and <code>cogRange()</code> which are self-explanatory. You are free to define any other measure of the data using the <code>cog()</code> function.  </p>
 
@@ -543,47 +565,7 @@ priceCog &lt;- function(a) {
 kvApply(priceCog, joinedData[[176]])
 </code></pre>
 
-<pre><code>$fips
-[1] &quot;53005&quot;
-
-$region
-[1] &quot;West&quot;
-
-$division
-[1] &quot;Pacific&quot;
-
-$slope
-[1] 0.007727
-
-$meanList
-[1] 114.2
-
-$meanSold
-[1] 109.9
-
-$listRange
-[1] 15.05
-
-$soldRange
-[1] 12.51
-
-$nObs
-[1] 66
-
-$lat
-[1] 46.23
-
-$lon
-[1] -119.5
-
-$pop2013
-[1] 5.266
-
-$wikiHref
-[1] &quot;&lt;a href=\&quot;http://en.wikipedia.org/wiki/Benton_County,_Washington\&quot; target=\&quot;_blank\&quot;&gt;wiki link&lt;/a&gt;&quot;
-
-$zillowHref
-[1] &quot;&lt;a href=\&quot;http://www.zillow.com/homes/Benton-County-WA_rb/\&quot; target=\&quot;_blank\&quot;&gt;zillow link&lt;/a&gt;&quot;
+<pre><code>Error in kvApply(priceCog, joinedData[[176]]): could not find function &quot;fn&quot;
 </code></pre>
 
 <pre><code class="r"># Create the display: this creates and saves display files and information in
@@ -605,157 +587,11 @@ view(port=myport)
 </div>
 
 
-<div class='tab-pane' id='data-description---computer-network-traffic'>
-<h3>Data Description - Computer Network Traffic</h3>
+<div class='tab-pane' id='data-description---power'>
+<h3>Data Description - Power</h3>
 
-<p>The NetFlow dataset is a simulated dataset of computer network traffic. 
-The packet data is captured at the firewall and aggregated into session
-records. Each record identifies the source and destination of the first 
-seen packet in that session. You can see more information about the data 
-<a href="http://hcil2.cs.umd.edu/newvarepository/VAST%20Challenge%202013/challenges/MC3%20-%20Big%20Marketing/">here</a>.<br>
-The variables in the data are described below:</p>
-
-<table><thead>
-<tr>
-<th>Variable</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>dateTimeStr</td>
-<td>date/timestamp in the form 20130411085433.710938 (2013-04-11 08:54:33.710938)</td>
-</tr>
-<tr>
-<td>ipLayerProtocol</td>
-<td>IP layer protocol code</td>
-</tr>
-<tr>
-<td>ipLayerProtocolCode</td>
-<td>text name of IP protocol code (e.g. 6=TCP)</td>
-</tr>
-<tr>
-<td>firstSeenSrcIp</td>
-<td>IP address of the source of the first packet seen</td>
-</tr>
-<tr>
-<td>firstSeenDestIp</td>
-<td>IP address of the destination of the first packet seen in this session</td>
-</tr>
-<tr>
-<td>firstSeenSrcPort</td>
-<td>source port of the first packet captured in this session</td>
-</tr>
-<tr>
-<td>firstSeenDestPort</td>
-<td>destination port of the first packet captured in this session</td>
-</tr>
-<tr>
-<td>moreFragments</td>
-<td>if nonzero, this session continues into a subsequent record</td>
-</tr>
-<tr>
-<td>contFragments</td>
-<td>if nonzero, this record is not the first session record but a continuation</td>
-</tr>
-<tr>
-<td>durationSeconds</td>
-<td>session duration in seconds</td>
-</tr>
-<tr>
-<td>firstSeenSrcPayloadBytes</td>
-<td>total payload bytes in this session from packets originating at the firstSeenSrcIp</td>
-</tr>
-<tr>
-<td>firstSeenDestPayloadBytes</td>
-<td>total payload bytes in this session from packets originating at the firstSeenDstIp</td>
-</tr>
-<tr>
-<td>firstSeenSrcTotalBytes</td>
-<td>total header+payload bytes in this session from packets originating at the firstSeenSrcIp</td>
-</tr>
-<tr>
-<td>firstSeenDestTotalBytes</td>
-<td>total header+payload bytes in this session from packets originating at the firstSeenDstIp</td>
-</tr>
-<tr>
-<td>firstSeenSrcPacketCount</td>
-<td>total number of packets in this session originating at the firstSeenSrcIp</td>
-</tr>
-<tr>
-<td>firstSeenDestPacketCount</td>
-<td>total number of packets in this session originating at the firstSeenDstIp</td>
-</tr>
-<tr>
-<td>recordForceOut</td>
-<td>if nonzero the record was flushed to data file before session timeout (15 minutes) usually by program shutdown</td>
-</tr>
-</tbody></table>
-
-</div>
-
-
-<div class='tab-pane' id='data-exploration---computer-network-traffic'>
-<h3>Data Exploration - Computer Network Traffic</h3>
-
-<p>Let&#39;s set the working directory for this example. You need to change the path in the call to <code>setwd()</code> below to correctly point to the <code>netflow_demo</code> directory.</p>
-
-<pre><code class="r">setwd(&quot;netflow_demo&quot;)
-</code></pre>
-
-<p>And let&#39;s remove any possible left-over objects in the Global environment:</p>
-
-<pre><code class="r">rm(list = ls())
-</code></pre>
-
-<p>And load the requisite packages:</p>
-
-<pre><code class="r">library(trelliscope)
-library(plyr)
-</code></pre>
-
-<p>The following will launch two pre-made trelliscope displays:</p>
-
-<ul>
-<li>Hourly counts of connections vs time </li>
-<li>Hourly counts of connections vs source/destination
-where each panel shows data for a specific host or destination IP address. </li>
-</ul>
-
-<p>The purpose of this activity is to launch the trelliscope display and then explore the data---to look for patterns, bad data, anomalies, etc. The code required to generate these displays is shown next.</p>
-
-<pre><code class="r">vdbConn(&quot;vdb_netflow&quot;, autoYes = TRUE)
-myport &lt;- 8100 # use this when running locally on your own computer.
-# myport &lt;- Sys.getenv(&quot;TR_PORT&quot;) # use this on demo cluster.
-view(port = myport)
-</code></pre>
-
-</div>
-
-
-<div class='tab-pane' id='challenge-question---computer-network-traffic'>
-<h3>Challenge Question - Computer Network Traffic</h3>
-
-<p>The following question is provided, free of charge, to help you become better acquainted with the trelliscope interface.</p>
-
-<ol>
-<li>There is a set of workstations that were infected with malware and now form a botnet. This botnet has launched a recurring Denial of Service attack against an external IP address. Can you find the machines in question? (Hint: Look for high numbers of outgoing connections.)</li>
-</ol>
-
-</div>
-
-
-<div class='tab-pane' id='code---computer-network-traffic'>
-<h3>Code - Computer Network Traffic</h3>
-
-<p>The time has come for you, the user, to do some of the coding work. In particular, the following demo will teach you how to use hadoop and trelliscope together to visually analyze the netflow data set. Luckily for us, we&#39;ve already covered this demo <a href="http://tessera.io/docs-r-intro-bootcamp/#activity-22-using-tessera-with-hadoop-to-analyze-large-data">here</a>. The necessary information will be covered in sections 2.2 and 2.3 of the <a href="http://tessera.io/docs-r-intro-bootcamp/">R boot camp</a>.</p>
-
-</div>
-
-
-<div class='tab-pane' id='data-description---power-data'>
-<h3>Data Description - Power Data</h3>
-
-<p>This dataset contains recordings of the energy consumption and outdoor air temperature of four retail buildings at various locations in the U.S. at 15 minute intervals during 2010. The measurements have
+<p>This dataset contains recordings of the energy consumption and outdoor air temperature of four retail 
+buildings at various locations in the U.S. at 15 minute intervals during 2010. The measurements have
 been anonymized by applying a random linear transformation.
 The variables in the data are described below:</p>
 
@@ -815,50 +651,43 @@ The variables in the data are described below:</p>
 </tr>
 </tbody></table>
 
-</div>
+<h3>Trelliscope View - Power</h3>
 
+<p>The purpose of this activity is to launch the <code>trelliscope</code> display and then explore the power
+consumption data: to look for patterns, bad data, anomalies, etc. 
+In this section, we&#39;ll show you the code required to launch a pre-created <code>trelliscope</code> view of the
+data.</p>
 
-<div class='tab-pane' id='data-exploration---power-utilization'>
-<h3>Data Exploration - Power Utilization</h3>
+<p>Let&#39;s begin by setting the working directory for this example. You will have to change the path 
+in the command below to correctly point to the <code>power_demo</code> directory.</p>
 
-<p>Let&#39;s begin by setting the working directory for this example. You may have to change the path in the command below to correctly point to the <code>power_demo</code> directory.</p>
-
-<pre><code class="r">setwd(&quot;power_demo&quot;)
+<pre><code class="r"># Set the working directory. Edit &quot;~/correct_path&quot; as necessary
+setwd(&quot;~/correct_path/power_demo&quot;)
 </code></pre>
 
-<p>And let&#39;s remove any possible left-over objects in the Global environment:</p>
+<p>And load the <code>trelliscope</code> and <code>plyr</code> packages:</p>
 
-<pre><code class="r">rm(list = ls())
-</code></pre>
-
-<p>And load the requisite packages:</p>
-
-<pre><code class="r">library(trelliscope)
+<pre><code class="r"># Load packages
+library(trelliscope)
 library(plyr)
 </code></pre>
 
 <p>The following will launch two pre-made trelliscope displays:</p>
 
 <ul>
-<li>Power vs. Time </li>
-<li>Power vs. Outdoor Air Temp 
-where each panel shows data for all four buildings for a single day.<br></li>
+<li>Power vs. Time for each day in 2010</li>
+<li>Power vs. Outdoor Air Temp for each day in 2010</li>
 </ul>
 
-<p>The purpose of this activity is to launch the Trelliscope display and then explore the data---to look for patterns, bad data, anomalies, etc. The code required to generate these displays is shown next.</p>
+<p>where each panel shows data for all four buildings for a single day.  Use
+<code>Cntrl-C</code> or <code>ESC</code> to stop the viewer and return to the R prompt.</p>
 
-<pre><code class="r"># Load some preconfigured global plotting limits.
-load(&quot;plottingLims.Rdata&quot;)
-
-# Open the connection to the pre-existing trelliscope visualization.
-# (&quot;vdb_power&quot; is a folder in &quot;power_demo&quot;)
-vdbConn(&quot;~/docs-csp2015/demos/power_demo/vdb_power&quot;)
+<pre><code class="r"># Open the connection to the pre-existing trelliscope visualization. &quot;vdb_power&quot; is a folder
+# in the &quot;power_demo&quot; folder, where we set the working directory earlier.
+vdbConn(&quot;vdb_power&quot;)
 
 # use this port when running locally on your own computer
 myport &lt;- 8100 
-
-# use this port on the AWS demo cluster
-# myport &lt;- Sys.getenv(&quot;TR_PORT&quot;) 
 
 # Launch the trelliscope viewer.  Use Ctrl-C or ESC to stop the reviewer and return
 # the R prompt
@@ -868,44 +697,92 @@ view(port = myport)
 </div>
 
 
-<div class='tab-pane' id='challenge-questions---power-utilization'>
-<h3>Challenge Questions - Power Utilization</h3>
+<div class='tab-pane' id='challenge-questions---power'>
+<h3>Challenge Questions - Power</h3>
 
-<p>Do your best to answer the following questions. We have placed them here to help you learn how to use trelliscope. Be sure to pull up the trelliscope display (if it&#39;s not already open) from the code above.</p>
+<p>Do your best to answer the following questions. We have placed them here to help 
+you learn how to use <code>trelliscope</code>. Be sure to launch the <code>trelliscope</code> display 
+(if it&#39;s not already open) using the code above.</p>
 
 <ol>
-<li><p>Without manually scrolling through all the panels, can you identify the days when the power consumption pattern is noticeably different than normal consumption patterns?</p></li>
+<li><p>Without manually scrolling through all the panels, can you identify the days when the 
+power consumption pattern is noticeably different than normal consumption patterns?</p></li>
 <li><p>Given the data, can you conclude that there are faulty sensors on or in the buildings?</p></li>
 <li><p>Is there a seasonal trend in power consumption?</p></li>
-<li><p>Given that each building is in a unique location, can you conclude that outdoor air temperature is correlated with power usage? </p></li>
+<li><p>Given that each building is in a unique location, can you conclude that outdoor air temperature 
+is correlated with power usage? </p></li>
 </ol>
 
 </div>
 
 
-<div class='tab-pane' id='code---power-utilization'>
-<h3>Code - Power Utilization</h3>
+<div class='tab-pane' id='code-to-create-trelliscope-view---power'>
+<h3>Code to Create Trelliscope View - Power</h3>
 
-<p>This activity will teach you how to create your own trelliscope displays. We will be using the same data as presented in the pre-made displays, but you will have the opportunity to interact with the underlying code. This tutorial will demonstrate how to generate your own plots and how to create and use cognostics to aid in the interpretability of said plots.</p>
+<p>This activity will teach you how to create your own <code>trelliscope</code> displays. We will be using the same 
+data as presented in the pre-made display, but you will have the opportunity to interact with the 
+underlying code. This tutorial will demonstrate how to generate your own plots and how to create 
+and use cognostics to filter and sort the plots.</p>
 
-<p>We&#39;ll start by importing the necessary libraries and reading in the power data. Note that you will have to supply the correct filepath in the call to <code>read.csv()</code> below.</p>
+<p>There are several key steps to creating a Trelliscope view that we will discuss below:</p>
+
+<ul>
+<li>Load the <code>trelliscope</code> package and other requisite packages</li>
+<li>Get an initial feel for the data using tabular summaries</li>
+<li>Divide the data using <code>divide()</code> from the <code>datadr</code> package</li>
+<li>Define the <strong>panel</strong> and <strong>cognostics</strong> functions</li>
+<li>Establish a connection to a visualization data base (vdb) using <code>vdbConn()</code> from the 
+<code>trelliscope</code> package</li>
+<li>Write <code>trelliscope</code> view files to the vdb using <code>makeDisplay()</code></li>
+<li>Launch the <code>trelliscope</code> viewer using <code>view()</code></li>
+</ul>
+
+<h4>Preliminaries</h4>
+
+<p>Let&#39;s begin by removing any (and all) left-over objects in the Global environment of the R session:</p>
+
+<pre><code class="r"># Clear the R workspace
+rm(list = ls())
+</code></pre>
+
+<p>Now we&#39;ll load the necessary libraries and read in the power data. </p>
 
 <pre><code class="r"># Load the trelliscope package if you haven&#39;t already
 library(trelliscope)
 library(datadr)
 
-# You will need to change this. Be sure this is pointed to the directory containing retailBuildings.csv
-setwd(&quot;~/docs-csp2015/demos/power_demo&quot;)
+# You will need to adjust replace the first part of path with the location where you
+# unzipped the demonstration files
+setwd(&quot;~/correct_path/power_demo&quot;)
 
-# We&#39;ll begin by reading in the data. Be sure to supply
-# the correct filepath or this will fail. 
+# We&#39;ll begin by reading in the data. 
 d &lt;- read.csv(&quot;retailBuildings.csv&quot;)
 </code></pre>
 
-<p>It&#39;s standard practice, when analyzing a new set of data, to get a sense of the underlying structure. The R programming language has many convenient functions for doing this and <code>str()</code> is one of the best for getting a sense of the dimensions and entries in the data set.   </p>
+<h4>Data Summaries</h4>
 
-<pre><code class="r"># Observe the first 6 rows of the dataset
+<p>It&#39;s standard practice, when analyzing a new set of data, to get a sense of the underlying 
+structure. The R programming language has several convenient functions for doing this and <code>str()</code> 
+is one of the best for getting a sense of the size and contents of a data frame:</p>
+
+<pre><code class="r"># Print the first 6 rows of the dataset
 head(d)
+</code></pre>
+
+<pre><code>  building            dateTime year       date quarter month monthName
+1        2 2010-01-01 01:15:00 2010 2010-01-01      Q1     1   January
+2        2 2010-01-01 01:30:00 2010 2010-01-01      Q1     1   January
+3        2 2010-01-01 01:45:00 2010 2010-01-01      Q1     1   January
+4        2 2010-01-01 02:00:00 2010 2010-01-01      Q1     1   January
+5        2 2010-01-01 02:15:00 2010 2010-01-01      Q1     1   January
+6        2 2010-01-01 02:30:00 2010 2010-01-01      Q1     1   January
+  week weekday day    OAT.F Power.KW
+1    1  Friday   1 43.79894 126.7764
+2    1  Friday   1 43.79894 127.3692
+3    1  Friday   1 43.79894 124.4899
+4    1  Friday   1 43.79894 124.5745
+5    1  Friday   1 43.09446 123.3042
+6    1  Friday   1 43.09446 122.4574
 </code></pre>
 
 <pre><code class="r"># Now let&#39;s look at the structure of the data.
@@ -929,18 +806,38 @@ str(d)
  $ Power.KW : num  127 127 124 125 123 ...
 </code></pre>
 
-<p>It would be useful to get an idea of the number of entries of each variable in our data set as well as a summary of each variable. We can use the <code>table()</code> and <code>summary()</code> functions to gather this data. </p>
+<p>It is often necessary to convert dates and date times from text to a format that R can 
+recognize as a date:</p>
 
-<pre><code class="r"># Let&#39;s convert the dateTime and date to a POSIXct format so R can compute with
+<pre><code class="r"># Convert the &#39;dateTime&#39; and &#39;date&#39; to a POSIXct format so R can compute with
 # them as dates
 d$dateTime &lt;- as.POSIXct(d$dateTime)
 d$date &lt;- as.POSIXct(d$date)
+
+# Notice how &quot;dateTime&quot; and &quot;date&quot; are POSIX variables now
 str(d)
 </code></pre>
 
-<pre><code class="r"># The summary method applied to a data frame can be helpful to get
-# a feel for the values in the data
-summary(d)
+<pre><code>&#39;data.frame&#39;:   139740 obs. of  12 variables:
+ $ building : int  2 2 2 2 2 2 2 2 2 2 ...
+ $ dateTime : POSIXct, format: &quot;2010-01-01 01:15:00&quot; &quot;2010-01-01 01:30:00&quot; ...
+ $ year     : int  2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
+ $ date     : POSIXct, format: &quot;2010-01-01&quot; &quot;2010-01-01&quot; ...
+ $ quarter  : Factor w/ 4 levels &quot;Q1&quot;,&quot;Q2&quot;,&quot;Q3&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ month    : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ monthName: Factor w/ 12 levels &quot;April&quot;,&quot;August&quot;,..: 5 5 5 5 5 5 5 5 5 5 ...
+ $ week     : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ weekday  : Factor w/ 7 levels &quot;Friday&quot;,&quot;Monday&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ day      : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ OAT.F    : num  43.8 43.8 43.8 43.8 43.1 ...
+ $ Power.KW : num  127 127 124 125 123 ...
+</code></pre>
+
+<p>It would be useful to get an idea of the number of entries of each variable in our data set as 
+well as a summary of each variable. We can use the <code>summary()</code> and <code>table()</code> functions to 
+creates these summaries:</p>
+
+<pre><code class="r">summary(d)
 </code></pre>
 
 <pre><code>    building       dateTime                        year     
@@ -951,71 +848,210 @@ summary(d)
  3rd Qu.:4.25   3rd Qu.:2010-10-01 00:30:00   3rd Qu.:2010  
  Max.   :5.00   Max.   :2010-12-30 23:45:00   Max.   :2010  
 
-      date                     quarter        month         monthName    
- Min.   :2010-01-01 00:00:00   Q1:34524   Min.   : 1.00   August :11904  
- 1st Qu.:2010-04-02 00:00:00   Q2:34944   1st Qu.: 4.00   July   :11904  
- Median :2010-07-02 00:00:00   Q3:35328   Median : 7.00   May    :11904  
- Mean   :2010-07-01 13:16:13   Q4:34944   Mean   : 6.51   October:11904  
- 3rd Qu.:2010-10-01 00:00:00              3rd Qu.:10.00   March  :11888  
- Max.   :2010-12-30 00:00:00              Max.   :12.00   January:11884  
-                                                          (Other):68352  
-      week           weekday           day          OAT.F      
- Min.   : 1.0   Friday   :19948   Min.   :  1   Min.   : 4.35  
- 1st Qu.:14.0   Monday   :19968   1st Qu.: 91   1st Qu.:44.54  
- Median :27.0   Saturday :19968   Median :182   Median :53.09  
- Mean   :26.6   Sunday   :19952   Mean   :182   Mean   :55.24  
- 3rd Qu.:40.0   Thursday :19968   3rd Qu.:273   3rd Qu.:69.16  
- Max.   :53.0   Tuesday  :19968   Max.   :364   Max.   :92.90  
-                Wednesday:19968                                
-    Power.KW  
- Min.   :  0  
- 1st Qu.:192  
- Median :255  
- Mean   :258  
- 3rd Qu.:317  
- Max.   :543  
+      date                     quarter        month          monthName    
+ Min.   :2010-01-01 00:00:00   Q1:34524   Min.   : 1.000   August :11904  
+ 1st Qu.:2010-04-02 00:00:00   Q2:34944   1st Qu.: 4.000   July   :11904  
+ Median :2010-07-02 00:00:00   Q3:35328   Median : 7.000   May    :11904  
+ Mean   :2010-07-01 13:16:13   Q4:34944   Mean   : 6.512   October:11904  
+ 3rd Qu.:2010-10-01 00:00:00              3rd Qu.:10.000   March  :11888  
+ Max.   :2010-12-30 00:00:00              Max.   :12.000   January:11884  
+                                                           (Other):68352  
+      week            weekday           day            OAT.F       
+ Min.   : 1.00   Friday   :19948   Min.   :  1.0   Min.   : 4.351  
+ 1st Qu.:14.00   Monday   :19968   1st Qu.: 91.0   1st Qu.:44.543  
+ Median :27.00   Saturday :19968   Median :182.0   Median :53.089  
+ Mean   :26.55   Sunday   :19952   Mean   :181.9   Mean   :55.245  
+ 3rd Qu.:40.00   Thursday :19968   3rd Qu.:273.0   3rd Qu.:69.160  
+ Max.   :53.00   Tuesday  :19968   Max.   :364.0   Max.   :92.901  
+                 Wednesday:19968                                   
+    Power.KW    
+ Min.   :  0.0  
+ 1st Qu.:192.0  
+ Median :254.8  
+ Mean   :257.9  
+ 3rd Qu.:317.4  
+ Max.   :543.3  
 
 </code></pre>
 
-<pre><code class="r"># It would be nice to see a tabulation of the categorial variables.
-# We can do that like this:
-with(d, table(building))
+<p>It would be nice to see a tabulation of the categorial variables in the data.  We could do that 
+one variable at a time, like this:</p>
 
-# To make tables for all the categorical variables, let&#39;s create a
-# vector with the names of these variables so we can easily select them:
+<pre><code class="r"># Table for building
+table(d$building)
+</code></pre>
+
+<pre><code>
+    2     3     4     5 
+34935 34935 34935 34935 
+</code></pre>
+
+<pre><code class="r"># Table for year
+table(d$year)
+</code></pre>
+
+<pre><code>
+  2010 
+139740 
+</code></pre>
+
+<p>Or we could tabulate all of them at once, like this:</p>
+
+<pre><code class="r"># A character vector of all the categorical variables
 sel &lt;- c(&quot;building&quot;, &quot;year&quot;, &quot;quarter&quot;, &quot;month&quot;, &quot;monthName&quot;, &quot;week&quot;, &quot;weekday&quot;)
 
-# Now we use that vector to select those columns of &#39;d&#39;, and we can apply
-# the table() function to each column (column-wise summaries are indicated by
-# MARGIN = 2)
+# Now we use that vector to select only those columns of &#39;d&#39;, and we can apply
+# the table() function to each column, where column-wise summaries are indicated by
+# MARGIN = 2.
 apply(d[,sel], MARGIN = 2, table)
+</code></pre>
 
-# We can also make cross tabulations to get a sense of the counts of
-# two categorical variables.  For example, let&#39;s look at month by building:
+<pre><code>$building
+
+    2     3     4     5 
+34935 34935 34935 34935 
+
+$year
+
+  2010 
+139740 
+
+$quarter
+
+   Q1    Q2    Q3    Q4 
+34524 34944 35328 34944 
+
+$month
+
+    1     2     3     4     5     6     7     8     9    10    11    12 
+11884 10752 11888 11520 11904 11520 11904 11904 11520 11904 11520 11520 
+
+$monthName
+
+    April    August  December  February   January      July      June 
+    11520     11904     11520     10752     11884     11904     11520 
+    March       May  November   October September 
+    11888     11904     11520     11904     11520 
+
+$week
+
+   1    2    3    4    5    6    7    8    9   10   11   12   13   14   15 
+2284 2688 2688 2688 2688 2688 2688 2688 2688 2688 3056 2688 2688 2688 2688 
+  16   17   18   19   20   21   22   23   24   25   26   27   28   29   30 
+2688 2688 2688 2688 2688 2688 2688 2688 2688 2688 2688 2688 2688 2688 2688 
+  31   32   33   34   35   36   37   38   39   40   41   42   43   44   45 
+2688 2688 2688 2688 2688 2688 2688 2688 2688 2688 2688 2688 2688 2688 2304 
+  46   47   48   49   50   51   52   53 
+2688 2688 2688 2688 2688 2688 2688  384 
+
+$weekday
+
+   Friday    Monday  Saturday    Sunday  Thursday   Tuesday Wednesday 
+    19948     19968     19968     19952     19968     19968     19968 
+</code></pre>
+
+<p>We can also make cross tabulations to get a sense of the counts of
+two categorical variables.  For example:</p>
+
+<pre><code class="r"># Cross tabulation of month by building
 with(d, table(month, building))
 </code></pre>
 
-<p>Now we are going to subdivide the data into meaningful groups and make a plot of each group. Suppose that we would like to see a time series plot of the energy consumption of each building for each day. To accomplish this, we need to divide the data by date to create a distributed data frame (<code>ddf</code>) object. This can be accomplished by using the <code>divide()</code> function from the datadr package. We will then sort each resulting data frame by building and dateTime using the <code>arrange()</code> function from the plyr package. </p>
+<pre><code>     building
+month    2    3    4    5
+   1  2971 2971 2971 2971
+   2  2688 2688 2688 2688
+   3  2972 2972 2972 2972
+   4  2880 2880 2880 2880
+   5  2976 2976 2976 2976
+   6  2880 2880 2880 2880
+   7  2976 2976 2976 2976
+   8  2976 2976 2976 2976
+   9  2880 2880 2880 2880
+   10 2976 2976 2976 2976
+   11 2880 2880 2880 2880
+   12 2880 2880 2880 2880
+</code></pre>
+
+<p>All of these tabular summaries suggest that the data are balanced among the values of the
+categorical variables.</p>
+
+<h4>Divide the Data</h4>
+
+<p>Now that we have a sense of the structure of the data, we will subdivide the data into meaningful 
+groups and make a plot of each group. 
+Suppose that we would like to see a time series plot of the energy consumption of each building 
+for each day. To accomplish this, we need to divide the data by date to create a distributed 
+data frame (<code>ddf</code>) object. This can be accomplished by using the <code>divide()</code> function from the 
+<code>datadr</code> package. We will then sort each resulting data frame by <code>building</code> and <code>dateTime</code> 
+using the <code>arrange()</code> function from the <code>plyr</code> package. </p>
 
 <pre><code class="r">library(plyr)
-byDate &lt;- divide(d, by = &quot;date&quot;, postTransFn = function(x) arrange(x, building, dateTime))
 
-# Let&#39;s look at a single element of the ddf:
+# Define a function that will sort each subset by &#39;building&#39; and &#39;dateTime&#39;
+# The argument, &#39;x&#39;, is a data frame for a single subset
+sortFunction &lt;- function(x) {
+  arrange(x, building, dateTime)
+}
+
+# Divide the data by &#39;date&#39; and sort the output
+byDate &lt;- divide(d, by = &quot;date&quot;, postTransFn = sortFunction)
+</code></pre>
+
+<p>Having divided the data, let&#39;s look at a single element of the <code>ddf</code>, corresponding to the data for
+a single day.  Notice how it is a list with two elements, a <strong>key</strong> and a <strong>value</strong>, where the value
+is a dataframe containing the data for a single date:  </p>
+
+<pre><code class="r"># Display the structure of the first element of the ddf
 str(byDate[1])
+</code></pre>
 
-# Now let&#39;s compute the range of the power so we can use the same axes for all 
-# the plots
+<pre><code>List of 1
+ $ :List of 2
+  ..$ key  : chr &quot;date=2010-01-01&quot;
+  ..$ value:&#39;data.frame&#39;:   364 obs. of  12 variables:
+  .. ..$ building : int [1:364] 2 2 2 2 2 2 2 2 2 2 ...
+  .. ..$ dateTime : POSIXct[1:364], format: &quot;2010-01-01 01:15:00&quot; ...
+  .. ..$ year     : int [1:364] 2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
+  .. ..$ date     : POSIXct[1:364], format: &quot;2010-01-01&quot; ...
+  .. ..$ quarter  : chr [1:364] &quot;Q1&quot; &quot;Q1&quot; &quot;Q1&quot; &quot;Q1&quot; ...
+  .. ..$ month    : int [1:364] 1 1 1 1 1 1 1 1 1 1 ...
+  .. ..$ monthName: chr [1:364] &quot;January&quot; &quot;January&quot; &quot;January&quot; &quot;January&quot; ...
+  .. ..$ week     : int [1:364] 1 1 1 1 1 1 1 1 1 1 ...
+  .. ..$ weekday  : chr [1:364] &quot;Friday&quot; &quot;Friday&quot; &quot;Friday&quot; &quot;Friday&quot; ...
+  .. ..$ day      : int [1:364] 1 1 1 1 1 1 1 1 1 1 ...
+  .. ..$ OAT.F    : num [1:364] 43.8 43.8 43.8 43.8 43.1 ...
+  .. ..$ Power.KW : num [1:364] 127 127 124 125 123 ...
+  .. ..- attr(*, &quot;split&quot;)=&#39;data.frame&#39;: 1 obs. of  1 variable:
+  .. .. ..$ date: POSIXct[1:1], format: &quot;2010-01-01&quot;
+  ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;kvPair&quot; &quot;list&quot;
+</code></pre>
+
+<p>All the other elements of <code>byDate</code> have this same structure--but just for different dates.</p>
+
+<h4>Define the Panel Function</h4>
+
+<p>Now let&#39;s compute the range of the power so we can use the same axes limits for all 
+the plots</p>
+
+<pre><code class="r"># Global axis limits for power and outdoor air temperature
 powerLims &lt;- range(d$Power.KW)
 tempLims &lt;- range(d$OAT.F)
+</code></pre>
 
-# Now we create a function to plot the power usage in all 5 buildings for a 
-# single day
+<p>The next step is to define the plotting function, or <strong>panel</strong> function that will be applied
+to each subset in the <code>ddf</code> to make a separate plot of the power usage over the course of the day
+for all four buildings for each date in the data set.</p>
+
+<pre><code class="r"># Create the panel function for plotting power vs. time for each day
 power.by.time &lt;- function(x) {
 
-  # Get the x and y axis limits
-  # Global limits for y
+  # &#39;x&#39; is a data frame for a single subset, or split, of the data
+
+  # Global limits for y axis
   ylim &lt;- powerLims
-  # Local limits for x
+
+  # Local limits for x axis
   xlim &lt;- range(x$dateTime)
 
   # Set plotting options
@@ -1026,69 +1062,87 @@ power.by.time &lt;- function(x) {
                xlab = &quot;&quot;, ylab = &quot;Power (KW)&quot;))
 
   # Add in the data for each building, giving each building a different color
-  for (i in as.character(2:5)) {
-    with(x[x$building == i,], 
-       lines(dateTime, Power.KW, col = as.numeric(i) - 1, lwd = 2))
+  for (i in 2:5) {
+    with(x[x$building == as.character(i),], 
+       lines(dateTime, Power.KW, col = i - 1, lwd = 2))
   }
 
-  # Add a legend to the plot
-  legend(xlim[1] + 0.5 * diff(xlim), ylim[1],
+  # Add a legend to the plot that is positioned near the bottom center
+  legend(xlim[1] + 0.5 * diff(xlim), 
+         ylim[1],
          paste(&quot;Building&quot;, 2:5),
-         lty = 1, col = c(2:5) - 1, lwd = 3, yjust = 0)
+         lty = 1, 
+         col = c(2:5) - 1, 
+         lwd = 3, 
+         yjust = 0)
 
   # Returning NULL is required by trelliscope when the plotting function is 
-  # base R code (as opposed to plots generated by lattice or ggplot)
+  # base R code (as opposed to plots generated by lattice or ggplot packages)
   return(NULL)
 
 } # power.by.time()
 </code></pre>
 
+<p>Let&#39;s test our panel function on the eighth subset of the data:</p>
+
 <pre><code class="r"># Test the plot on a single subset
 power.by.time(byDate[[8]][[2]])
 </code></pre>
 
-<p><img src="figures/knitr/unnamed-chunk-12.png" alt="plot of chunk unnamed-chunk-12"> </p>
+<p><img src="figures/knitr/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16"> </p>
 
-<pre><code>NULL
-</code></pre>
+<h4>Define Cognostics</h4>
 
-<p>There is a function in the trelliscope package for building cognostics (measurements of interest) that will be calculated and visualized for the plots that you generate. Cognostics are usually scalar valued measurements like summary statistics, but they can also generate or gather metadata as well. The input to the cognostics function (&#39;x&#39;) is a data frame that contains one split (subset) of the data. In the following code, the subset is a data frame that contains all the power data for a given day. </p>
+<p>We now will define the <strong>cognostics</strong> that correspond to the panel function we just defined.
+Cognostiscs are measures of interest that facilitate our cognition for each panel.
+They are usually 
+scalar valued measurements like summary statistics, but they can also be any character string
+that describes information contained in the plot.  The cognostics function takes a single argument
+that is a single subset, or split, of the data, and it returns a named list of the 
+calculated cognostics.  </p>
 
-<pre><code class="r">kwCog &lt;- function(x) { list(
+<pre><code class="r">kwCog &lt;- function(x) { 
 
-  # Compute the max and min for each day
-  max = cog(max(x$Power.KW, na.rm = TRUE), desc = &quot;Max Power (KW)&quot;),
-  min = cog(min(x$Power.KW, na.rm = TRUE), desc = &quot;Min Power (KW)&quot;),
+  # &#39;x&#39; is a data frame for a single subset, or split, of the data
 
-  # Some common statistics are built into trelliscope with their own cognostics functions.
-  # For example, cogMean() and cogRange().
-  meanPower = cogMean(x$Power.KW, desc = &quot;Mean Power (KW)&quot;),
-  rangePower = cogRange(x$Power.KW, desc = &quot;Range of Power (Max - Min) (KW)&quot;),
+  list(
 
-  # Note that we use &#39;unique()&#39; below because, for each subset, the value of 
-  # month, week, and day are all repeated for a single date. So we use unique() 
-  # to get a scalar value of these date variables
-  month = cog(unique(x$monthName), desc = &quot;Month Name&quot;),
-  week = cog(unique(x$week), desc = &quot;Week in 2010&quot;),
-  day = cog(unique(x$day), desc = &quot;Julian Day in 2010&quot;)
+    # Compute the max and min power consumed for each day
+    max = cog(max(x$Power.KW, na.rm = TRUE), desc = &quot;Max Power (KW)&quot;),
+    min = cog(min(x$Power.KW, na.rm = TRUE), desc = &quot;Min Power (KW)&quot;),
 
-)} # kwCog()
+    # Compute the mean and range power
+    # Note how some common statistics are built into trelliscope with their own 
+    # cognostics functions. For example, cogMean() and cogRange().
+    meanPower = cogMean(x$Power.KW, desc = &quot;Mean Power (KW)&quot;),
+    rangePower = cogRange(x$Power.KW, desc = &quot;Range of Power (Max - Min) (KW)&quot;),
 
-# Test the cognostics function for the 7th subset
+    # Note that we use &#39;unique()&#39; below because, for each subset, the value of 
+    # month, week, and day are repeated for all the rows in the subset for a 
+    # single date. So we use unique() to get singel text string for these date variables
+    month = cog(unique(x$monthName), desc = &quot;Month Name&quot;),
+    week = cog(unique(x$week), desc = &quot;Week in 2010&quot;),
+    day = cog(unique(x$day), desc = &quot;Julian Day in 2010&quot;)
+
+  ) # close the list
+
+} # kwCog()
+
+# Test the cognostics function for the 73rd subset
 kwCog(byDate[[73]][[2]])
 </code></pre>
 
 <pre><code>$max
-[1] 373.5
+[1] 373.5434
 
 $min
-[1] 164.9
+[1] 164.8856
 
 $meanPower
-[1] 235.2
+[1] 235.155
 
 $rangePower
-[1] 208.7
+[1] 208.6579
 
 $month
 [1] &quot;March&quot;
@@ -1100,24 +1154,32 @@ $day
 [1] 73
 </code></pre>
 
-<p>We now have the necessary pieces to create our own visual data base. The visual data base is used by trelliscope (along with a plot function) to genereate output on the <code>shiny</code> server. </p>
+<h4>Make the Trelliscope Display</h4>
+
+<p>We now have the necessary pieces to create the <code>trelliscope</code> visual data base (vdb).  First
+we open a connection to the visualization database (vdb) using <code>vdbConn()</code> 
+and then we create the display using <code>makeDisplay()</code>, which writes the requisite files to
+the vdb:</p>
 
 <pre><code class="r"># Open connection to the trelliscope visualization database (vdb)
 vdbConn(&quot;vdb_power&quot;, autoYes = TRUE)
 
-# Create first display using Trelliscope&#39;s makeDisplay() function.  This writes
+# Create the display using Trelliscope&#39;s makeDisplay() function.  This writes
 # the various plots to the vdb that can then be viewed with trelliscope.
 makeDisplay(byDate, name = &quot;Power_by_Day&quot;,
             desc = &quot;Power time series for 2010 buildings by day&quot;,
             panelFn = power.by.time, cogFn = kwCog)
 </code></pre>
 
-<p>It&#39;s always a good idea to test your plotting function on a single data entry before uploading data to the trelliscope server. </p>
+<h4>A second, related display</h4>
+
+<p>Using the same division of the data (by date), we can create an additional, related display of 
+outdoor air temperature versus time.  We start by defining the panel function:</p>
 
 <pre><code class="r"># Let&#39;s also create a related display of power versus temperature by date
 power.v.temp &lt;- function(x) {
 
-  # Get the limits
+  # Get the axes limits
   xlim &lt;- tempLims
   ylim &lt;- powerLims
 
@@ -1129,8 +1191,8 @@ power.v.temp &lt;- function(x) {
                xlab = &quot;Outside Air Temp (F)&quot;, ylab = &quot;Power (KW)&quot;))
 
   # Add points for each building with a different color
-  for (i in as.character(2:5)) {
-    with(x[x$building == i,], points(OAT.F, Power.KW, col = as.numeric(i)-1))
+  for (i in 2:5) {
+    with(x[x$building == as.character(i),], points(OAT.F, Power.KW, col = i - 1))
   }
 
   # Add in the legend
@@ -1145,26 +1207,40 @@ power.v.temp &lt;- function(x) {
 
 } # power.v.temp()
 
-# Test the plot on a single subset
+# Test the plot on a single subset of the ddf (the 8th subset, in this case)
 power.v.temp(byDate[[8]][[2]])
 </code></pre>
 
-<p><img src="figures/knitr/unnamed-chunk-15.png" alt="plot of chunk unnamed-chunk-15"> </p>
+<p><img src="figures/knitr/unnamed-chunk-19-1.png" alt="plot of chunk unnamed-chunk-19"> </p>
 
-<pre><code>NULL
-</code></pre>
-
-<p>To use trelliscope, we need to connect to our visual data base and bring up the R Shiny server. </p>
+<p>Now let&#39;s create the visual database for this view using <code>makeDisplay()</code>.  We&#39;ll use the 
+same cognostic function that we defined earlier, and this call to <code>makeDisplay()</code> will
+write to the same vdb connection we previously created by calling <code>vdbConn()</code>:</p>
 
 <pre><code class="r"># Make the trelliscope display
 makeDisplay(byDate, name = &quot;Power_vs_Temp_by_Day&quot;,
             desc = &quot;Power vs. Temperature for 2010 buildings by day&quot;,
             panelFn = power.v.temp, cogFn = kwCog)
+</code></pre>
 
-# Launch the trelliscope viewer (must be in Firefox, Chrome, or Safari--not 
-# Internet Explorer)
-myport &lt;- 8100 # use this when running locally
-# myport &lt;- Sys.getenv(&quot;TR_PORT&quot;) # use this on demo cluster
+<h4>Launch the Trelliscope Viewer</h4>
+
+<p>Having completed the following essential steps:</p>
+
+<ul>
+<li>Divided the data using <code>divide()</code></li>
+<li>Defined the panel and cognostic functions</li>
+<li>Connected to a vdb using <code>vdbConn()</code></li>
+<li>Created the <code>trelliscope</code> displays using <code>makeDisplay()</code></li>
+</ul>
+
+<p>we are now ready to launch the <code>trelliscope</code> viewer using <code>view()</code>.  </p>
+
+<p>Note that you&#39;ll want to use Firefox or Chrome.  If the display launches in another browser,
+you can copy the URL in that browser and paste it into Firefox or Chrome.</p>
+
+<pre><code class="r"># use this port when running locally (on your own computer)
+myport &lt;- 8100 
 view(port = myport)
 </code></pre>
 
@@ -1184,13 +1260,13 @@ view(port = myport)
 <hr>
 
 <div class="footer">
-   <p>&copy; , 2015</p>
+   <p>&copy; Tessera, 2015</p>
 </div>
 </div> <!-- /container -->
 
 <script src="assets/jquery/jquery.js"></script>
 <script type='text/javascript' src='assets/custom/custom.js'></script>
-<script src="assets/bootstrap/js/bootstrap.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="assets/custom/jquery.ba-hashchange.min.js"></script>
 <script src="assets/custom/nav.js"></script>
 

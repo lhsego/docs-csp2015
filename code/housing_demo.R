@@ -1,12 +1,12 @@
 
 
-# Load necessary libraries
+# Load necessary libraries.
 library(datadr)
 library(trelliscope)
 library(housingData)
 
 # Set the working directory. You will need to provide the complete file path.
-setwd("housing_demo")
+setwd("~/correct_path/housing_demo")
 
 # Remove any left-over objects in the Global environment
 rm(list = ls())
@@ -73,7 +73,7 @@ length(byCounty) ## number of data divisions
 
 names(byCounty) ## column names
 
-getKeys(byCounty) ## data division keys (state & county names in this example)
+head(getKeys(byCounty)) ## data division keys (state & county names in this example)
 
 
 
@@ -87,7 +87,10 @@ splitSizeDistn(byCounty) ## percentiles of number of bytes per division
 
 # A data division can be accessed by by its named key or by number
 byCounty[["county=Benton County|state=WA"]]
-# byCounty[[176]] # If you wish to access the data frame by index 
+
+
+
+byCounty[[176]] # If you wish to access the data frame by index 
 
 
 
@@ -105,7 +108,7 @@ lmCoef <- function(x) {
 }
 
 # Test lmCoef on one division
-kvApply(lmCoef, byCounty[[176]])
+kvApply(byCounty[[176]], lmCoef)
 
 # Add the function transform to the DDF
 byCountySlope <- addTransform(byCounty, lmCoef)
@@ -134,7 +137,7 @@ wikiByCounty <- divide(wikiCounty, by = c("county", "state"))
 
 # Join divided housing, geo and wiki data together
 # This forms a Distributed Data Object (DDO)
-joinedData <- drJoin(housing = byCounty, slope=byCountySlope, geo = geo, wiki=wikiByCounty)
+joinedData <- drJoin(housing = byCounty, slope = byCountySlope, geo = geo, wiki = wikiByCounty)
 
 # Note that this is no longer a distributed data frame
 class(joinedData)
@@ -159,6 +162,8 @@ length(joinedData)
 # will be saved. Unless a complete file path is specified, the vdb will be
 # generated in the working directory. 
 vdbConn("vdb_housing", autoYes=TRUE)
+
+
 
 # Define a plot function
 timePanel <- function(x) {

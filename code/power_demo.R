@@ -1,30 +1,22 @@
 
 
-setwd("power_demo")
+# Set the working directory. Edit "~/correct_path" as necessary
+setwd("~/correct_path/power_demo")
 
 
 
-rm(list = ls())
-
-
-
+# Load packages
 library(trelliscope)
 library(plyr)
 
 
 
-# Load some preconfigured global plotting limits
-load("plottingLims.Rdata")
-
-# Open the connection to the pre-existing trelliscope visualization.
-# ("vdb_power" is a folder in "power_demo")
+# Open the connection to the pre-existing trelliscope visualization. "vdb_power" is a folder
+# in the "power_demo" folder, where we set the working directory earlier.
 vdbConn("vdb_power")
 
 # use this port when running locally on your own computer
 myport <- 8100 
-
-# use this port on the AWS demo cluster
-# myport <- Sys.getenv("TR_PORT") 
 
 # Launch the trelliscope viewer.  Use Ctrl-C or ESC to stop the reviewer and return
 # the R prompt
@@ -32,24 +24,25 @@ view(port = myport)
 
 
 
+# Clear the R workspace
+rm(list = ls())
+
+
 
 # Load the trelliscope package if you haven't already
 library(trelliscope)
 library(datadr)
 
-# Let's clear the workspace of any residual objects
-rm(list = ls())
+# You will need to adjust replace the first part of path with the location where you
+# unzipped the demonstration files
+setwd("~/correct_path/power_demo")
 
-# You will need to change this. Be sure this is pointed to the directory containing retailBuildings.csv
-setwd("~/docs-csp2015/demos/power_demo")
-
-# We'll begin by reading in the data. Be sure to supply
-# the correct filepath or this will fail. 
+# We'll begin by reading in the data. 
 d <- read.csv("retailBuildings.csv")
 
 
 
-# Observe the first 6 rows of the dataset
+# Print the first 6 rows of the dataset
 head(d)
 
 # Now let's look at the structure of the data.
@@ -59,55 +52,76 @@ str(d)
 
 
 
-
-# Let's convert the dateTime and date to a POSIXct format so R can compute with
+# Convert the 'dateTime' and 'date' to a POSIXct format so R can compute with
 # them as dates
 d$dateTime <- as.POSIXct(d$dateTime)
 d$date <- as.POSIXct(d$date)
+
+# Notice how "dateTime" and "date" are POSIX variables now
 str(d)
 
-# The summary method applied to a data frame can be helpful to get
-# a feel for the values in the data
+
+
 summary(d)
 
-# It would be nice to see a tabulation of the categorial variables.
-# We can do that like this:
-with(d, table(building))
 
-# To make tables for all the categorical variables, let's create a
-# vector with the names of these variables so we can easily select them:
+
+# Table for building
+table(d$building)
+
+# Table for year
+table(d$year)
+
+
+
+# A character vector of all the categorical variables
 sel <- c("building", "year", "quarter", "month", "monthName", "week", "weekday")
 
-# Now we use that vector to select those columns of 'd', and we can apply
-# the table() function to each column (column-wise summaries are indicated by
-# MARGIN = 2)
+# Now we use that vector to select only those columns of 'd', and we can apply
+# the table() function to each column, where column-wise summaries are indicated by
+# MARGIN = 2.
 apply(d[,sel], MARGIN = 2, table)
 
-# We can also make cross tabulations to get a sense of the counts of
-# two categorical variables.  For example, let's look at month by building:
+
+
+# Cross tabulation of month by building
 with(d, table(month, building))
 
 
 
 library(plyr)
-byDate <- divide(d, by = "date", postTransFn = function(x) arrange(x, building, dateTime))
 
-# Let's look at a single element of the ddf:
+# Define a function that will sort each subset by 'building' and 'dateTime'
+# The argument, 'x', is a data frame for a single subset
+sortFunction <- function(x) {
+  arrange(x, building, dateTime)
+}
+
+# Divide the data by 'date' and sort the output
+byDate <- divide(d, by = "date", postTransFn = sortFunction)
+
+
+
+# Display the structure of the first element of the ddf
 str(byDate[1])
 
-# Now let's compute the range of the power so we can use the same axes for all 
-# the plots
+
+
+# Global axis limits for power and outdoor air temperature
 powerLims <- range(d$Power.KW)
 tempLims <- range(d$OAT.F)
 
-# Now we create a function to plot the power usage in all 5 buildings for a 
-# single day
+
+
+# Create the panel function for plotting power vs. time for each day
 power.by.time <- function(x) {
 
-  # Get the x and y axis limits
-  # Global limits for y
+  # 'x' is a data frame for a single subset, or split, of the data
+
+  # Global limits for y axis
   ylim <- powerLims
-  # Local limits for x
+
+  # Local limits for x axis
   xlim <- range(x$dateTime)
 
   # Set plotting options
@@ -118,48 +132,61 @@ power.by.time <- function(x) {
                xlab = "", ylab = "Power (KW)"))
 
   # Add in the data for each building, giving each building a different color
-  for (i in as.character(2:5)) {
-    with(x[x$building == i,], 
-       lines(dateTime, Power.KW, col = as.numeric(i) - 1, lwd = 2))
+  for (i in 2:5) {
+    with(x[x$building == as.character(i),], 
+       lines(dateTime, Power.KW, col = i - 1, lwd = 2))
   }
 
-  # Add a legend to the plot
-  legend(xlim[1] + 0.5 * diff(xlim), ylim[1],
+  # Add a legend to the plot that is positioned near the bottom center
+  legend(xlim[1] + 0.5 * diff(xlim), 
+         ylim[1],
          paste("Building", 2:5),
-         lty = 1, col = c(2:5) - 1, lwd = 3, yjust = 0)
+         lty = 1, 
+         col = c(2:5) - 1, 
+         lwd = 3, 
+         yjust = 0)
 
   # Returning NULL is required by trelliscope when the plotting function is 
-  # base R code (as opposed to plots generated by lattice or ggplot)
+  # base R code (as opposed to plots generated by lattice or ggplot packages)
   return(NULL)
 
 } # power.by.time()
+
+
 
 # Test the plot on a single subset
 power.by.time(byDate[[8]][[2]])
 
 
 
-kwCog <- function(x) { list(
+kwCog <- function(x) { 
 
-  # Compute the max and min for each day
-  max = cog(max(x$Power.KW, na.rm = TRUE), desc = "Max Power (KW)"),
-  min = cog(min(x$Power.KW, na.rm = TRUE), desc = "Min Power (KW)"),
+  # 'x' is a data frame for a single subset, or split, of the data
 
-  # Some common statistics are built into trelliscope with their own cognostics functions.
-  # For example, cogMean() and cogRange().
-  meanPower = cogMean(x$Power.KW, desc = "Mean Power (KW)"),
-  rangePower = cogRange(x$Power.KW, desc = "Range of Power (Max - Min) (KW)"),
+  list(
 
-  # Note that we use 'unique()' below because, for each subset, the value of 
-  # month, week, and day are all repeated for a single date. So we use unique() 
-  # to get a scalar value of these date variables
-  month = cog(unique(x$monthName), desc = "Month Name"),
-  week = cog(unique(x$week), desc = "Week in 2010"),
-  day = cog(unique(x$day), desc = "Julian Day in 2010")
+    # Compute the max and min power consumed for each day
+    max = cog(max(x$Power.KW, na.rm = TRUE), desc = "Max Power (KW)"),
+    min = cog(min(x$Power.KW, na.rm = TRUE), desc = "Min Power (KW)"),
+  
+    # Compute the mean and range power
+    # Note how some common statistics are built into trelliscope with their own 
+    # cognostics functions. For example, cogMean() and cogRange().
+    meanPower = cogMean(x$Power.KW, desc = "Mean Power (KW)"),
+    rangePower = cogRange(x$Power.KW, desc = "Range of Power (Max - Min) (KW)"),
+  
+    # Note that we use 'unique()' below because, for each subset, the value of 
+    # month, week, and day are repeated for all the rows in the subset for a 
+    # single date. So we use unique() to get singel text string for these date variables
+    month = cog(unique(x$monthName), desc = "Month Name"),
+    week = cog(unique(x$week), desc = "Week in 2010"),
+    day = cog(unique(x$day), desc = "Julian Day in 2010")
 
-)} # kwCog()
+  ) # close the list
 
-# Test the cognostics function for the 7th subset
+} # kwCog()
+
+# Test the cognostics function for the 73rd subset
 kwCog(byDate[[73]][[2]])
 
 
@@ -167,16 +194,18 @@ kwCog(byDate[[73]][[2]])
 # Open connection to the trelliscope visualization database (vdb)
 vdbConn("vdb_power", autoYes = TRUE)
 
-# Create first display using Trelliscope's makeDisplay() function.  This writes
+# Create the display using Trelliscope's makeDisplay() function.  This writes
 # the various plots to the vdb that can then be viewed with trelliscope.
 makeDisplay(byDate, name = "Power_by_Day",
             desc = "Power time series for 2010 buildings by day",
             panelFn = power.by.time, cogFn = kwCog)
 
+
+
 # Let's also create a related display of power versus temperature by date
 power.v.temp <- function(x) {
 
-  # Get the limits
+  # Get the axes limits
   xlim <- tempLims
   ylim <- powerLims
 
@@ -188,8 +217,8 @@ power.v.temp <- function(x) {
                xlab = "Outside Air Temp (F)", ylab = "Power (KW)"))
 
   # Add points for each building with a different color
-  for (i in as.character(2:5)) {
-    with(x[x$building == i,], points(OAT.F, Power.KW, col = as.numeric(i)-1))
+  for (i in 2:5) {
+    with(x[x$building == as.character(i),], points(OAT.F, Power.KW, col = i - 1))
   }
 
   # Add in the legend
@@ -204,17 +233,19 @@ power.v.temp <- function(x) {
 
 } # power.v.temp()
 
-# Test the plot on a single subset
+# Test the plot on a single subset of the ddf (the 8th subset, in this case)
 power.v.temp(byDate[[8]][[2]])
+
+
 
 # Make the trelliscope display
 makeDisplay(byDate, name = "Power_vs_Temp_by_Day",
             desc = "Power vs. Temperature for 2010 buildings by day",
             panelFn = power.v.temp, cogFn = kwCog)
 
-# Launch the trelliscope viewer (must be in Firefox, Chrome, or Safari--not 
-# Internet Explorer)
-myport <- 8100 # use this when running locally
-# myport <- Sys.getenv("TR_PORT") # use this on demo cluster
+
+
+# use this port when running locally (on your own computer)
+myport <- 8100 
 view(port = myport)
 
